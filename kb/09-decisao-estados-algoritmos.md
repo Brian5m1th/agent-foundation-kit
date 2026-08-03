@@ -1,0 +1,289 @@
+# 09 — Árvores de decisão, máquinas de estado e algoritmos conceituais
+
+Procedimentos. Diferente de princípio (por quê) e de padrão (como): aqui é **o que fazer, agora,
+neste ponto**.
+
+---
+
+# Parte I — Árvores de decisão
+
+## AD-01 · Do pedido do usuário à ação
+
+Refinamento da árvore que você esboçou, com dois acréscimos: **calibração por porte** e **custo de
+reversão** — sem eles a árvore trata typo e módulo novo do mesmo jeito.
+
+```mermaid
+graph TD
+    A[Usuario pediu algo] --> B{Cabe em um diff<br/>de uma frase?}
+    B -->|sim| C[Executar direto] --> V[Verificar e mostrar saida]
+    B -->|nao| D{Existe contexto<br/>suficiente?}
+    D -->|nao| E{Esta no prompt?}
+    E -->|sim| F[Inferir]
+    E -->|nao| G{E pratica padrao<br/>da stack?}
+    G -->|sim| H[Usar default]
+    G -->|nao| I{Esta no codigo<br/>ou na memoria?}
+    I -->|sim| J[Buscar - subagente se for amplo]
+    I -->|nao| K{E especifico<br/>do negocio?}
+    K -->|nao| L[Assumir e registrar suposicao]
+    K -->|sim| M{Reverter e caro?}
+    M -->|nao| L
+    M -->|sim| N[PERGUNTAR ao humano]
+    F --> D
+    H --> D
+    J --> D
+    L --> D
+    N --> D
+    D -->|sim| O{Ha ambiguidade<br/>bloqueante aberta?}
+    O -->|sim| N
+    O -->|nao| P{Toca varios arquivos<br/>ou abordagem incerta?}
+    P -->|nao| C
+    P -->|sim| Q[Explorar em plan mode]
+    Q --> R[Planejar + fixar contratos]
+    R --> S{Humano aprovou?}
+    S -->|nao| R
+    S -->|sim| T[Decompor em tasks verificaveis]
+    T --> U[Executar dentro do envelope]
+    U --> V
+    V --> W{Passou?}
+    W -->|nao| X{Ja corrigi<br/>2 vezes?}
+    X -->|sim| Y[Limpar contexto e<br/>reescrever o prompt]
+    X -->|nao| U
+    W -->|sim| Z{Custo do erro<br/>e alto?}
+    Z -->|sim| AA[Auditoria em contexto separado]
+    Z -->|nao| AB[Entregar com evidencia]
+    AA --> AB
+    AB --> AC[Registrar licao se houve surpresa]
+```
+
+**Os quatro nós que mais mudam o resultado:**
+- `Cabe em um diff de uma frase?` — evita AP-03 e AP-16 de uma vez.
+- `Reverter é caro?` — é o que separa bloquear de assumir. Sem ele: AP-09 ou AP-19.
+- `Já corrigi 2 vezes?` — o laço `X→U` sem esse corte é o modo de falha mais comum em sessão longa.
+- `Custo do erro é alto?` — auditoria independente não é grátis; aplicá-la sempre produz AP-24.
+
+## AD-02 · Onde este conhecimento deve morar
+
+```mermaid
+graph TD
+    A[Tenho um conhecimento<br/>para registrar] --> B{Muda com<br/>frequencia?}
+    B -->|sim| C[STATUS.md ou tasks.md<br/>NUNCA na constituicao]
+    B -->|nao| D{Vale em<br/>toda sessao?}
+    D -->|nao| E{Vale so num<br/>diretorio?}
+    E -->|sim| F[subdir/CLAUDE.md<br/>carregado sob demanda]
+    E -->|nao| G[Skill]
+    D -->|sim| H{Precisa valer<br/>SEM excecao?}
+    H -->|sim| I[Hook ou CI<br/>markdown e advisory]
+    H -->|nao| J{E portavel entre<br/>agentes?}
+    J -->|sim| K[AGENTS.md]
+    J -->|nao| L[CLAUDE.md]
+    L --> M{Remover a linha<br/>faria o agente errar?}
+    K --> M
+    M -->|nao| N[Nao escreva]
+    M -->|sim| O[Escreva - uma linha]
+```
+
+## AD-03 · Que tipo de verificação usar
+
+```mermaid
+graph TD
+    A[Requisito a verificar] --> B{Contem sempre/nunca/<br/>qualquer/independente de?}
+    B -->|sim| C{O espaco de entrada<br/>e geravel?}
+    C -->|sim| D[Teste de propriedade + shrinking]
+    C -->|nao| E[Registrar o motivo na spec<br/>e usar exemplos + revisao]
+    B -->|nao| F{E comportamento<br/>observavel de fora?}
+    F -->|sim| G[Criterio de aceite Given/When/Then]
+    F -->|nao| H{E regra estrutural?}
+    H -->|sim| I[Teste de arquitetura<br/>ex.: dominio nao importa framework]
+    H -->|nao| J{E softgoal<br/>elegancia confianca?}
+    J -->|sim| K[Declarar julgamento humano<br/>NAO inventar proxy numerica]
+    J -->|nao| L[Teste unitario por exemplo]
+    D --> M[Forcar a falha de proposito<br/>e mostrar o contra-exemplo]
+    M --> N{Falhou?}
+    N -->|nao| O[A verificacao e decorativa<br/>refazer]
+    N -->|sim| P[Reverter e seguir]
+```
+
+O nó `K` é o mais desobedecido: sob pressão de "precisamos de uma métrica", inventa-se uma proxy — e
+daí nasce AP-05 do corpus de intenção (proxy capturada, Goodhart).
+
+---
+
+# Parte II — Máquinas de estado
+
+## ME-01 · Ciclo de vida de uma spec
+
+```mermaid
+stateDiagram-v2
+    [*] --> Rascunho: /specify
+    Rascunho --> Rascunho: refinar
+    Rascunho --> Bloqueada: ambiguidade bloqueante detectada
+    Bloqueada --> Esclarecida: humano respondeu
+    Rascunho --> Esclarecida: sem bloqueantes
+    Esclarecida --> Planejada: plan aprovado
+    Planejada --> EmImplementacao: tasks aprovadas
+    EmImplementacao --> EmImplementacao: task concluida
+    EmImplementacao --> Reaberta: contrato inviavel ou criterio mudou
+    Reaberta --> Esclarecida
+    EmImplementacao --> Auditoria: todas as tasks fechadas
+    Auditoria --> EmImplementacao: lacuna encontrada
+    Auditoria --> Arquivada: aprovada com evidencia
+    Arquivada --> Reaberta: mudanca de requisito
+    Arquivada --> [*]
+```
+
+**Transições que a maioria dos fluxos não modela, e deveria:**
+- `EmImplementacao → Reaberta` — descobrir na implementação que o contrato é inviável é **normal**.
+  Sem essa transição, o executor "conserta" o contrato em silêncio (AP-21).
+- `Auditoria → EmImplementacao` — auditoria que não pode reprovar não é auditoria.
+- `Arquivada → Reaberta` — sem ela, `spec-anchored` é impossível e o fluxo é só `spec-first`.
+
+## ME-02 · Ciclo de vida de uma task
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pendente
+    Pendente --> Bloqueada: dependencia nao satisfeita
+    Bloqueada --> Pendente: dependencia concluida
+    Pendente --> EmExecucao: envelope verificado
+    EmExecucao --> AguardandoHumano: acao fora do envelope
+    AguardandoHumano --> EmExecucao: aprovado
+    AguardandoHumano --> Pendente: recusado - replanejar
+    EmExecucao --> Verificando: implementacao pronta
+    Verificando --> EmExecucao: harness reprovou
+    Verificando --> NaoVerificavel: comando nao roda no ambiente
+    Verificando --> Concluida: harness aprovou + evidencia registrada
+    NaoVerificavel --> Concluida: humano aceitou o risco explicitamente
+    Concluida --> [*]
+```
+
+`NaoVerificavel` é um estado **de primeira classe**, não um atalho para `Concluida`. Colapsar os dois
+é como o "trust-then-verify gap" entra no processo.
+
+## ME-03 · Estado do contexto da sessão
+
+```mermaid
+stateDiagram-v2
+    [*] --> Limpo
+    Limpo --> Produtivo: tarefa iniciada
+    Produtivo --> Elevado: 40% da janela
+    Elevado --> Delegando: 60% - subagente obrigatorio
+    Delegando --> Critico: 80%
+    Critico --> Compactado: /compact dirigido
+    Compactado --> Produtivo
+    Produtivo --> Poluido: 2 correcoes falhas na mesma coisa
+    Poluido --> Limpo: /clear + prompt reescrito
+    Produtivo --> Limpo: /clear entre tarefas nao relacionadas
+    Produtivo --> [*]: tarefa concluida
+```
+
+`Poluido` **não** se resolve compactando — a compactação preserva as abordagens falhas. Só `/clear`
+com prompt reescrito sai desse estado.
+
+---
+
+# Parte III — Algoritmos conceituais
+
+Pseudocódigo de decisão. Não é código: é a política, escrita de forma inequívoca.
+
+## AL-01 · Resolver lacuna de informação
+
+```
+resolver_lacuna(lacuna, contexto):
+    se lacuna ∈ prompt_do_usuario:            devolve inferir(prompt)
+    se lacuna ∈ defaults_da_stack:            devolve default(stack)
+    se lacuna ∈ codebase:
+        se escopo_da_busca é amplo:           devolve delegar_subagente(busca)
+        senao:                                devolve buscar(codebase)
+    se lacuna é especifica_do_negocio:
+        se custo_de_reverter(lacuna) alto:    devolve perguntar_humano(lacuna)   # bloqueia
+        senao:                                devolve assumir_e_registrar(lacuna)
+    devolve marcar_UNKNOWN(lacuna)            # nunca inventar
+```
+
+Última linha é o **protocolo anti-invenção**: o caminho de saída padrão é `UNKNOWN`, jamais um palpite
+plausível.
+
+## AL-02 · Decidir o peso do processo
+
+```
+calibrar(mudanca):
+    r = custo_de_reverter(mudanca)      # baixo | medio | alto
+    n = arquivos_afetados(mudanca)
+    c = certeza_da_abordagem(mudanca)   # alta | baixa
+
+    se r == alto:                       devolve FULL          # custo do erro domina o tamanho
+    se n == 1 e c == alta:              devolve DIRETO
+    se n <= 5 e c == alta:              devolve PLANO_LEVE
+    devolve PADRAO
+```
+
+A primeira linha é a que quase todo framework erra: calibrar por **tamanho** em vez de por **custo do
+erro** faz uma linha alterada no cálculo de dinheiro ser tratada como typo.
+
+## AL-03 · Ciclo de execução de task
+
+```
+executar(task, envelope, contratos):
+    verificar_precondicoes(task.depends_on)
+    para cada decisao em implementar(task):
+        se decisao ∉ envelope.decide_sozinho:
+            se decisao ∈ envelope.vedado:        aborta_e_reporta()
+            senao:                               pedir_aprovacao(decisao)
+        se decisao contradiz contratos:          para_e_reporta()   # nunca "corrigir" o contrato
+        se decisao preenche lacuna da spec:      registrar_interpretacao(decisao)
+
+    resultado = rodar(task.verificacao)
+    se resultado == NAO_EXECUTAVEL:              marcar(NAO_VERIFICAVEL); reportar()
+    se resultado == FALHA:                       corrigir(); repetir()     # nunca desabilitar teste
+    se resultado == SUCESSO:                     marcar(CONCLUIDA, evidencia=resultado.saida)
+```
+
+## AL-04 · Verificação adversarial
+
+```
+auditar(entrega, spec, plan, constitution):
+    exigir(contexto_atual ≠ contexto_de_execucao)      # senao a auditoria nao vale
+
+    achados = []
+    para cada criterio em spec.criterios:
+        e = buscar_evidencia_no_codigo(criterio)        # arquivo:linha ou saida de comando
+        se e ausente:               achados += LACUNA(criterio)
+        se e nao_executavel:        achados += NAO_VERIFICADO(criterio)
+
+    para cada unidade em entrega.codigo:                # a busca esquecida
+        se unidade nao mapeia para nenhum requisito:
+            achados += EXCEDENTE(unidade)               # escopo ampliado
+
+    para cada artigo em constitution:
+        se violado e nao_declarado_no_plan:
+            achados += DESVIO_NAO_DECLARADO(artigo)
+
+    devolve filtrar(achados, afeta_correcao_ou_requisito_declarado)   # evita over-engineering
+```
+
+O `filtrar` final é obrigatório. Sem ele, a auditoria sempre encontra algo e o resultado é AP-24.
+
+## AL-05 · Promover falha a conhecimento
+
+```
+aprender(incidente):
+    se incidente é unico e nao generalizavel:    registra_nota(); retorna
+
+    padrao = generalizar(incidente)              # a CLASSE, nao o caso
+    destino = escolher_destino(padrao):
+        regra universal e mecanizavel        -> teste / hook / CI     # mais durável
+        regra que exige julgamento           -> pergunta de revisao
+        principio que muda decisoes futuras  -> artigo de constitution
+        conhecimento de area especifica      -> skill
+
+    escrever(destino, padrao, evidencia=incidente)
+    se destino == pergunta_de_revisao:  anexar(checklist_de_review)
+    verificar(destino aplicado a um caso real)    # senao é AP-33, teatro
+```
+
+A última linha é o que separa aprendizado de arquivamento: **se o novo padrão não muda nenhuma decisão
+concreta, ele não foi aprendido.**
+
+---
+
+**Anterior:** [08 — Arquiteturas e pipelines](08-arquiteturas-e-pipelines.md) · **Próximo:** [10 — Métricas](10-metricas.md)

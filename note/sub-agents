@@ -1,0 +1,5 @@
+→ ../kb/sub-agents.md
+
+Documentação canônica de subagentes (embutidos, frontmatter, ferramentas, permissão, contexto
+inicial, fork, limites, hooks, armadilhas, comportamentos versionados). Padrão correspondente:
+CTX-03 em ../kb/04-padroes.md.

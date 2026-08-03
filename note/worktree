@@ -1,0 +1,4 @@
+→ ../kb/worktrees.md
+
+Documentação canônica de worktrees (uso, ciclo de vida, isolamento de subagentes, hooks,
+armadilhas, comportamentos versionados). Padrão correspondente: EXE-05 em ../kb/04-padroes.md.
