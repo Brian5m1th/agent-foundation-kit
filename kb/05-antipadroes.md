@@ -69,6 +69,48 @@ obrigatória a partir de 60%.
 **Detecção.** Meça os arquivos que são carregados de uma vez. Acima de ~20 KB, questione.
 **Correção.** Progressive disclosure: núcleo curto + `references/` sob demanda.
 
+### AP-35 · Skill Negativa 🟡
+
+**Sintoma.** A skill é uma lista de proibições — "não faça X", "nunca Y" — e o agente continua fazendo.
+**Mecanismo.** `[INDÚSTRIA]` Dirigir por negação obriga o modelo a representar o comportamento
+indesejado para evitá-lo, e não diz qual é o desejado. Sobra ambiguidade exatamente onde a skill
+existia para removê-la.
+**Evidência.** `[INDÚSTRIA]` *Negation* está entre os seis modos de falha nomeados em
+`writing-great-skills` ([mattpocock-skills.md](mattpocock-skills.md) §8).
+**Detecção.** Conte as linhas imperativas negativas. Se as proibições superam as instruções positivas,
+o anti-padrão está ativo.
+**Correção.** Reescrever como ação com critério de conclusão checável. A proibição que sobrar e
+precisar valer **sem exceção** não é texto de skill: é hook (EXE-02) ou invariante.
+
+### AP-36 · Sedimento 🟡
+
+**Sintoma.** Camadas acumuladas numa skill, comando ou CLAUDE.md, escritas em momentos diferentes,
+que ninguém removeu — algumas contradizendo as outras.
+**Mecanismo.** Cada ajuste é acrescentado ao fim porque acrescentar é mais barato que reler. O arquivo
+cresce por deposição, e o agente lê a camada errada.
+**Evidência.** `[INDÚSTRIA]` *Sediment* entre os seis modos de falha de `writing-great-skills`.
+`[CAMPO]` A defesa correspondente já existe neste corpus: ADR sem campo *"revisar quando"* é a mesma
+falha em outro artefato (kb/11, cabeçalho).
+**Detecção.** Duas instruções sobre o mesmo assunto escritas em estilos diferentes é sinal de duas
+camadas. Pergunte de qual data é cada uma.
+**Correção.** Editar no lugar em vez de acrescentar; todo artefato de processo declara quando expira.
+Distinto de AP-02: enciclopédia é volume, sedimento é **estratificação contraditória** — um arquivo
+curto pode ter sedimento.
+
+### AP-37 · Conclusão Prematura 🔴
+
+**Sintoma.** O agente declara a skill cumprida com metade dos passos executados, e o relatório final
+descreve o resultado pretendido em vez do obtido.
+**Mecanismo.** `[INDÚSTRIA]` Passo sem critério de conclusão checável termina quando o modelo julga
+que terminou. Numa sequência, o julgamento acumula: o passo 2 herda o "pronto" duvidoso do passo 1.
+**Evidência.** `[INDÚSTRIA]` *Premature completion* é o primeiro dos seis modos de falha de
+`writing-great-skills`, e a razão declarada para dividir skill **por sequência**.
+**Detecção.** Cada passo tem uma condição que alguém de fora consegue conferir? Se o critério é
+"quando estiver bom", não há critério (AP-07).
+**Correção.** Critério checável por passo; separar em skills sequenciais quando o passo seguinte não
+pode começar sem evidência do anterior. Parente de AP-30 (Truncamento Silencioso), que é o mesmo
+defeito no **volume** da saída, e de AP-29 (Código de Fachada), que é no **conteúdo**.
+
 ---
 
 ## Intenção
@@ -300,6 +342,7 @@ ausente, porque produz confiança falsa.
 | AP-31 | Teste Desligado para Passar | D4 | 🔴 |
 | AP-32 | Falsa Sensação de Controle | D5 | 🔴 |
 | AP-33 | Teatro de Conformidade | D6 | 🔴 |
+| AP-37 | Conclusão Prematura | D2 | 🔴 |
 | AP-04/05 | Sessão Entulhada / Exploração Infinita | D2 | 🟡 |
 | AP-06 | Pseudocódigo em Prosa | D1 | 🟡 |
 | AP-08 | Três Exemplos p/ Regra Universal | D1 | 🟡 |
@@ -313,6 +356,7 @@ ausente, porque produz confiança falsa.
 | AP-27 | Artefato Grande p/ o Próprio Protocolo | D2 | 🟡 |
 | AP-30 | Truncamento Silencioso | D4 | 🟡 |
 | AP-34 | Rastreabilidade Fantasma | D6 | 🟡 |
+| AP-35/36 | Skill Negativa / Sedimento | D2 | 🟡 |
 
 **Os quatro achados `[CAMPO]` inéditos** — AP-14, AP-15, AP-26, AP-27 — não aparecem em nenhuma fonte
 oficial ou acadêmica deste corpus. São observações dos seus próprios repositórios, e por isso são a

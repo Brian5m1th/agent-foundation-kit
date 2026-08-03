@@ -14,7 +14,9 @@ reversão** — sem eles a árvore trata typo e módulo novo do mesmo jeito.
 
 ```mermaid
 graph TD
-    A[Usuario pediu algo] --> B{Cabe em um diff<br/>de uma frase?}
+    A[Usuario pediu algo] --> A1{E defeito dificil,<br/>flaky ou regressao?}
+    A1 -->|sim| A2[Construir o loop<br/>vermelho-verde VER-06] --> B
+    A1 -->|nao| B{Cabe em um diff<br/>de uma frase?}
     B -->|sim| C[Executar direto] --> V[Verificar e mostrar saida]
     B -->|nao| D{Existe contexto<br/>suficiente?}
     D -->|nao| E{Esta no prompt?}
@@ -37,7 +39,9 @@ graph TD
     O -->|sim| N
     O -->|nao| P{Toca varios arquivos<br/>ou abordagem incerta?}
     P -->|nao| C
-    P -->|sim| Q[Explorar em plan mode]
+    P -->|sim| P1{Sei o que<br/>especificar?}
+    P1 -->|nao| P2[Mapa de decisoes<br/>sob nevoa PLN-06] --> P1
+    P1 -->|sim| Q[Explorar em plan mode]
     Q --> R[Planejar + fixar contratos]
     R --> S{Humano aprovou?}
     S -->|nao| R
@@ -55,7 +59,9 @@ graph TD
     AB --> AC[Registrar licao se houve surpresa]
 ```
 
-**Os quatro nós que mais mudam o resultado:**
+**Os seis nós que mais mudam o resultado:**
+- `É defeito difícil?` — sem o loop determinístico primeiro, todo o resto da árvore roda no escuro (H-18).
+- `Sei o que especificar?` — o nó que impede spec confiante e errada sobre escopo nebuloso.
 - `Cabe em um diff de uma frase?` — evita AP-03 e AP-16 de uma vez.
 - `Reverter é caro?` — é o que separa bloquear de assumir. Sem ele: AP-09 ou AP-19.
 - `Já corrigi 2 vezes?` — o laço `X→U` sem esse corte é o modo de falha mais comum em sessão longa.

@@ -239,6 +239,43 @@ conhecimento de uma coleção de opiniões bem escritas.
 
 ---
 
+## ADR-011 · Absorver disciplinas externas na KB, em vez de instalar o conjunto
+
+**Problema.** Um conjunto externo de skills maduro — [mattpocock/skills](https://github.com/mattpocock/skills),
+21 skills — cobre lacunas reais deste corpus. Instalamos, forkamos, ou destilamos?
+
+**Alternativas.**
+
+| # | Alternativa | Avaliação |
+|---|---|---|
+| A | Instalar o plugin gerenciado (`claude plugins install`) | Atualiza sozinho, mas 21 comandos passam a disputar gatilho com os 9 `sdd-*` — AP-14 no espaço de nomes de skill. O próprio autor alerta que instalar plugin **e** `skills.sh` deixa tudo duplicado |
+| B | Forkar via `skills.sh` para dentro de `.claude/` | Arquivos editáveis, mas `.claude/commands/` é **upstream** de quatro projetos reais: cada projeto consumidor herdaria o conjunto inteiro sem ter pedido |
+| C | Ignorar | Perde cinco lacunas identificadas, três delas sem cobertura alguma aqui |
+| D | **Destilar na KB com identificador citável** | Escolhida |
+
+**Critérios.** Custo de contexto por sessão · efeito nos projetos consumidores · rastreabilidade da
+afirmação · esforço de manutenção.
+
+**Trade-offs.** A e B dão comportamento de graça e cobram governança; D cobra escrita e não dá
+comportamento nenhum — o conhecimento só age se alguém rotear até ele. O que decide é ADR-009: o nível
+certo do conhecimento aqui é **descrição** (padrão, heurística), porque `labs` é a fonte de verdade que
+outros projetos consomem, e conhecimento descrito viaja para os quatro; um plugin instalado, não.
+
+**Escolha.** D. A destilação vira [mattpocock-skills.md](mattpocock-skills.md), com cinco padrões, três
+anti-padrões e duas heurísticas citáveis (§7 de lá). O que foi lido e **recusado** fica registrado na §6
+da mesma página — sem isso a destilação vira propaganda.
+
+**Consequências.** A destilação **não se atualiza sozinha**: envelhece a partir da data de leitura
+(2026-08-02) e precisa de releitura datada, exatamente como as destilações oficiais. Em troca, cada
+afirmação importada carrega selo `[INDÚSTRIA]` e é distinguível do que é `[OFICIAL]` ou `[CAMPO]` —
+o que uma instalação não permitiria. Abre precedente: fonte não-oficial entra na KB **se** cobrir lacuna
+nomeada e vier com o registro do que foi recusado.
+
+**Revisar quando.** O conjunto externo virar dependência real de algum projeto em `C:\workspace\`, ou o
+Claude Code passar a resolver colisão de nome entre plugin e comando de projeto de forma explícita.
+
+---
+
 ## Grafo de dependência
 
 ```mermaid
@@ -251,6 +288,8 @@ graph TD
     A3[ADR-003 Portao deterministico] --> A4[ADR-004 Contexto separado]
     A3 --> A7[ADR-007 Falha vira executavel]
     A2 --> A3
+    A9 --> A11[ADR-011 Absorver em vez de instalar]
+    A10 --> A11
 ```
 
 **ADR-009 é a raiz.** Se ela cair, quase tudo é reconstruído. **ADR-003 é a de maior efeito prático**:

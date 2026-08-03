@@ -5,6 +5,10 @@ Termos com ★ são propostos por esta KB.
 
 ---
 
+**Adaptador** `[D3]` — coisa concreta que satisfaz uma interface num *seam*. Descreve **papel** (que
+encaixe preenche), não substância. Um adaptador indica seam hipotético; dois indicam seam real
+(PLN-05).
+
 **Agente** `[D4]` — entidade autônoma que percebe, raciocina, usa ferramentas e age sobre um ambiente.
 Definição moderna (arXiv 2508.10146): *"entidade autônoma e colaborativa, dotada de capacidades de
 raciocínio e comunicação, capaz de interpretar dinamicamente contextos estruturados, orquestrar
@@ -16,6 +20,9 @@ como **motor de raciocínio** em vez de regras ou BDI simbólico.
 
 **AGENTS.md** `[D2]` — arquivo de contexto de projeto, agnóstico de fornecedor. Complementa o
 CLAUDE.md: o portátil vive no AGENTS.md; o específico do harness, no CLAUDE.md.
+
+**Alavancagem (leverage)** `[D3]` — comportamento que um chamador ou teste consegue exercitar por
+unidade de interface que precisou aprender. É a medida operacional de profundidade de módulo (PLN-05).
 
 **Ambiguidade marcada** ★ `[D1]` — ambiguidade registrada explicitamente no artefato
 (`[PRECISA ESCLARECER]`, `[NEEDS CLARIFICATION]`, `Q01`), que bloqueia a fase seguinte quando reverter
@@ -69,6 +76,10 @@ tasks 0,5 — **4–6 páginas por feature, não 50**.
 **Envelope de autonomia** ★ `[D4]` — declaração por tarefa do que o executor decide sozinho, do que
 consulta antes e do que lhe é vedado.
 
+**Fatia vertical / tracer bullet** `[D3]` — recorte **estreito mas completo** que atravessa todas as
+camadas (schema, API, UI, teste), demonstrável ou verificável sozinho e que cabe numa janela de
+contexto. Oposto do fatiamento horizontal ("todos os models, depois todos os controllers" — AP-11).
+
 **Fan-out** `[D4]` — distribuição de trabalho por muitas invocações paralelas (`claude -p` em laço,
 com `--allowedTools` restrito).
 
@@ -84,6 +95,13 @@ contexto; o harness é o ambiente de segurança."*
 
 **Hook** `[D4]` — script executado em ponto determinístico do ciclo do agente. Diferença crítica:
 instrução em CLAUDE.md é **advisory**; hook é **garantido**.
+
+**Linguagem ubíqua** `[D2]` — vocabulário único compartilhado entre quem conhece o domínio, quem
+escreve o código e o agente, de modo que conversa e código derivem do mesmo modelo (Evans). Mora num
+glossário versionado do projeto (`CONTEXT.md`), **só termos, zero implementação** — CTX-06.
+
+**Localidade** `[D3]` — grau em que mudança, defeito e conhecimento se concentram num lugar só, em vez
+de se espalharem pelos chamadores. Contrapartida da alavancagem no julgamento de PLN-05.
 
 **MCP (Model Context Protocol)** `[D2]` — protocolo JSON-RPC para chamada de ferramenta e troca de
 contexto, modelo cliente-servidor. Comparar com A2A (orientado a agente, Agent Cards), ACP (REST,
@@ -101,8 +119,16 @@ altera aquela funcionalidade. Kiro chama de *steering*; Spec Kit, de *constituti
 **Standard** (4–5 comandos, entrevista, confirmações). Ortogonal ao **modo de template**: Full
 (~1.100 linhas) × Lite (~80 linhas).
 
+**Módulo profundo** `[D3]` — módulo cuja interface é pequena em relação ao comportamento que entrega.
+*"Os melhores módulos são profundos: muita funcionalidade acessível por uma interface simples"*
+(Ousterhout). Profundidade é propriedade **da interface**, não da implementação — PLN-05.
+
 **Nível 1 / Nível 2** `[D1]` — Nível 1 (spec): intenção e contrato, **rígido**. Nível 2 (plan):
 algoritmos, tipos internos, estrutura, **flexível**.
+
+**Palavra-líder (leading word)** `[D2]` — termo que o modelo já compreende e que comprime um conceito
+inteiro em um token, ancorando execução e invocação. Escolhê-la bem no início da `description` é onde
+uma skill faz seu trabalho de acionamento.
 
 **PBT (property-based testing)** `[D5]` — teste que verifica uma afirmação universal gerando centenas
 de entradas, com *shrinking* até o contra-exemplo mínimo. Três engrenagens: gerador, execução,
@@ -122,9 +148,17 @@ torna verde — **nunca afrouxada** até passar.
 **Registro de interpretação** ★ `[D4]` — lista das lacunas que o executor precisou preencher e da
 escolha feita. Filtro: *"outro executor competente poderia ter escolhido diferente?"*
 
+**Seam (costura)** `[D3]` — lugar onde se pode alterar o comportamento **sem editar naquele lugar**
+(Feathers); é onde a interface de um módulo vive, e por onde chamadores e testes passam igualmente.
+Por isso *a interface é a superfície de teste* — PLN-05.
+
 **Skill (SKILL.md)** `[D2]` — pasta com instruções, scripts e recursos que o agente descobre e carrega
 dinamicamente. Formato aberto desde dez/2025 (adotado também pela OpenAI). *Model-invoked* por
 padrão; `disable-model-invocation: true` torna manual.
+Os dois modos têm papéis distintos: **model-invoked** guarda a **disciplina reutilizável** e custa
+contexto (a `description` ocupa token em todo turno); **user-invoked** **orquestra** um fluxo e custa
+carga cognitiva (você precisa lembrar que existe). Regra de composição: user-invoked pode invocar
+model-invoked, **nunca outra user-invoked**.
 
 **Spec** `[D1]` — *"artefato estruturado, orientado a comportamento, escrito em linguagem natural, que
 expressa funcionalidade de software e serve de guia a agentes"* (Böckeler).
@@ -142,6 +176,10 @@ isola **arquivos** — eixos ortogonais. Detalhe em [sub-agents.md](sub-agents.m
 
 **TDAD (Test-Driven Agentic Development)** `[D5]` — o agente gera os testes de aceitação a partir da
 spec **antes** de implementar; verde = task concluída.
+
+**Teste da deleção** `[D3]` — critério para saber se um módulo se paga: apague-o mentalmente. Se a
+complexidade desaparece, ele era passa-fio; se reaparece espalhada por N chamadores, ele concentrava
+complexidade real e merece existir.
 
 **Validator independence** `[D5]` — *"você não pode validar seu próprio código no mesmo contexto"*.
 Exige subagente ou sessão separada.

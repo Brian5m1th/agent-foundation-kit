@@ -113,6 +113,25 @@ escrita. O contexto da elaboração (alternativas descartadas, discussão) é ru
 **Quando falha.** Mudança pequena em área crítica (uma linha no cálculo de dinheiro). Aí o critério
 não é o tamanho, é o **custo do erro**.
 
+## H-17 · Uma pergunta por vez, com a resposta recomendada junto
+**Justificativa.** `[INDÚSTRIA]` Rajada de perguntas transfere ao humano o custo de decidir do zero e
+produz respostas rasas; pergunta única com recomendação embutida custa um "sim". Resolve a tensão
+aparente com AP-09 (Interrogatório): o defeito de AP-09 nunca foi o **número** de perguntas, foi a
+ausência de recomendação. Compõe com INT-07 — infira o inferível, pergunte o resto assim. É a regra
+mais acionável de INT-08, isolada aqui porque vale em qualquer diálogo, não só em entrevista formal.
+**Quando falha.** O humano já escreveu tudo num documento; aí perguntar em série é atrito puro.
+Também falha quando as perguntas são independentes e o humano prefere despachar em lote.
+**Custo.** Mais turnos. **Exemplo.** `/sdd-clarify` resolvendo uma ambiguidade bloqueante por vez.
+
+## H-18 · Se o loop de feedback não fecha em segundos, conserte o loop antes do bug
+**Justificativa.** `[INDÚSTRIA]` Sem sinal vermelho/verde determinístico e rápido, toda hipótese é
+testada no escuro e cada iteração custa o dobro. Construir o loop parece desvio e é o caminho curto —
+é a fase 1 de VER-06.
+**Quando falha.** Bug de causa óbvia com teste existente que já o cobre; e o caso em que construir o
+loop custa mais que o defeito vale (script de uso único, defeito cosmético).
+**Custo.** Dez a trinta minutos antes de tocar no bug. **Exemplo.** Regressão de desempenho: medir a
+linha de base e automatizar a medição antes de otimizar qualquer coisa.
+
 ---
 
 # Parte II — Invariantes

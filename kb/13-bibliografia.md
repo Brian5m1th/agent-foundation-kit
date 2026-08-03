@@ -114,6 +114,15 @@ processo é necessário; desonesto usá-los como prova de que SDD funciona.
   dinâmico → task prompt), do padrão **Builder/Verifier**, e do equilíbrio alucinação × rigidez que
   motiva a especificação hierárquica. Parte 5: o papel do "arquiteto de intenção" e o cenário
   brownfield.
+- **Matt Pocock — [github.com/mattpocock/skills](https://github.com/mattpocock/skills)** (lido em
+  2026-08-02). 21 skills de engenharia empacotadas, com a tese oposta à do Spec Kit: *"GSD, BMAD e
+  Spec-Kit tentam ajudar assumindo o processo — e ao fazê-lo tiram seu controle"*. Origem de INT-08
+  (*grilling*, a entrevista conduzida), CTX-06 (linguagem ubíqua), CTX-07 (handoff), PLN-05 (módulo
+  profundo), PLN-06 (mapa sob névoa), VER-06 (loop de feedback), AP-35/36/37 e H-17/H-18. Valor da fonte: **operacionaliza** literatura
+  consolidada — Ousterhout, Feathers, Fowler, Evans, Beck, Hunt & Thomas — em procedimento executável
+  por agente, que é precisamente o que os livros não trazem. Ressalva: é prática de um praticante, sem
+  medição publicada; nada aqui é `[CONSOLIDADO]` por vir dele. Destilação:
+  [mattpocock-skills.md](mattpocock-skills.md) · decisão de não instalar: ADR-011.
 - **Comparativo TDD × BDD × SDD.** Uma tabela que resolve uma confusão frequente: TDD trava correção no
   nível do código, BDD verifica comportamento observável, **SDD opera acima dos dois e os orquestra**.
   Não competem.

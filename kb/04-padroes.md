@@ -65,6 +65,38 @@ artefato derivado e nunca é editada.
 **Relacionados.** LRN-02. **Combate.** AP-15 (Cópia Manual Multi-Harness).
 **Não usar quando.** Um harness só.
 
+## CTX-06 · Linguagem Ubíqua do Projeto
+
+**Contexto.** Projeto com jargão próprio; o agente é jogado dentro dele e deduz os termos pelo caminho.
+**Problema.** Sem palavra para o conceito, o agente usa vinte palavras onde cabe uma — e cada sessão
+paga de novo. Pior: nomeia variáveis, funções e arquivos de forma inconsistente, tornando o codebase
+menos navegável para ele mesmo na próxima vez.
+**Solução.** `[INDÚSTRIA]` Um glossário de domínio versionado no repositório (`CONTEXT.md`), contendo
+**só termos — zero detalhe de implementação**. Atualizado no instante em que um termo se resolve, nunca
+em lote. Decisão que é difícil de reverter, surpreendente **e** fruto de trade-off real vira ADR; as
+outras não. `[CONSOLIDADO]` Base em Evans: conversa e código derivam do mesmo modelo.
+**Trade-offs.** Menos token e mais consistência × mais um arquivo para manter honesto.
+**Relacionados.** CTX-01, INT-06. **Combate.** AP-02 (por redução do que precisa ser explicado).
+**Não usar quando.** O domínio é genérico o bastante para não ter jargão — aí o glossário é cerimônia.
+**Fronteira.** No instante em que o arquivo ganha "como fazemos X", virou AP-02. Glossário, não spec.
+**Detalhe completo.** [mattpocock-skills.md](mattpocock-skills.md) §5.2.
+
+## CTX-07 · Handoff Explícito entre Sessões
+
+**Contexto.** Sessão que precisa terminar — contexto cheio, verificação que exige contexto limpo (I-09),
+ou trabalho que continua amanhã.
+**Problema.** H-02 e H-15 mandam trocar de sessão; nenhum diz **o que atravessa**. Sem artefato, ou se
+perde o que foi decidido, ou se cola a conversa inteira — que reintroduz exatamente o que o `/clear`
+tinha resolvido.
+**Solução.** `[INDÚSTRIA]` Documento de passagem gravado **fora do workspace** (diretório temporário do
+SO), que **referencia** spec, ADR, issue, commit e diff por caminho/URL em vez de duplicá-los, redige
+segredo e PII, declara o que ficou pendente e traz uma seção de **skills sugeridas** para quem assume.
+Escrito já sabendo para que a próxima sessão vai servir.
+**Trade-offs.** Continuidade × o handoff é uma interpretação, e interpretação erra.
+**Relacionados.** CTX-03, CTX-04, VER-01. **Combate.** AP-04 (Sessão Entulhada).
+**Não usar quando.** A próxima sessão é sobre outra coisa — aí o handoff certo é nenhum.
+**Detalhe completo.** [mattpocock-skills.md](mattpocock-skills.md) §5.6.
+
 ---
 
 ## INT-01 · Constituição Executável
@@ -151,6 +183,35 @@ negócio? SLA?).
 **Relacionados.** INT-06. **Combate.** AP-09 (Interrogatório).
 **Não usar quando.** Domínio onde inferir errado é caro — aí pergunte mesmo o inferível.
 
+## INT-08 · Entrevista Conduzida por Árvore de Decisão (*grilling*)
+
+**Contexto.** A entrevista já foi decidida (INT-06) e já se sabe o que perguntar (INT-07). Falta a
+parte que os dois não cobrem: **como conduzi-la**.
+**Problema.** Entrevista sem condução degenera nos dois sentidos. Perguntas em rajada sobrecarregam e
+produzem respostas rasas (AP-09). Perguntas em ordem arbitrária fazem o humano decidir folhas antes da
+raiz — e a resposta da raiz invalida tudo o que veio antes.
+**Solução.** `[INDÚSTRIA]` Oito regras, e a força está em quantas são sobre **postura**, não conteúdo:
+
+1. Entrevistar **implacavelmente** sobre cada aspecto até chegar a **entendimento compartilhado**.
+2. Descer cada ramo da árvore de decisão, **resolvendo dependências entre decisões uma a uma** — a
+   ordem é topológica, não a ordem em que as dúvidas ocorreram.
+3. Toda pergunta vem com **a resposta recomendada** junto.
+4. **Uma pergunta por vez**, esperando a resposta antes de seguir.
+5. *"Perguntar várias coisas de uma vez é desnorteante."*
+6. **Fato** que a ferramenta consegue descobrir no ambiente é **buscado, nunca perguntado**.
+7. **Decisão é do humano**: cada uma é apresentada e a resposta é aguardada.
+8. **Não agir** até o humano confirmar que o entendimento é compartilhado.
+
+A separação **fato × decisão** (6 e 7) é o eixo: o agente carrega todo o custo de descobrir, o humano
+carrega só o de escolher. Critério de término: confirmação explícita do humano — não é o agente que
+declara a entrevista encerrada.
+**Trade-offs.** Alinhamento antes de gastar execução × muitos turnos, e o humano precisa estar presente.
+**Relacionados.** INT-06 (quando), INT-07 (o quê), H-17 (a cadência isolada), CTX-06.
+**Combate.** AP-09 (Interrogatório) — pela regra 3, que é o que separa entrevista de questionário.
+**Não usar quando.** O escopo cabe numa frase (H-01), o humano já entregou tudo escrito, ou não há
+humano no laço — sem confirmação, a regra 8 não tem como ser satisfeita.
+**Detalhe completo.** [mattpocock-skills.md](mattpocock-skills.md) §5.1.
+
 ---
 
 ## PLN-01 · Contrato Antes de Código
@@ -196,6 +257,51 @@ disponível — agent teams não colocam os companheiros em worktree — a disju
 e vira pré-condição: particione por arquivo antes de distribuir.
 **Trade-offs.** Velocidade × coordenação.
 **Relacionados.** EXE-05, [worktrees.md](worktrees.md).
+
+## PLN-05 · Módulo Profundo
+
+**Contexto.** Decidir onde cortar um módulo, e como é a interface dele.
+**Problema.** `[INDÚSTRIA]` O agente acelera a entropia que já existia: módulos rasos se multiplicam,
+cada um com interface quase tão complexa quanto a implementação, e o custo passa a ser cobrado por
+sessão em vez de por trimestre.
+**Solução.** `[CONSOLIDADO]` Ousterhout — *"os melhores módulos são profundos: muita funcionalidade
+acessível por uma interface simples"*. `[INDÚSTRIA]` Vocabulário operacional:
+
+| Termo | Definição |
+|---|---|
+| **Módulo** | qualquer coisa com interface e implementação — agnóstico de escala |
+| **Interface** | tudo o que o chamador precisa saber para usar corretamente: assinatura, invariantes, ordem, modos de erro, configuração exigida, desempenho |
+| **Profundidade** | comportamento exercitável por unidade de interface aprendida — **propriedade da interface, não da implementação** |
+| **Seam** | `[CONSOLIDADO]` (Feathers) lugar onde se altera comportamento sem editar naquele lugar |
+| **Adaptador** | coisa concreta que satisfaz uma interface num seam — descreve **papel**, não substância |
+| **Alavancagem / localidade** | capacidade por interface aprendida · concentração de mudança e bug num lugar só |
+
+Três regras de decisão: **teste da deleção** (apague o módulo mentalmente — a complexidade some, ou só
+se muda de lugar?) · **a interface é a superfície de teste**, porque chamadores e testes cruzam o mesmo
+seam · **um adaptador é seam hipotético, dois adaptadores é seam real**.
+**Trade-offs.** Design que sobrevive × tempo gasto antes de escrever a primeira linha.
+**Relacionados.** PLN-01, VER-06. **Combate.** AP-24 (Over-engineering por Revisão), pela terceira regra.
+**Não usar quando.** Protótipo descartável — em `experiments/` a forma não precisa pagar por si.
+**Detalhe completo.** [mattpocock-skills.md](mattpocock-skills.md) §5.3.
+
+## PLN-06 · Mapa de Decisões sob Névoa
+
+**Contexto.** Trabalho grande, envolto em incerteza, que não cabe numa sessão — e do qual você ainda
+não sabe nem o que especificar.
+**Problema.** `/sdd-specify` pressupõe escopo conhecido. Aplicado à névoa, produz spec confiante e
+errada; adiar produz paralisia.
+**Solução.** `[INDÚSTRIA]` Um artefato-mapa com **Destino · Decisões até aqui · Ainda não especificado ·
+Fora de escopo**, e tickets filhos que se bloqueiam. O mapa é **índice, não armazenamento**: cada
+decisão vive em exatamente um lugar e o mapa aponta para ele. A **fronteira** são os filhos abertos,
+desbloqueados e não reivindicados — é a borda do conhecido. Uma sessão resolve **um** ticket (pesquisa
+em paralelo é a exceção), e reivindica antes de trabalhar. Termina quando a fronteira esvazia: não
+sobra nada a decidir antes de alguém ir e fazer.
+**Trade-offs.** Progresso sob incerteza × o mapa é mais um artefato a manter verdadeiro.
+**Relacionados.** PLN-02, INT-05, CTX-03. **Combate.** AP-19 (Ambiguidade Silenciosa) em escala de projeto.
+**Ordem.** Roda **antes** de `/sdd-specify`, não no lugar dele. Gatilho: *"não sei nem o que
+especificar"* — contra o de `/sdd-specify`, que é *"sei o que quero, falta escrever"*.
+**Não usar quando.** O escopo já cabe numa spec. Aí o mapa é `/sdd-tasks` com passos extras.
+**Detalhe completo.** [mattpocock-skills.md](mattpocock-skills.md) §5.4.
 
 ---
 
@@ -317,6 +423,35 @@ resto é opcional e marcado como tal.
 **Trade-offs.** Evita over-engineering × pode deixar passar melhoria legítima.
 **Relacionados.** VER-01. **Combate.** AP-24 (Over-engineering por Revisão).
 
+## VER-06 · Loop de Feedback Antes da Hipótese
+
+**Contexto.** Bug difícil, teste intermitente ou regressão de desempenho.
+**Problema.** Sem sinal vermelho/verde confiável, o agente hipotetiza no escuro: cada tentativa muda
+várias coisas, nada é falsificado e o log vira "logar tudo e grepar".
+**Solução.** `[INDÚSTRIA]` Construir o loop **é** a habilidade; o resto é mecânico. Seis fases:
+
+1. **Loop.** Do mais barato ao mais caro: teste no seam · curl contra o dev server · CLI com fixture
+   diffada · browser headless · replay de trace · harness descartável · laço de propriedade/fuzz ·
+   `git bisect run` · comparação entre versões · script conduzido por humano.
+   Pronto quando: **capaz de ficar vermelho** no sintoma exato · **determinístico** · **segundos** ·
+   **executável sem humano**.
+2. **Minimizar** até que todo elemento restante seja portante — remover qualquer um torna verde.
+3. **Hipotetizar** 3–5 hipóteses ranqueadas **antes** de testar, no formato falsificável *"se X é a
+   causa, mudar Y faz sumir / mudar Z piora"*. O humano reordena de graça com conhecimento de domínio.
+4. **Instrumentar** uma variável por vez, cada sonda mapeando para uma predição; log com tag única
+   (`[DEBUG-a4f2]`) que sai depois num grep só.
+5. **Corrigir** com o teste de regressão escrito **antes** do fix, e só num seam correto — sem seam, o
+   achado é arquitetural e se registra em vez de forçar.
+6. **Limpar** — repro não reproduz · teste passa (ou a ausência está documentada) · nenhuma tag sobrou ·
+   a hipótese correta está na mensagem do commit. Fecha em *"o que teria evitado este bug?"*.
+
+**Trade-offs.** Investir no loop antes de tocar no bug × parecer lento nos primeiros dez minutos.
+**Relacionados.** VER-04, PLN-05, EXE-03. **Combate.** AP-17 (Confiança sem Verificação).
+**Distinção.** VER-04 prova que a verificação mede algo; VER-06 é anterior — **constrói** a verificação
+que VER-04 vai testar.
+**Não usar quando.** A causa é óbvia e o fix cabe numa linha, com teste existente que já cobre.
+**Detalhe completo.** [mattpocock-skills.md](mattpocock-skills.md) §5.5.
+
 ---
 
 ## LRN-01 · Lições Aprendidas Consumíveis
@@ -351,6 +486,8 @@ como padrão.
 | CTX-03 Delegação | D2 | P05 | AP-05 |
 | CTX-04 Orçamento | D2 | P05 | AP-04 |
 | CTX-05 Fonte única | D2 | P06 | AP-15 |
+| CTX-06 Linguagem ubíqua | D2 | P06 | AP-02 |
+| CTX-07 Handoff | D2 | P05 | AP-04 |
 | INT-01 Constituição | D1 | — | AP-01 |
 | INT-02 Hierárquica | D1 | P02 | AP-06 |
 | INT-03 EARS | D1 | P01 | AP-07 |
@@ -358,10 +495,13 @@ como padrão.
 | INT-05 Calibração | D1 | P01/P03 | AP-03 |
 | INT-06 Entrevista | D1 | P03 | — |
 | INT-07 Pergunta inteligente | D1 | P04 | AP-09 |
+| INT-08 Grilling | D1 | P03 | AP-09 |
 | PLN-01 Contrato antes | D3 | P02 | AP-10 |
 | PLN-02 Por história | D3 | P08 | AP-11 |
 | PLN-03 Task verificável | D3 | P08 | AP-12/13 |
 | PLN-04 Disjunção | D3 | P08 | — |
+| PLN-05 Módulo profundo | D3 | P02 | AP-24 |
+| PLN-06 Mapa sob névoa | D3 | P03 | AP-19 |
 | EXE-01 Explore→Plan | D4 | P01 | AP-16 |
 | EXE-02 Hook | D4 | P11 | AP-02 |
 | EXE-03 Harness | D4 | P11 | AP-17 |
@@ -373,6 +513,7 @@ como padrão.
 | VER-03 Quarentena | D5 | P13 | AP-22 |
 | VER-04 Falha forçada | D5 | P13 | AP-23 |
 | VER-05 Proporcional | D5 | P13 | AP-24 |
+| VER-06 Loop de feedback | D5 | P13 | AP-17 |
 | LRN-01 Lições | D6 | P14 | AP-25 |
 | LRN-02 Promoção | D6 | P14 | AP-25 |
 

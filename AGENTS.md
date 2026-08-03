@@ -32,21 +32,23 @@ nunca reusam um prefixo (AP-14 · Namespace Colidido). Ao citar, use o identific
 | O que um termo significa aqui | [02-glossario](kb/02-glossario.md) | — |
 | **Por que** fazemos assim | [03-principios](kb/03-principios.md) | `P01`–`P14` |
 | **Padrões** — problema recorrente resolvido | [04-padroes](kb/04-padroes.md) | `CTX-`, `INT-`, `PLN-`, `EXE-`, `VER-`, `LRN-` |
-| **Anti-padrões** — o que falha repetidamente | [05-antipadroes](kb/05-antipadroes.md) | `AP-01`–`AP-34` (🔴 grave / 🟡 moderado) |
-| **Regras absolutas** e apostas sob incerteza | [06-heuristicas-e-invariantes](kb/06-heuristicas-e-invariantes.md) | `I-01`–`I-18` · `H-01`–`H-16` |
+| **Anti-padrões** — o que falha repetidamente | [05-antipadroes](kb/05-antipadroes.md) | `AP-01`–`AP-37` (🔴 grave / 🟡 moderado) |
+| **Regras absolutas** e apostas sob incerteza | [06-heuristicas-e-invariantes](kb/06-heuristicas-e-invariantes.md) | `I-01`–`I-18` · `H-01`–`H-18` |
 | Como raciocinar sobre algo | [07-modelos-mentais](kb/07-modelos-mentais.md) | — |
 | **Arquiteturas** de referência e pipelines | [08-arquiteturas-e-pipelines](kb/08-arquiteturas-e-pipelines.md) | `AR-01`–`AR-03` · `PL-01`–`PL-05` |
 | O que fazer **neste ponto** | [09-decisao-estados-algoritmos](kb/09-decisao-estados-algoritmos.md) | `AD-01`–`AD-03` · `ME-01`–`ME-03` · `AL-01`–`AL-05` |
 | Como sei se está funcionando | [10-metricas](kb/10-metricas.md) | — |
-| **Por que** escolhemos isto e não aquilo | [11-adrs](kb/11-adrs.md) | `ADR-001`–`ADR-010` (imutáveis) |
+| **Por que** escolhemos isto e não aquilo | [11-adrs](kb/11-adrs.md) | `ADR-001`–`ADR-011` (imutáveis) |
 | Isto cobre aquilo? | [12-rastreabilidade](kb/12-rastreabilidade.md) | — |
 | De onde vem a afirmação | [13-bibliografia](kb/13-bibliografia.md) | — |
 
 As cinco famílias de padrões seguem as disciplinas: `CTX` contexto · `INT` intenção · `PLN`
 planejamento · `EXE` execução · `VER` verificação · `LRN` aprendizado.
 
-Destilações das fontes oficiais, fora da numeração: [anthropic-claude-code](kb/anthropic-claude-code.md),
+Destilações fora da numeração. **Oficiais** `[OFICIAL]`: [anthropic-claude-code](kb/anthropic-claude-code.md),
 [worktrees](kb/worktrees.md), [sub-agents](kb/sub-agents.md), [prompt-library](kb/prompt-library.md).
+**De indústria** `[INDÚSTRIA]`: [mattpocock-skills](kb/mattpocock-skills.md) — absorvida, não instalada
+(ADR-011); toda afirmação vinda dela é `[INDÚSTRIA]`, nunca `[OFICIAL]`.
 
 **Selo epistêmico é obrigatório e nunca se mistura** (ADR-010): `[CONSOLIDADO]` `[INDÚSTRIA]`
 `[RECENTE]` `[EXPERIMENTAL]` `[ACADÊMICO]` `[HIPÓTESE]` `[OFICIAL]` `[CAMPO]`. Ao citar a KB,

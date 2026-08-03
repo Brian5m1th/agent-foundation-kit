@@ -71,13 +71,13 @@ diferente e envelhecendo em ritmo diferente.
 | 02 | [Glossário](kb/02-glossario.md) | O que este termo significa aqui? | — |
 | 03 | [Princípios](kb/03-principios.md) | **Por que** fazemos assim? | `P01`–`P14` |
 | 04 | [Padrões](kb/04-padroes.md) | Como resolvo este problema recorrente? | `CTX-` `INT-` `PLN-` `EXE-` `VER-` `LRN-` |
-| 05 | [Anti-padrões](kb/05-antipadroes.md) | O que falha repetidamente? | `AP-01`–`AP-34` |
-| 06 | [Heurísticas e invariantes](kb/06-heuristicas-e-invariantes.md) | O que nunca pode ser violado? | `I-01`–`I-18` · `H-01`–`H-16` |
+| 05 | [Anti-padrões](kb/05-antipadroes.md) | O que falha repetidamente? | `AP-01`–`AP-37` |
+| 06 | [Heurísticas e invariantes](kb/06-heuristicas-e-invariantes.md) | O que nunca pode ser violado? | `I-01`–`I-18` · `H-01`–`H-18` |
 | 07 | [Modelos mentais](kb/07-modelos-mentais.md) | Como raciocinar sobre isto? | — |
 | 08 | [Arquiteturas e pipelines](kb/08-arquiteturas-e-pipelines.md) | Que forma o sistema deve ter? | `AR-01`–`AR-03` · `PL-01`–`PL-05` |
 | 09 | [Decisão, estados, algoritmos](kb/09-decisao-estados-algoritmos.md) | O que fazer **neste ponto**? | `AD-01`–`AD-03` · `ME-01`–`ME-03` · `AL-01`–`AL-05` |
 | 10 | [Métricas](kb/10-metricas.md) | Como sei se está funcionando? | — |
-| 11 | [ADRs](kb/11-adrs.md) | Por que **isto** e não aquilo? | `ADR-001`–`ADR-010` |
+| 11 | [ADRs](kb/11-adrs.md) | Por que **isto** e não aquilo? | `ADR-001`–`ADR-011` |
 | 12 | [Rastreabilidade](kb/12-rastreabilidade.md) | Isto cobre aquilo? | — |
 | 13 | [Bibliografia](kb/13-bibliografia.md) | De onde vem a afirmação? | — |
 
@@ -87,6 +87,11 @@ Fora da numeração, destilações das fontes oficiais:
 [sub-agents](kb/sub-agents.md) ·
 [prompt-library](kb/prompt-library.md) — os **52 prompts oficiais** da Anthropic com um índice de
 gatilho (intenção → prompt) que transforma a vitrine em tabela de decisão consultável por agente.
+
+E uma destilação de indústria: [mattpocock-skills](kb/mattpocock-skills.md) — 21 skills de engenharia
+absorvidas como padrões, não instaladas como comandos (`ADR-011`). É de onde vêm `INT-08` (a entrevista
+conduzida — *grilling*), `PLN-05` (módulo profundo), `PLN-06` (mapa sob névoa), `VER-06` (loop de
+feedback), `CTX-06`/`CTX-07` e `H-17`/`H-18`.
 
 As famílias de padrões seguem as disciplinas: `CTX` contexto · `INT` intenção · `PLN` planejamento ·
 `EXE` execução · `VER` verificação · `LRN` aprendizado.

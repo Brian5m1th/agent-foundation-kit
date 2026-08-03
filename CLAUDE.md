@@ -36,6 +36,20 @@ oficial — *se você descreve o diff em uma frase, pule o plano* (H-01). `draft
 qual usar quando. A árvore completa de decisão é `AD-01` em
 [kb/09](kb/09-decisao-estados-algoritmos.md).
 
+### Disciplinas fora da biblioteca de prompts
+
+Cinco pedidos que nenhum dos 52 prompts atende. O destino é um padrão da KB, não um prompt — leia a
+entrada antes de agir. Detalhe em [kb/mattpocock-skills.md](kb/mattpocock-skills.md).
+
+| Pedido soa como… | Vá para |
+|---|---|
+| "me entrevista sobre isso", "testa meu plano", pedido de duas frases para feature grande | `INT-08` · Grilling — **antes** de `/sdd-specify` |
+| "está tudo acoplado", desenhar a interface de um módulo, decidir onde cortar | `PLN-05` · Módulo Profundo |
+| escopo nebuloso, "não sei nem o que especificar", grande demais para uma sessão | `PLN-06` **antes** de `/sdd-specify` |
+| bug difícil, teste intermitente, regressão de desempenho | `VER-06` (construa o loop primeiro) + `find-and-fix-a` |
+| encerrar a sessão passando o bastão para outra | `CTX-07` · Handoff |
+| o agente é verboso, o projeto tem jargão que ele não conhece | `CTX-06` · Linguagem Ubíqua |
+
 ## Antes de escrever na KB ou nos templates
 
 Estes três arquivos respondem quase toda dúvida de manutenção — leia a entrada, não improvise:

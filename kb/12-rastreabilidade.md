@@ -95,7 +95,7 @@ Mapeamento dos artefatos reais para a cadeia:
 
 | Elo | InscreveAI `[CAMPO]` | sdd-kit `[CAMPO]` | Fluxo do `labs` |
 |---|---|---|---|
-| Necessidade | `.spec/discovery/brief.md` | `PROJECT.md` | — (lacuna) |
+| Necessidade | `.spec/discovery/brief.md` | `PROJECT.md` | mapa de PLN-06, quando há névoa |
 | Requisito | `spec.md` §4 (EARS) | `1-functional/spec.md` | `spec.md` FR-NNN |
 | Regra | `spec.md` §8 (RN) | — | Obstáculos |
 | Contrato | `spec.md` §7 | `2-technical/spec.md` | `plan.md` Contratos |
@@ -111,8 +111,10 @@ Mapeamento dos artefatos reais para a cadeia:
    — nenhuma das outras fontes, oficiais inclusive, tem verificação de invariante universal na spec.
 2. **O sdd-kit é o único com dependências de task formalizadas** (`depends_on` em JSON, com detecção de
    ciclo no validador). É o elo que o formato markdown não consegue verificar mecanicamente.
-3. **O fluxo do `labs` não tem o elo "Necessidade"** — as specs começam no requisito. Para features
-   pequenas tudo bem; para produto, falta o de onde vem.
+3. **O elo "Necessidade" do `labs` é o mais novo e o menos exercitado.** As specs começam no requisito;
+   para features pequenas tudo bem, para produto faltava o de onde vem. PLN-06 (Mapa de Decisões sob
+   Névoa) preenche o elo — o mapa é o artefato de necessidade, e as decisões que ele fecha viram os
+   requisitos de `/sdd-specify`. Ainda sem uso registrado: enquanto não houver, trate como aposta.
 
 **O ideal seria a união:** EARS + PROP do InscreveAI · `depends_on` verificável do sdd-kit ·
 histórias independentemente testáveis do Spec Kit · calibração por porte dos três.

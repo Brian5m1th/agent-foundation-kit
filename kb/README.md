@@ -40,6 +40,7 @@ inchados e constituições decorativas:
 | — | [Worktrees](worktrees.md) | Destilação das fontes oficiais — isolamento de arquivos para trabalho paralelo |
 | — | [Subagentes](sub-agents.md) | Destilação das fontes oficiais — coordenação de trabalho em contexto isolado |
 | — | [Biblioteca de prompts](prompt-library.md) | Os 52 prompts oficiais + índice de gatilho (intenção → prompt) |
+| — | [mattpocock/skills](mattpocock-skills.md) | Destilação `[INDÚSTRIA]` — disciplinas de engenharia empacotadas como skills |
 | 00 | [Taxonomia](00-taxonomia.md) | Classificação hierárquica das disciplinas |
 | 01 | [Ontologia / Knowledge Graph](01-ontologia.md) | Relações semânticas entre conceitos |
 | 02 | [Glossário](02-glossario.md) | Definições formais |
@@ -77,6 +78,7 @@ Wakanda, K.A.O.S), com o arquivo citado.
 
 **Oficiais** — `code.claude.com/docs`: best-practices, common-workflows, prompt-library, worktrees,
 agents, hooks, sub-agents · `github.github.io/spec-kit` · Anthropic Agent Skills.
+**De indústria** — `github.com/mattpocock/skills` (21 skills, lidas em 2026-08-02; ver ADR-011).
 **Acadêmicas** — arXiv 2508.10146 (Agentic AI Frameworks) · arXiv 2601.16809 (Will It Survive?) ·
 METR 2507.09089 · DORA 2024 · GitClear 2025 · Martin Fowler / Thoughtworks (Böckeler).
 **De campo** — `WWMA-Tech/inscreveai-new-project` (.spec, CLAUDE.md, AGENTS.md, patterns.md com
