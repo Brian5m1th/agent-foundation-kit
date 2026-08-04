@@ -132,6 +132,29 @@ loop custa mais que o defeito vale (script de uso único, defeito cosmético).
 **Custo.** Dez a trinta minutos antes de tocar no bug. **Exemplo.** Regressão de desempenho: medir a
 linha de base e automatizar a medição antes de otimizar qualquer coisa.
 
+## H-19 · Onde a propriedade é decidível, troque o escore de confiança por evidência reproduzível
+**Justificativa.** `[CAMPO]` Escore serve para quando **não se pode testar**. Onde existe grep, código
+de saída, validador ou compilador, o número não acrescenta informação — e subtrai, porque tem aparência
+de rigor sem o ser. Um escore inventado sobre um fato verificável é pior que nenhum escore (AP-38).
+**Quando falha.** Domínios interpretativos onde não há predicado — qualidade de uma analogia, adequação
+de um resumo, se um texto está claro. Ali o escore com limiar é o melhor instrumento disponível, e
+exigir evidência produz um agente que recusa tudo.
+**Custo.** Escrever a verificação em vez de declarar a confiança — mais caro por item, muito mais barato
+por incidente evitado.
+**Exemplo.** `[CAMPO]` Num acervo de 58 agentes, os quatro que substituíram o formulário de confiança
+por relatório de grep reproduzível são, por larga margem, os mais maduros. Ver AD-04, VER-07.
+
+## H-20 · Se o artefato a revisar ficou maior que o diff, o processo está errado
+**Justificativa.** `[CAMPO]` O método existe para **comprimir** a carga de revisão humana: revisar
+intenção escala melhor que revisar código. Quando o markdown gerado passa o tamanho da mudança que ele
+descreve, a compressão **inverteu de sinal** e o processo passou a custar mais do que economiza.
+É o teste de sanidade mais barato que existe para calibrar peso de processo (INT-05, AL-02).
+**Quando falha.** Mudança pequena em domínio de alto custo de reversão — schema, contrato público,
+segurança. Ali a desproporção é o preço correto, porque o que se compra não é velocidade, é reversão.
+**Custo.** Nenhum: é uma comparação de duas contagens.
+**Exemplo.** `[INDÚSTRIA]` Um defeito pequeno convertido em quatro histórias com dezesseis critérios de
+aceite — o caso canônico de AP-03 (Marreta na Noz), agora com um sinal mensurável.
+
 ---
 
 # Parte II — Invariantes
@@ -159,6 +182,7 @@ Regras que nunca podem ser violadas. Cada uma declara **como é imposta** — in
 | **I-16** | Truncar é proibido: 48 campos ⇒ documentar 48 | D5 | Contagem antes de emitir |
 | **I-17** | A constitution não muda no meio de uma task | D1 | Processo de emenda próprio |
 | **I-18** | Task não fecha sem que a verificação declarada tenha rodado | D5 | Harness obrigatório |
+| **I-19** | Conflito entre fontes é escalado, nunca resolvido pelo agente | D5 | Célula de conflito abaixo de todos os limiares (VER-07) |
 
 ## Os oito do esboço original, auditados
 
@@ -178,6 +202,13 @@ Você propôs oito invariantes. Sete entram como estão (I-01 a I-08). A auditor
 **Acréscimos derivados das fontes** — I-09 a I-18. O mais importante é **I-09**, porque é o único que
 não pode ser cumprido por boa vontade: exige arquitetura (contexto separado). E **I-10**, porque é o
 mais frequentemente violado sob pressão de prazo.
+
+**I-19** (2026-08-04, de [kbmain-corpus.md](kbmain-corpus.md)) é o único invariante desta lista cujo
+enforcement é **aritmético em vez de procedimental**: não se pede ao agente que escale o conflito — a
+célula de conflito recebe um valor abaixo de todos os limiares, e o escalonamento vira consequência
+mecânica do cálculo. É a forma mais forte de enforcement disponível quando não há hook, e o modelo a
+imitar para outros invariantes que hoje dependem de instrução. Distingue-se de **I-14**, que trata do
+conflito com a constitution: I-14 é sobre autoridade, I-19 é sobre evidência.
 
 ---
 

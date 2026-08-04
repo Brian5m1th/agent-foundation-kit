@@ -41,6 +41,7 @@ inchados e constituições decorativas:
 | — | [Subagentes](sub-agents.md) | Destilação das fontes oficiais — coordenação de trabalho em contexto isolado |
 | — | [Biblioteca de prompts](prompt-library.md) | Os 52 prompts oficiais + índice de gatilho (intenção → prompt) |
 | — | [mattpocock/skills](mattpocock-skills.md) | Destilação `[INDÚSTRIA]` — disciplinas de engenharia empacotadas como skills |
+| — | [Corpus KbMain](kbmain-corpus.md) | Destilação `[CAMPO]` — acervo agêntico de terceiro em produção, com seus modos de apodrecimento |
 | 00 | [Taxonomia](00-taxonomia.md) | Classificação hierárquica das disciplinas |
 | 01 | [Ontologia / Knowledge Graph](01-ontologia.md) | Relações semânticas entre conceitos |
 | 02 | [Glossário](02-glossario.md) | Definições formais |
@@ -74,6 +75,10 @@ Wakanda, K.A.O.S), com o arquivo citado.
 
 `[CAMPO]` é o selo mais valioso desta KB e o mais fácil de perder: é evidência que ninguém mais tem.
 
+Desde 2026-08-04 (ADR-012) o selo `[CAMPO]` tem **duas origens**: os projetos do titular e acervos de
+terceiros observados diretamente. A distinção fica no cabeçalho de cada destilação, não em selo novo —
+observar não é endossar, e a mesma fonte pode render um padrão e um anti-padrão.
+
 ## Fontes primárias desta versão
 
 **Oficiais** — `code.claude.com/docs`: best-practices, common-workflows, prompt-library, worktrees,
@@ -84,6 +89,8 @@ METR 2507.09089 · DORA 2024 · GitClear 2025 · Martin Fowler / Thoughtworks (B
 **De campo** — `WWMA-Tech/inscreveai-new-project` (.spec, CLAUDE.md, AGENTS.md, patterns.md com
 P1–P22 e P_Novo1–21, correctness/) · `Back-End/Wakanda/wakanda-ai/sdd-kit` (framework/standards,
 WORKFLOW, MODES, 11 agentes, 7 skills, 19 comandos) · `Freelancer/K.A.O.S` (CLAUDE.md, .agents) ·
-Metodologia SDD V5 · Comparativo TDD/BDD/SDD.
+Metodologia SDD V5 · Comparativo TDD/BDD/SDD · **corpus KbMain** (619 arquivos: 493 de KB em 36
+domínios, 58 agentes, dossiê metodológico, kit de verificação por propriedades — lido em 2026-08-04,
+ver ADR-012).
 
 Detalhe e comentário: [13-bibliografia.md](13-bibliografia.md).

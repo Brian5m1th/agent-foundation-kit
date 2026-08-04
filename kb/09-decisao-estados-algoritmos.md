@@ -112,6 +112,41 @@ graph TD
 O nó `K` é o mais desobedecido: sob pressão de "precisamos de uma métrica", inventa-se uma proxy — e
 daí nasce AP-05 do corpus de intenção (proxy capturada, Goodhart).
 
+## AD-04 · Escore de confiança ou evidência reproduzível?
+
+`[CAMPO]` Aplica-se **antes** de VER-07, e é a pergunta que o corpus de origem só aprendeu a fazer
+tarde. Ver [kbmain-corpus.md](kbmain-corpus.md) §2.6.
+
+```mermaid
+graph TD
+    A[Agente prestes a afirmar algo] --> B{A afirmacao e<br/>decidivel por maquina?}
+    B -->|sim| C[Rode a verificacao<br/>grep, exit code, validador, compilador]
+    C --> D[Reporte o COMANDO e a SAIDA<br/>nao um numero]
+    B -->|nao| E{Existe mais<br/>de uma fonte?}
+    E -->|nao| F[Escore sobre fonte unica<br/>e tautologia — declare a fonte<br/>e a limitacao]
+    E -->|sim| G{As fontes<br/>concordam?}
+    G -->|discordam| H[ESCALAR — I-19<br/>apresentar as duas posicoes]
+    G -->|concordam ou silente| I[VER-07 · matriz + modificadores<br/>preenchidos ANTES da conclusao]
+    I --> J{Escore >= limiar<br/>da categoria?}
+    J -->|sim| K[Executar + citar fontes]
+    J -->|nao| L{Tarefa critica?}
+    L -->|sim| M[Recusar e explicar]
+    L -->|nao| N[Perguntar ou executar<br/>com ressalva estrutural]
+```
+
+**O nó `B` é o que muda tudo, e é pulado por default.** Escore existe para quando não se pode testar;
+onde há predicado, o número não acrescenta informação e **subtrai**, porque tem aparência de rigor sem
+o ser — é AP-38. A regra de bolso é H-19.
+
+**O nó `D` merece ênfase:** o formato da evidência importa. "Verifiquei e está correto" não é evidência;
+o comando executado mais sua saída é — porque é **reproduzível por quem lê**, que é a única propriedade
+que distingue verificação de afirmação.
+
+**O nó `N` não é "executar com um aviso no fim".** A ressalva precisa ser **estrutural**: aviso textual
+anexado a uma resposta confiante não funciona, porque o leitor ancora na resposta e desconta o aviso.
+Abaixo do limiar, a resposta sai da posição de resposta e vira inventário do que se sabe, do que não se
+sabe, e uma pergunta.
+
 ---
 
 # Parte II — Máquinas de estado
