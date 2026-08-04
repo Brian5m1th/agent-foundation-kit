@@ -2,6 +2,8 @@
 
 Regras de engenharia deste repositório, portáveis para qualquer agente.
 A camada específica do Claude Code está em [CLAUDE.md](CLAUDE.md).
+As regras de **como o código sai** — estilo, git, segurança e convenções por linguagem/framework —
+estão em [RULES.md](RULES.md); este arquivo trata do **processo**.
 
 ## O que é este diretório
 
@@ -116,6 +118,7 @@ estrutura de pastas é a mesma.
 
 | Precisa de | Vá para |
 |---|---|
+| Regra de código, commit, segurança ou convenção de stack | [RULES.md](RULES.md) — `RG`, `RGIT`, `RSEC`, `RTEST`, `RJ`, `RSB`, `RPY`, `RTS`, `RNG`, `RRE`, `RDB`, `RDK`, `RCI`, `RCFG` |
 | Roteamento de pedido → prompt oficial | [kb/prompt-library.md](kb/prompt-library.md), com a tabela de gatilho em [CLAUDE.md](CLAUDE.md) |
 | Instalar o fluxo ou os templates em outro projeto | [CLAUDE.md](CLAUDE.md) · [templates/README.md](templates/README.md) |
 | O par CLAUDE.md/AGENTS.md para um projeto novo | [templates/](templates/README.md) — regra em ADR-001 |
