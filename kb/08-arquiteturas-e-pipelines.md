@@ -236,6 +236,23 @@ provedores concretos.
 etapa) mas merece ser explícita, porque significa que nenhum estágio do pipeline é responsável por
 **verificar** se a intenção foi preservada. É a mesma lacuna do AR-01 sem o laço de aprendizado.
 
+### PL-06 · Pipeline Integrado SDD + Worktree + Grilling + Subagentes
+
+`[CAMPO]` Formalizado no whitepaper `[[docs/paper-fluxo-integrado|paper-fluxo-integrado.md]]`. É a integração do ciclo SDD completo com isolamento preventivo em controle de versão e entrevista de intenção:
+
+```mermaid
+graph LR
+    A[Task/Sprint] --> B["Worktree Init<br/>(EXE-05)"]
+    B --> C["sdd-specify + Skill grill-me<br/>(INT-08)"]
+    C --> D["sdd-plan & tasks<br/>(PLN-02)"]
+    D --> E["Subagentes Workers<br/>(CTX-03 & EXE-04)"]
+    E --> F["sdd-converge Auditor<br/>(AR-02 / I-09)"]
+    F -->|Aprovado| G[Merge to Main & Cleanup]
+```
+
+**Diferencial Operacional**: O Git Worktree é disparado **na recepção da tarefa**, isolando rascunhos de especificação (`specs/NNN-slug/`) e impedindo que a branch principal seja poluída durante a fase de entrevista/grilling (`[[kb/mattpocock-skills#51-grill-me--grilling--a-entrevista-conduzida--int-08-h-17|INT-08]]`).
+
+
 ## 7. Automação — o que deve ser mecânico
 
 Hierarquia de confiabilidade, do mais forte ao mais fraco:

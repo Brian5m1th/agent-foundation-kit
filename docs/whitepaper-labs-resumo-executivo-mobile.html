@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Plataforma de Engenharia de Sistemas Agênticos (labs) — Edição Mobile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-color: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.15);
+            --code-bg: #090d16;
+            --badge-bg: #0369a1;
+            --badge-text: #e0f2fe;
+            --quote-border: #38bdf8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            font-size: 15px;
+            padding: 12px;
+            max-width: 680px;
+            margin: 0 auto;
+            word-wrap: break-word;
+        }
+
+        header {
+            text-align: center;
+            padding: 24px 16px;
+            background: linear-gradient(185deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-top: 24px;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-top: 18px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            margin-bottom: 12px;
+            color: #e2e8f0;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            word-break: break-all;
+            border-bottom: 1px dashed var(--accent-color);
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .wikilink {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.1);
+            color: #7dd3fc;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.88em;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            margin: 2px 0;
+        }
+
+        blockquote {
+            background: rgba(30, 41, 59, 0.7);
+            border-left: 4px solid var(--quote-border);
+            padding: 12px 14px;
+            border-radius: 0 12px 12px 0;
+            margin: 14px 0;
+            color: #94a3b8;
+            font-size: 0.93rem;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 14px;
+            color: #cbd5e1;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 14px;
+            overflow-x: auto;
+            margin: 14px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: #a5f3fc;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(51, 65, 85, 0.6);
+            color: #38bdf8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+        }
+
+        .mermaid {
+            background: #1e293b;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px 8px;
+            margin: 16px 0;
+            overflow-x: auto;
+            text-align: center;
+        }
+
+        details {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 12px;
+            margin: 14px 0;
+        }
+
+        summary {
+            font-weight: 600;
+            color: var(--accent-color);
+            cursor: pointer;
+            outline: none;
+            padding: 4px 0;
+            user-select: none;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--card-border);
+            margin: 24px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            padding: 8px 10px;
+            border: 1px solid var(--card-border);
+            text-align: left;
+        }
+
+        th {
+            background: #334155;
+            color: #ffffff;
+        }
+
+        td {
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 40px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .mobile-badge {
+            display: inline-block;
+            background: #0284c7;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="mobile-badge">📱 Edição Mobile-First</div>
+        <h1>Plataforma de Engenharia de Sistemas Agênticos (labs) — Edição Mobile</h1>
+        <p style="font-size:0.85rem; color:#94a3b8;">Formatado para leitura em Smartphones & Dispositivos Móveis</p>
+    </header>
+
+    <main>
+        <h1>📱 Plataforma de Engenharia Agêntica (<code>labs</code>)</h1>
+<blockquote><strong>Edição Otimizada para Leitura no Celular</strong>  <br/><em>Versão Executiva, Científica e Autocontida</em></blockquote>
+<hr/>
+<h2>📌 Resumo Executivo</h2>
+<blockquote><strong>Pergunta Fundamental</strong>:  <br/><em>Como fazer um agente de IA entregar software correto de forma repetível e determinística?</em></blockquote>
+<p>A plataforma <strong><code>labs</code></strong> rejeita o "prompting ad-hoc" e estabelece um <strong>sistema agêntico em 3 camadas</strong>:</p>
+<p>1. 🔬 <strong>Fundamentação Científica</strong>: Alinhamento formal de intenção humano-agente (<code><span class="wikilink">🔗 Intent Engineering</span></code>).
+2. 📚 <strong>Knowledge Base Tipada</strong>: Grafo de conhecimento com identificadores imutáveis (<code>P01..P14</code>, <code>AP-01..41</code>, <code>I-01..19</code>, <code>ADR-001..012</code>) e selos epistêmicos.
+3. ⚡ <strong>Runtime Executável</strong>: Esteira SDD (10 slash commands) integrada a <strong>Git Worktrees (<code>EXE-05</code>)</strong>, <strong>Skill <code>grill-me</code> (<code>INT-08</code>)</strong>, <strong>Subagentes (<code>CTX-03</code>)</strong> e <strong>Auditor Virgem (<code>I-09</code>)</strong>.</p>
+<hr/>
+<h2>🏛️ Arquitetura em 3 Camadas</h2>
+<div class="mermaid">
+graph TD
+    subgraph C1["1. Fundamentação Científica"]
+        IE["Intent Engineering (D1)"]
+    end
+<p>subgraph C2["2. Knowledge Base Tipada"]
+        KB["Grafo KB (P01..P14, AP01..AP41)"]
+        INV["Invariantes (I-01..I-19)"]
+        ADR["Decisões (ADR-001..012)"]
+    end</p>
+<p>subgraph C3["3. Execução em Runtime"]
+        SDD["Engine SDD (.specify)"]
+        WT["Git Worktrees (EXE-05)"]
+        TPL["Par AGENTS.md + CLAUDE.md"]
+    end</p>
+<p>C1 --> C2
+    C2 --> C3
+    KB --> SDD
+    INV --> SDD
+    ADR --> TPL
+    WT -.-> SDD
+</div></p>
+<hr/>
+<h2>🏷️ Selos Epistêmicos</h2>
+<p>Garantem honestidade intelectual sobre a origem de cada afirmação:</p>
+<em> <code>[CONSOLIDADO]</code>: Revisado por pares e replicado (ex: janela de atenção finita).
+</em> <code>[INDÚSTRIA]</code>: Prática de grandes empresas (ex: Skill <em>Grilling</em> <code>INT-08</code>).
+<em> <code>[OFICIAL]</code>: Documentação do fornecedor (ex: Git Worktrees / Anthropic).
+</em> <code>[CAMPO]</code>: Observado em projetos reais (ex: 41 Anti-Padrões <code>AP-01..41</code>).
+<em> <code>[RECENTE]</code>: Literatura de ~3 anos (ex: arXiv 2508.10146, arXiv 2601.16809).
+</em> <code>[EXPERIMENTAL]</code>: Testes com limitações (ex: METR RCT arXiv 2507.09089).
+<em> <code>[ACADÊMICO]</code>: Propostas teóricas (ex: modelagem KAOS).
+</em> <code>[HIPÓTESE]</code>: Proposta original com regra de refutação (ex: Heurística <code>H-01</code>).
+<hr/>
+<h2>🗺️ Mapa da Knowledge Base (<code>kb/</code>)</h2>
+<details>
+<summary><b>👉 Clique aqui para expandir a lista de 14 Documentos Tipados</b></summary>
+<br/>
+<em> <strong>00 Taxonomia</strong> (<code>D0</code>–<code>D6</code>): Classificação das 7 disciplinas agênticas.
+</em> <strong>01 Ontologia</strong>: Grafo de relações conceituais.
+<em> <strong>02 Glossário</strong>: Terminologia técnica padronizada.
+</em> <strong>03 Princípios</strong> (<code>P01</code>–<code>P14</code>): Fundamentos do sistema (Ex: <code>P04</code> Ambiguidade por custo).
+<em> <strong>04 Padrões</strong>: Soluções aprovadas (<code>CTX-</code>, <code>INT-</code>, <code>PLN-</code>, <code>EXE-</code>, <code>VER-</code>, <code>LRN-</code>).
+</em> <strong>05 Anti-Padrões</strong> (<code>AP-01</code>–<code>AP-41</code>): Modos de falha catalogados.
+<em> <strong>06 Invariantes</strong> (<code>I-01</code>–<code>I-19</code> · <code>H-01</code>–<code>H-20</code>): Regras absolutas.
+</em> <strong>07 Modelos Mentais</strong>: Como raciocinar sobre agentes.
+<em> <strong>08 Arquiteturas</strong> (<code>AR-01</code>–<code>AR-04</code> · <code>PL-01</code>–<code>PL-06</code>): Topologias e esteiras.
+</em> <strong>09 Decisão</strong> (<code>AD-01</code>–<code>AD-04</code> · <code>ME-01</code>–<code>ME-03</code>): Algoritmos de roteamento.
+<em> <strong>10 Métricas</strong>: Métricas de contexto, churn e convergência.
+</em> <strong>11 ADRs</strong> (<code>ADR-001</code>–<code>ADR-012</code>): Registro imutável de decisões.
+<em> <strong>12 Rastreabilidade</strong>: Matriz requisito → código.
+</em> <strong>13 Bibliografia</strong>: Fontes e links oficiais.
+<em> <strong>Destilações</strong>: <code>anthropic-claude-code</code>, <code>worktrees</code>, <code>sub-agents</code>, <code>prompt-library</code>, <code>mattpocock-skills</code>, <code>kbmain-corpus</code>.
+</details>
+<hr/>
+<h2>🚀 O Fluxo SDD (10 Slash Commands)</h2>
+<p>Esteira sequencial e rígida de especificação:</p>
+<pre><code class="language-">[0. /sdd-constitution]  ──► Princípios inegociáveis (I-14)
+          │
+[1. /sdd-specify]       ──► O QUÊ e POR QUÊ (Sem tecnologia)
+          │
+[1.5 /sdd-clarify]      ──► Desambiguação com humano (P04)
+          │
+[2. /sdd-plan]          ──► COMO (Stack, contratos, riscos)
+          │
+[3. /sdd-tasks]         ──► Tarefas por História (PLN-02)
+          │
+[3.5 /sdd-analyze]      ──► Auditoria Artefato vs Artefato
+          │
+[4. /sdd-implement]     ──► Código sob envelope (EXE-04)
+          │
+[5. /sdd-converge]      ──► Auditoria Cega Código vs Spec (I-09)</code></pre>
+<hr/>
+<h2>📐 Matriz de Ortogonalidade Agêntica</h2>
+<p>Evita a confusão entre <strong>arquivo</strong> e <strong>contexto</strong>:</p>
+</em> 🗂️ <strong>Git Worktree (<code>EXE-05</code>)</strong>: Isolamento de <strong>arquivos/disco</strong>. Impede sujeira na branch <code>main</code>.
+<em> 🧠 <strong>Subagente (<code>CTX-03</code>)</strong>: Isolamento de <strong>tokens/contexto</strong>. Preserva a janela principal.
+</em> 🔍 <strong>Auditor Virgem (<code>I-09</code>)</strong>: Isolamento de <strong>avaliação</strong>. Elimina o viés de auto-confirmação.
+<hr/>
+<h2>🔄 Pipeline Integrado E2E (<code>PL-06</code>)</h2>
+<p>Sequência de produção do recebimento da task ao merge:</p>
+<div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor U as Usuário
+    participant M as Orquestrador
+    participant WT as Git Worktree
+    participant SK as Skill grill-me
+    participant SDD as Engine SDD
+    participant SA as Subagente
+    participant AUD as Auditor
+<p>U->>M: Envia Task ("Nova Feature")
+    
+    Note over M,WT: 1. Setup Worktree (EXE-05)
+    M->>WT: Spawn worktree-feature
+    
+    Note over M,SK: 2. Spec & Grilling
+    M->>SDD: /sdd-specify
+    SDD->>SK: Ativa grill-me (INT-08)
+    SK->>U: Pergunta restrições
+    U-->>SK: Respostas
+    SK-->>WT: Grava specs/ (no Worktree)</p>
+<p>Note over M,SDD: 3. Plan & Tasks
+    M->>SDD: /sdd-plan + /sdd-tasks</p>
+<p>Note over M,SA: 4. Execução Isolada
+    M->>SA: Executa task (EXE-04)
+    SA->>WT: Altera código + testes</p>
+<p>Note over M,AUD: 5. Verificação Cega
+    M->>AUD: /sdd-converge (I-09)
+    AUD->>WT: Valida Código vs Spec
+    
+    Note over M,WT: 6. Merge Final
+    M->>WT: Merge back to main & Cleanup
+</div></p>
+<hr/>
+<h2>📊 Gráficos de Performance (Layout Narrow)</h2>
+<h3>Retenção de Contexto Principal</h3>
+<pre><code class="language-">100% |─────┐ (Início)
+ 90% |     └──┐ [Subagente c/ Resumo]
+ 80% |        └──────────┐ (95% Ativo)
+ 50% |     ┌─────────────┘
+ 30% |     └───► (Degradação s/ filtro)
+   0 +─────────────────────────►
+     0    2    4    6    8   Subagentes</code></pre>
+<h3>Hierarquia de Portões de Automação</h3>
+1. 🔒 <strong>CI / Pre-commit</strong>: Garantia Absoluta (0% Falha).
+2. 🛑 <strong>Agent Hooks</strong>: Determinístico no ciclo (~1% Falha).
+3. 🤖 <strong>Subagente Validador</strong>: Contexto Isolado (~5% Falha).
+4. 📋 <strong>Checklist LLM</strong>: Probabilístico (~25% Falha).
+5. 📝 <strong>Instrução Markdown</strong>: Advisory (~40%+ Falha).
+<hr/>
+<h2>📚 Bibliografia & Links Oficiais</h2>
+<details>
+<summary><b>👉 Clique para expandir Fontes, URLs e Papers Citados</b></summary>
+<br/>
+<h3>Documentação Oficial <code>[OFICIAL]</code></h3>
+<em> <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">Anthropic Best Practices</a>
+</em> <a href="https://code.claude.com/docs/en/worktrees" target="_blank" rel="noopener">Anthropic Worktrees</a>
+<em> <a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener">Anthropic Sub-agents</a>
+</em> <a href="https://code.claude.com/docs/en/prompt-library" target="_blank" rel="noopener">Anthropic Prompt Library</a>
+<em> <a href="https://github.github.io/spec-kit/" target="_blank" rel="noopener">GitHub Spec Kit</a>
+<h3>Pesquisa Acadêmica <code>[EXPERIMENTAL]</code></h3>
+</em> <strong>Code Survival</strong>: <a href="https://arxiv.org/abs/2601.16809" target="_blank" rel="noopener">arXiv 2601.16809</a>
+<em> <strong>Agent Frameworks</strong>: <a href="https://arxiv.org/html/2508.10146v1" target="_blank" rel="noopener">arXiv 2508.10146</a>
+</em> <strong>METR Productivity RCT</strong>: <a href="https://arxiv.org/abs/2507.09089" target="_blank" rel="noopener">arXiv 2507.09089</a>
+<em> <strong>Criteria Drift (UIST 2024)</strong>: <a href="https://arxiv.org/abs/2404.12272" target="_blank" rel="noopener">arXiv 2404.12272</a>
+<h3>Relatórios de Indústria <code>[INDÚSTRIA]</code></h3>
+</em> <a href="https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report" target="_blank" rel="noopener">DORA 2024 State of DevOps Report</a>
+<em> <a href="https://www.gitclear.com/ai_assistant_code_quality_2025_research" target="_blank" rel="noopener">GitClear Code Quality 2025</a>
+</em> <a href="https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html" target="_blank" rel="noopener">Thoughtworks / Martin Fowler (Böckeler)</a>
+<em> <a href="https://developers.redhat.com/articles/2025/10/22/how-spec-driven-development-improves-ai-coding-quality" target="_blank" rel="noopener">Red Hat SDD Article</a>
+</em> <a href="https://github.com/mattpocock/skills" target="_blank" rel="noopener">Matt Pocock Skills Repository</a>
+</details>
+<hr/>
+<h2>💻 Instalação Rápida (PowerShell 7)</h2>
+<pre><code class="language-powershell">&lt;h1&gt;1. Instalar os Slash Commands globais&lt;/h1&gt;
+pwsh C:\workspace\labs\.specify\scripts\install.ps1
+<p>&lt;h1&gt;2. Instalar no projeto alvo&lt;/h1&gt;
+pwsh C:\workspace\labs\.specify\scripts\install.ps1 -Target C:\workspace\Projeto Alvo</p>
+<p>&lt;h1&gt;3. Copiar o Par de Contexto&lt;/h1&gt;
+Copy-Item C:\workspace\labs\templates\AGENTS.template.md C:\workspace\Projeto Alvo\AGENTS.md
+Copy-Item C:\workspace\labs\templates\CLAUDE.template.md C:\workspace\Projeto Alvo\CLAUDE.md</code></pre></p>
+<hr/>
+<blockquote>📱 <strong>Plataforma de Engenharia Agêntica (<code>labs</code>)</strong>  <br/><em>Versão Mobile-First de Leitura Rápida</em></blockquote>
+    </main>
+
+    <footer>
+        <p>📱 Plataforma de Engenharia Agêntica (labs)</p>
+        <p>Documento de Leitura Mobile • Autocontido & Preservado</p>
+    </footer>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            securityLevel: 'loose',
+            flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
+        });
+    </script>
+</body>
+</html>
