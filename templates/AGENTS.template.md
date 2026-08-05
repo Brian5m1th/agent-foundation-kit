@@ -88,15 +88,18 @@ Apague todos estes comentários ao instanciar.
 <!-- Como o trabalho entra e sai. Calibrado por porte — este é o item de maior
      consenso em toda a literatura: o peso do processo é proporcional ao tamanho da mudança. -->
 
+- **Protocolo de Task Automático:** Toda nova funcionalidade, sprint ou mudança relevante dispara obrigatoriamente: **Worktree Isolado (EXE-05)** ──► **Spec + Skill grill-me (INT-08)** ──► **Plan & Tasks (PLN-02)** ──► **Subagentes Workers (CTX-03)** ──► **Auditoria Converge (I-09)** ──► **Merge**.
+
 | Porte | Processo |
 |---|---|
 | Correção de uma frase | Direto ao código + verificação |
-| Feature média | Plano → implementação → verificação |
-| Módulo novo / mudança estrutural | Spec → plano → tasks → implementação → auditoria |
+| Feature média | Worktree → Plano → implementação → verificação |
+| Módulo novo / mudança estrutural | Worktree → Spec + Grill-me → plano → tasks → subagentes → auditoria virgem |
 
 - **Branch/commit:** `<padrão>`. Commit por unidade concluída, nunca um commit no fim.
-- **Trabalho paralelo:** checkout isolado por frente — nunca por task. Isolamento é de arquivo, não de runtime: portas, banco e serviços também precisam ser separados.
-- **Definition of Done:** `<harness que precisa passar>` **e** documentação de intenção atualizada.
+- **Trabalho paralelo:** checkout isolado por frente (Worktree `EXE-05`) — nunca na branch `main`.
+- **Definition of Done:** `<harness que precisa passar>` **e** relatório `/sdd-converge` aprovado.
+
 
 ## Autonomia
 
