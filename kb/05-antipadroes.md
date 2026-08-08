@@ -383,7 +383,26 @@ restringir a decisão.
 fonte de verdade, não esses dois documentos"*. Reconhecer qual documento mente é bom; ter documentos
 que mentem é o anti-padrão.
 **Correção.** Rastreabilidade **verificada** (VER-02) ou nenhuma. Matriz não verificada é pior que
+**Correção.** Rastreabilidade **verificada** (VER-02) ou nenhuma. Matriz não verificada é pior que
 ausente, porque produz confiança falsa.
+
+### AP-42 · Poluição Narrativa e Código Comentado Inline 🔴
+**Sintoma.** Agentes deixam blocos de código antigo comentado (`// void oldMethod()`) e parágrafos explicativos inline em arquivos de produção.
+**Mecanismo.** O agente tenta justificar a alteração para si mesmo ou "preservar" o código antigo por insegurança.
+**Evidência.** `[CAMPO]` Observado em commits gerados por IAs em projetos da workspace (violando a regra `RG-01`).
+**Correção.** Git é o histórico; código morto é deletado, não comentado. Proibir comentários explicativos/narrativos em arquivos de código.
+
+### AP-43 · Ausência de Isolamento por Worktree em Sessões Concorrentes 🟡
+**Sintoma.** Múltiplos agentes ou sessões editam a mesma branch principal simultaneamente, sobrescrevendo alterações ou gerando conflitos de merge espúrios.
+**Mecanismo.** Execução de pipelines SDD diretamente no diretório principal sem criar git worktrees isoladas por tarefa (`/sdd-implement`).
+**Evidência.** `[CAMPO]` Mapeado nas memórias de sessão do Claude Code e Antigravity (`CC-Memory-inscreveai-new-project-feedback-worktree-por-sessao-sdd.md`).
+**Correção.** Toda sessão de implementação de spec deve ser executada numa Worktree descartável (conforme `kb/worktrees.md` e `RULE_AUTOMATIC_WORKTREE_SDD_GRILLING.md`).
+
+### AP-44 · Violação de Idempotência em Fluxos Transacionais e Checkout 🔴
+**Sintoma.** Submissão duplicada de formulários (duplo clique ou falha de conexão) gera registros duplos no banco ou cobranças duplicadas em gateways de pagamento.
+**Mecanismo.** Falta de chave de idempotência (`Idempotency-Key` ou token de transação único) no contrato entre frontend e backend.
+**Evidência.** `[CAMPO]` Identificado durante a auditoria de QA do InscreveAI (`AG-Document-8496b372-qa_master_prompt.md`).
+**Correção.** Enforçar tokens de idempotência no backend e desabilitar botões de ação transacional no frontend após o primeiro clique.
 
 ---
 
@@ -412,6 +431,8 @@ ausente, porque produz confiança falsa.
 | AP-37 | Conclusão Prematura | D2 | 🔴 |
 | AP-38 | **Escore Inventado** | D5 | 🔴 |
 | AP-39 | **Conflito Resolvido em Silêncio** | D5 | 🔴 |
+| AP-42 | **Poluição Narrativa / Código Comentado Inline** | D4 | 🔴 |
+| AP-44 | **Violação de Idempotência em Transações** | D5 | 🔴 |
 | AP-04/05 | Sessão Entulhada / Exploração Infinita | D2 | 🟡 |
 | AP-06 | Pseudocódigo em Prosa | D1 | 🟡 |
 | AP-08 | Três Exemplos p/ Regra Universal | D1 | 🟡 |
@@ -428,6 +449,7 @@ ausente, porque produz confiança falsa.
 | AP-35/36 | Skill Negativa / Sedimento | D2 | 🟡 |
 | AP-40 | **Cerimônia Herdada** | D2 | 🟡 |
 | AP-41 | **Registro sem Portão** | D2 | 🟡 |
+| AP-43 | **Ausência de Worktree em Sessões Concorrentes** | D3 | 🟡 |
 
 **Os quatro achados `[CAMPO]` inéditos** — AP-14, AP-15, AP-26, AP-27 — não aparecem em nenhuma fonte
 oficial ou acadêmica deste corpus. São observações dos seus próprios repositórios, e por isso são a

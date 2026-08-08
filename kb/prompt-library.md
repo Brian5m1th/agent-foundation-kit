@@ -96,6 +96,13 @@ Estes três são os que mais escapam, porque o pedido chega como nome de produto
 - **"toda vez que editar arquivo, rode o linter"** → [`add-a-hook-for`](#add-a-hook-for) (é hook, não
   skill — determinístico vence advisory).
 
+### Gatilhos de Master Prompts de Auditoria (`[CAMPO]`)
+
+Quando a auditoria for exaustiva, de ponta a ponta e exigir múltiplos aspectos integrados (QA + DevTools + E2E + UX/UI + Segurança):
+
+- **Auditoria Completa de QA, DevTools, Personas & E2E**: [`templates/master-prompts/qa-audit-master-prompt.md`](../templates/master-prompts/qa-audit-master-prompt.md)
+- **Auditoria Premium de UX/UI, Design System, WCAG 2.2 AA & Conversão**: [`templates/master-prompts/ux-ui-master-prompt.md`](../templates/master-prompts/ux-ui-master-prompt.md)
+
 ## 3. Os 52 prompts
 
 Legenda: **Requer** = dependência externa · **Cole** = precisa de anexo no prompt · **Depois** =
