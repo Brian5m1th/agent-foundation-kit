@@ -49,8 +49,8 @@ planejamento · `EXE` execução · `VER` verificação · `LRN` aprendizado.
 
 Destilações fora da numeração. **Oficiais** `[OFICIAL]`: [anthropic-claude-code](kb/anthropic-claude-code.md),
 [git-strategy](kb/git-strategy.md), [worktrees](kb/worktrees.md), [sub-agents](kb/sub-agents.md), [prompt-library](kb/prompt-library.md).
-**De indústria** `[INDÚSTRIA]`: [mattpocock-skills](kb/mattpocock-skills.md) — absorvida, não instalada
-(ADR-011); [github-agent-skills](kb/github-agent-skills.md) — matriz de skills por papel (PO, QA, QC, Dev). Toda afirmação vinda delas é `[INDÚSTRIA]`, nunca `[OFICIAL]`.
+**De indústria / Recente** `[INDÚSTRIA]` `[RECENTE]`: [mattpocock-skills](kb/mattpocock-skills.md) — absorvida, não instalada
+(ADR-011); [github-agent-skills](kb/github-agent-skills.md) — matriz de skills por papel (PO, QA, QC, Dev); [ai-workflows-eval-pipelines](kb/ai-workflows-eval-pipelines.md) — taxonomia de motores de IA e pipelines de avaliação offline (Evals). Toda afirmação vinda delas é `[INDÚSTRIA]` ou `[RECENTE]`, nunca `[OFICIAL]`.
 **De campo, de terceiro** `[CAMPO]`: [kbmain-corpus](kb/kbmain-corpus.md) — acervo agêntico em produção; [mempalace-memory-system](kb/mempalace-memory-system.md) — sistema local-first de memória verbatim.
 
 Observar não é endossar — a §5 de lá registra o que foi **recusado**, e a §7 o material sensível que
