@@ -132,7 +132,33 @@ ancora a falha num **diff** em vez de em prosa — que é o formato que o modelo
 os domínios que a abandonaram são visivelmente os mais fracos.
 **Detalhe completo.** [kbmain-corpus.md](kbmain-corpus.md) §2.3.
 
+## CTX-10 · Arquitetura de Memória L0–L3 (Memory Wake-up Stack)
+
+**Contexto.** Agente autônomo reiniciando sessão com necessidade de manter contexto acumulado de sessões passadas.
+**Problema.** Carregar todo o histórico de conversas passadas estoura a janela de contexto no boot (AP-04), enquanto zerar o contexto exige re-explicar tudo a cada nova sessão (AP-11).
+**Solução.** `[CAMPO]` Carregar a memória em 4 camadas hierárquicas com orçamentos rígidos:
+- **L0 (Identidade fixada ~100t)**: Quem é o agente/usuário, regras inegociáveis. Sempre carregado.
+- **L1 (História Essencial ~500–800t)**: Top momentos auto-gerados das interações mais recentes. Sempre carregado no boot.
+- **L2 (Contexto de Ala/Quarto sob Demanda ~300t)**: Carregado sob demanda quando o usuário cita uma entidade (pessoa, projeto).
+- **L3 (Busca Profunda)**: Busca semântica e híbrida (BM25 + Vetorial) acionada apenas em pesquisas explícitas.
+**Trade-offs.** Boot ultra-rápido com ~600–900 tokens (preserva >95% da janela de contexto) × exige pipeline de extração e indexação em background.
+**Relacionados.** CTX-01, CTX-04, CTX-07. **Combate.** AP-04 (Sessão Entulhada), AP-11 (Amnésia de Sessão).
+**Detalhe completo.** [mempalace-memory-system.md](mempalace-memory-system.md) §3.
+
+## CTX-11 · Indexação Verbatim com Camada Simbólica (Palace & AAAK Dialect)
+
+**Contexto.** Sistema de recuperação de memória de longo prazo para agentes de IA (RAG).
+**Problema.** RAGs tradicionais resumem ou parafraseiam o texto bruto no armazenamento base, introduzindo alucinações e perda de precisão em trechos de código, comandos ou citações literais.
+**Solução.** `[CAMPO]` Desacoplamento estrito entre duas camadas de armazenamento:
+- **Drawers (Gavetas Verbatim Imutáveis)**: Chunks contendo a fala e o código original exato do usuário, sem resumo ou alteração.
+- **Closets (Armários / Índice Simbólico AAAK)**: Camada de índice denso e lossy contendo entidades, tags emocionais, citações-chave e flags universais (`DECISION`, `PIVOT`, `TECHNICAL`).
+O LLM faz a leitura do índice simbólico compacto para identificar a coordenada exata da gaveta verbatim a abrir.
+**Trade-offs.** Zero perda de fidelidade nos dados brutos × necessidade de manter dois níveis de armazenamento sincronizados.
+**Relacionados.** CTX-01, CTX-08. **Combate.** AP-22 (Resumo Alucinatório em RAG).
+**Detalhe completo.** [mempalace-memory-system.md](mempalace-memory-system.md) §2.
+
 ---
+
 
 ## INT-01 · Constituição Executável
 
@@ -441,7 +467,17 @@ ruidosa.
 **Relacionados.** EXE-04, EXE-05, VER-01, VER-08. **Combate.** AP-45 (Patching Prematuro), AP-17.
 **Origem.** Protocolo de investigação de auditoria do `auto-slide`.
 
+## EXE-09 · Auto-Save Hooks de Preservação Temporal
+
+**Contexto.** Agente autônomo operando em ambientes interativos (Claude Code, Antigravity, Cursor) onde sessões expiram ou sofrem compreesão automática de contexto (`/compact`).
+**Problema.** O aprendizado, raciocínio e decisões tomadas durante a conversa somem silenciosamente quando a janela expira ou sofre descarte.
+**Solução.** `[CAMPO]` Scripts assíncronos acoplados ao ciclo de vida do agente (`pre-compact`, `stop`, `session-end`) que mineram e salvam a transcrição verbatim da conversa em background, extraindo entidades e registrando-a num repositório local de memória antes que o descarte ocorra.
+**Trade-offs.** Pequeno tempo de execução de hooks em background (<500ms) × preservação permanente do histórico do usuário contra amnésia de agente.
+**Relacionados.** EXE-02, CTX-07, CTX-10. **Combate.** AP-11 (Amnésia de Sessão).
+**Detalhe completo.** [mempalace-memory-system.md](mempalace-memory-system.md) §1.
+
 ---
+
 
 ## VER-01 · Verificador Independente (Writer/Critic)
 
@@ -609,6 +645,8 @@ como padrão.
 | CTX-07 Handoff | D2 | P05 | AP-04 |
 | CTX-08 Orçamento por artefato | D2 | P05 | AP-02/27 |
 | CTX-09 Par contrastivo | D2 | P06 | AP-06 |
+| CTX-10 Memória L0–L3 | D2 | P05 | AP-04/11 |
+| CTX-11 Indexação Verbatim | D2 | P06 | AP-22 |
 | INT-01 Constituição | D1 | — | AP-01 |
 | INT-02 Hierárquica | D1 | P02 | AP-06 |
 | INT-03 EARS | D1 | P01 | AP-07 |
@@ -632,6 +670,7 @@ como padrão.
 | EXE-06 Interpretação | D4 | P04 | AP-19 |
 | EXE-07 Disjuntor de loop | D4 | P10 | AP-17/30 |
 | EXE-08 Investigação Read-Only + Lock MD | D4 | P10 | AP-45/17 |
+| EXE-09 Auto-Save Hooks | D4 | P11 | AP-11 |
 | VER-01 Independente | D5 | P12 | AP-20 |
 | VER-02 Cruzada | D5 | P09 | AP-21 |
 | VER-03 Quarentena | D5 | P13 | AP-22 |

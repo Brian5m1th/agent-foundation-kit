@@ -129,7 +129,44 @@ laço sem teto é laço sem fim em qualquer uma delas.
 **Não usar quando.** Um agente resolve. A escolha de topologia só existe a partir de dois — e a
 pergunta anterior, quase sempre pulada, é se a decomposição em agentes se justifica (CTX-03).
 
-## 5. Comparativo das arquiteturas de contexto observadas
+## 5. AR-05 · Arquitetura Local-First de Palácio da Memória (MemPalace)
+
+`[CAMPO]` Mapeada do sistema [MemPalace](mempalace-memory-system.md). Resolve o dilema entre estourar a janela de contexto com o histórico completo (`AP-04`) e sofrer de amnésia a cada nova sessão (`AP-11`), sem dependência de APIs externas de nuvem.
+
+```mermaid
+graph TD
+    subgraph INGEST["Ingestao & Mineracao"]
+        CONV[Transcr de Conversa / Project Files] --> NORM[Normalizacao & Chunking]
+        NORM --> DRAW[Drawers · Storage Verbatim Brutal]
+    end
+    subgraph INDEX["Indexacao & Grafo"]
+        NORM --> AAAK[AAAK Dialect · Formato Simbolico Compacto]
+        AAAK --> CLOS[Closets · Indice de Ponteiros]
+        NORM --> KG[Knowledge Graph Temporal · SQLite]
+    end
+    subgraph RETRIEVAL["Pipeline de Recuperacao & Search"]
+        Q[User Query] --> SAN[Query Sanitizer · query_sanitizer.py]
+        SAN --> HYB[Hybrid Search · BM25 + Vector]
+        HYB --> BOOST[Rank Boost via Closets & Proximidade Temporal]
+        BOOST --> VERB[Retrieval de Drawers Verbatim]
+    end
+    subgraph WAKE["Pilha L0-L3 (Wake-up Stack)"]
+        L0[L0 Identidade ~100t] --> BOOT[Boot de Sessao ~600-900t]
+        L1[L1 Historia Essencial ~600t] --> BOOT
+        BOOT --> CHAT[Contexto Ativo do Agente]
+        L2[L2 On-Demand Wing/Room ~300t] -.sob demanda.-> CHAT
+        VERB -.L3 Deep Search.-> CHAT
+    end
+```
+
+**Regras que fazem funcionar:**
+- **Armazenamento Verbatim Imutável (Drawers)**: As falas e conteúdos originais nunca são resumidos ou alterados no nível do armazenamento base (`CTX-11`).
+- **Índice Simbólico Denso (Closets/AAAK)**: Um dialeto compacto que permite ao LLM varrer centenas de ponteiros consumindo pouquíssimos tokens.
+- **Wake-up em 4 Camadas (L0–L3)**: Boot com L0 (Identidade) e L1 (História Essencial) custando ~600–900 tokens (economiza >95% do contexto); L2 e L3 só entram sob demanda (`CTX-10`).
+- **Hooks de Persistência Assíncronos**: Desencadeados em eventos `pre-compact`, `stop` e `session-end` (`EXE-09`).
+
+## 6. Comparativo das arquiteturas de contexto observadas
+
 
 | Dimensão | Claude Code `[OFICIAL]` | Spec Kit `[INDÚSTRIA]` | Kiro `[INDÚSTRIA]` | sdd-kit `[CAMPO]` | InscreveAI `[CAMPO]` |
 |---|---|---|---|---|---|

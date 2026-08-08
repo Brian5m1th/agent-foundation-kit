@@ -44,6 +44,7 @@ inchados e constituições decorativas:
 | — | [mattpocock/skills](mattpocock-skills.md) | Destilação `[INDÚSTRIA]` — disciplinas de engenharia empacotadas como skills |
 | — | [Agent Skills do GitHub](github-agent-skills.md) | Destilação `[INDÚSTRIA]` / `[OFICIAL]` / `[CAMPO]` — matriz extensiva de skills (PO, QA, QC, Dev) |
 | — | [Corpus KbMain](kbmain-corpus.md) | Destilação `[CAMPO]` — acervo agêntico de terceiro em produção, com seus modos de apodrecimento |
+| — | [MemPalace Memory System](mempalace-memory-system.md) | Destilação `[CAMPO]` — sistema de memória local verbatim (Wings/Rooms/Drawers, AAAK dialect, L0-L3 stack e query sanitizer) |
 | 00 | [Taxonomia](00-taxonomia.md) | Classificação hierárquica das disciplinas |
 | 01 | [Ontologia / Knowledge Graph](01-ontologia.md) | Relações semânticas entre conceitos |
 | 02 | [Glossário](02-glossario.md) | Definições formais |
