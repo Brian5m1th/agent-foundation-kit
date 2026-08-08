@@ -42,6 +42,7 @@ inchados e constituições decorativas:
 | — | [Subagentes](sub-agents.md) | Destilação das fontes oficiais — coordenação de trabalho em contexto isolado |
 | — | [Biblioteca de prompts](prompt-library.md) | Os 52 prompts oficiais + índice de gatilho (intenção → prompt) |
 | — | [mattpocock/skills](mattpocock-skills.md) | Destilação `[INDÚSTRIA]` — disciplinas de engenharia empacotadas como skills |
+| — | [Agent Skills do GitHub](github-agent-skills.md) | Destilação `[INDÚSTRIA]` / `[OFICIAL]` / `[CAMPO]` — matriz extensiva de skills (PO, QA, QC, Dev) |
 | — | [Corpus KbMain](kbmain-corpus.md) | Destilação `[CAMPO]` — acervo agêntico de terceiro em produção, com seus modos de apodrecimento |
 | 00 | [Taxonomia](00-taxonomia.md) | Classificação hierárquica das disciplinas |
 | 01 | [Ontologia / Knowledge Graph](01-ontologia.md) | Relações semânticas entre conceitos |
