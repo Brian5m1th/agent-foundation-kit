@@ -384,15 +384,10 @@ humana **mesmo em modo auto-aprovar**, com o diálogo explicando o que será afe
 
 **Contexto.** Várias frentes de trabalho simultâneas **que escrevem nos mesmos arquivos**.
 **Problema.** Edições concorrentes colidem e o histórico fica ilegível.
-**Solução.** `[CAMPO]` Worktree dedicado por sessão, em branch nomeada pelo assunto
-(`spec/SPEC-NNN-slug` ou `<tipo>/<tema>`), com **commit por task concluída** — nunca um commit único
-no fim. `[OFICIAL]` No Claude Code: `claude --worktree <nome>` cria em `.claude/worktrees/<nome>/` na
-branch `worktree-<nome>`; `isolation: worktree` no frontmatter isola um subagente; `.worktreeinclude`
-carrega os gitignorados (`.env`) para dentro; um sweep periódico limpa worktrees de subagente, **nunca
-os criados por `--worktree`**.
+**Solução.** `[CAMPO]` Worktree dedicado por frente de trabalho (`RGIT-11`), em branch convencional nomeada pelo tipo e assunto (`<tipo>/<NNN>-<slug>` ou `<tipo>/<slug>`, ex.: `feat/001-autenticacao`), respeitando estritamente os tipos do `RGIT-02` (sem prefixos `spec/` ou `sdd/`), com **commit por task concluída** — nunca um commit único no fim. `[OFICIAL]` No Claude Code: `claude --worktree <nome>` cria em `.claude/worktrees/<nome>/`; `isolation: worktree` no frontmatter isola um subagente; `.worktreeinclude` carrega os gitignorados (`.env`) para dentro; um sweep periódico limpa worktrees finalizados (`RGIT-14`).
 **Trade-offs.** Isolamento de **arquivo** × custo de setup do **ambiente** (deps, `.env`, portas,
 banco) — e worktree não isola runtime: duas sessões na mesma porta continuam colidindo.
-**Relacionados.** PLN-04, EXE-04, VER-01. **Detalhe completo.** [worktrees.md](worktrees.md).
+**Relacionados.** PLN-04, EXE-04, VER-01. **Detalhes completos.** [git-strategy.md](git-strategy.md) · [worktrees.md](worktrees.md).
 **Não usar quando.** A tarefa só lê; nenhuma outra frente escreve ao mesmo tempo; os conjuntos de
 arquivos já são disjuntos; ou o setup do ambiente custa mais que o conflito que se evita.
 

@@ -38,7 +38,7 @@ nunca reusam um prefixo (AP-14 · Namespace Colidido). Ao citar, use o identific
 | **Regras absolutas** e apostas sob incerteza | [06-heuristicas-e-invariantes](kb/06-heuristicas-e-invariantes.md) | `I-01`–`I-19` · `H-01`–`H-20` |
 | Como raciocinar sobre algo | [07-modelos-mentais](kb/07-modelos-mentais.md) | — |
 | **Arquiteturas** de referência e pipelines | [08-arquiteturas-e-pipelines](kb/08-arquiteturas-e-pipelines.md) | `AR-01`–`AR-04` · `PL-01`–`PL-05` |
-| O que fazer **neste ponto** | [09-decisao-estados-algoritmos](kb/09-decisao-estados-algoritmos.md) | `AD-01`–`AD-04` · `ME-01`–`ME-03` · `AL-01`–`AL-05` |
+| O que fazer **neste ponto** | [09-decisao-estados-algoritmos](kb/09-decisao-estados-algoritmos.md) | `AD-01`–`AD-05` · `ME-01`–`ME-04` · `AL-01`–`AL-05` |
 | Como sei se está funcionando | [10-metricas](kb/10-metricas.md) | — |
 | **Por que** escolhemos isto e não aquilo | [11-adrs](kb/11-adrs.md) | `ADR-001`–`ADR-012` (imutáveis) |
 | Isto cobre aquilo? | [12-rastreabilidade](kb/12-rastreabilidade.md) | — |
@@ -48,7 +48,7 @@ As cinco famílias de padrões seguem as disciplinas: `CTX` contexto · `INT` in
 planejamento · `EXE` execução · `VER` verificação · `LRN` aprendizado.
 
 Destilações fora da numeração. **Oficiais** `[OFICIAL]`: [anthropic-claude-code](kb/anthropic-claude-code.md),
-[worktrees](kb/worktrees.md), [sub-agents](kb/sub-agents.md), [prompt-library](kb/prompt-library.md).
+[git-strategy](kb/git-strategy.md), [worktrees](kb/worktrees.md), [sub-agents](kb/sub-agents.md), [prompt-library](kb/prompt-library.md).
 **De indústria** `[INDÚSTRIA]`: [mattpocock-skills](kb/mattpocock-skills.md) — absorvida, não instalada
 (ADR-011); toda afirmação vinda dela é `[INDÚSTRIA]`, nunca `[OFICIAL]`.
 **De campo, de terceiro** `[CAMPO]`: [kbmain-corpus](kb/kbmain-corpus.md) — acervo agêntico em produção,

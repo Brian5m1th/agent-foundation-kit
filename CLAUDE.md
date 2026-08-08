@@ -77,7 +77,7 @@ tarefa de leitura (caro e inútil) e edição concorrente sem isolamento.
   consumir esta sessão.
 - Duas frentes escrevendo nos mesmos arquivos → `claude --worktree <assunto>`, uma por frente, nunca
   uma por task (`EXE-05`, `PLN-04`).
-- Detalhe operacional: [kb/worktrees.md](kb/worktrees.md) · [kb/sub-agents.md](kb/sub-agents.md).
+- Detalhe operacional: [kb/git-strategy.md](kb/git-strategy.md) · [kb/worktrees.md](kb/worktrees.md) · [kb/sub-agents.md](kb/sub-agents.md).
 
 ## Instalação nos projetos consumidores
 

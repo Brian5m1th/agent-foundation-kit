@@ -127,8 +127,7 @@ revisão incremental e abandono parcial sem perder granularidade.
 **RGIT-04 · Commit e push só quando pedido** 🔴 — o agente escreve o código; publicar é decisão do
 humano. Vale também para `gh pr create`, `gh pr merge` e criação de branch remota.
 
-**RGIT-05 · Nunca na branch default** 🔴 — trabalho novo nasce em branch (`feature/`, `fix/`,
-`refactor/`, `spec/NNN-slug`).
+**RGIT-05 · Nunca na branch default** 🔴 — trabalho novo nasce em branch convencional casando estritamente com os tipos do RGIT-02 (`feat/`, `fix/`, `refactor/`, `test/`, `docs/`, `chore/`, `perf/`, `build/`, `ci/`). Proibido usar os prefixos `spec/` ou `sdd/` no nome da branch (ex.: use `feat/001-autenticacao`, nunca `spec/001-autenticacao`).
 
 **RGIT-06 · Operações destrutivas exigem confirmação explícita** 🔴 (I-11) — `push --force` (mesmo
 `--force-with-lease`) em branch compartilhada, `reset --hard`, `checkout --` sobre trabalho não
@@ -145,6 +144,16 @@ de todo mundo. Corrija com commit novo.
 
 **RGIT-10 · Mensagem descreve o porquê** — o *o quê* já está no diff. `fix: corrige cálculo` não
 informa nada; `fix: arredonda desconto com HALF_UP para bater com o extrato do gateway` informa.
+
+**RGIT-11 · Worktree por frente de trabalho** (EXE-05) — o isolamento de checkout git é por frente de trabalho (funcionalidade ou refatoração relevante que dura horas/dias), nunca por tarefa individual. Múltiplas tarefas da mesma frente reusam o mesmo worktree. Leitura e investigações utilizam subagentes sem worktree.
+
+**RGIT-12 · Rebase local e Squash na integração** — branches curtas devem realizar rebase local sobre a branch principal antes da integração. O merge da frente concluída deve ser consolidado via squash commit (ou rebase limpo), produzindo uma mensagem Conventional Commit unificada.
+
+**RGIT-13 · Tamanho máximo de PR e lote de mudança** — PRs e integrações devem conter até 400 linhas alteradas. Mudanças maiores devem ser subdivididas em frentes menores ou entregues de forma incremental (ex.: via Stacked PRs ou Feature Flags).
+
+**RGIT-14 · Ciclo de vida e limpeza de Worktree** (ME-04) — concluído o merge de uma frente, o worktree e a branch temporária correspondente devem ser limpos (`git worktree remove` + `git branch -d`). Worktrees abandonados/órfãos devem ser auditados e removidos periodicamente.
+
+**RGIT-15 · Hooks locais e de sessão são invioláveis** 🔴 (AD-02) — é proibido desabilitar, burlar ou ignorar Git Hooks (`.git/hooks/`) ou Claude Code Hooks. Se a validação falhar, o código ou a mensagem de commit deve ser corrigido.
 
 ---
 

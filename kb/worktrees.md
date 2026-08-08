@@ -345,21 +345,13 @@ A tarefa ALTERA arquivos?
                   └─ agent team                   → NÃO isola: particione por arquivo na mão
 ```
 
-## 12. Contradição registrada
+## 12. Regra Unificada e Consolidação
 
-`[HIPÓTESE]` A doc oficial trata worktree como barato — no app desktop **toda** sessão nova ganha um
-automaticamente. Isso é verdade para o custo do *git*, e falso para o custo do *ambiente*: instalar
-dependências, copiar `.env`, subir banco e realocar portas custa minutos e gigabytes por worktree em
-qualquer stack não-trivial. A assimetria não aparece na documentação porque ela mede o mecanismo, não o
-projeto.
+`[CONSOLIDADO]` A documentação oficial trata o git worktree como um recurso de custo irrisório. Isso é exato para a camada do *git*, porém falso para o custo de *ambiente* (instalação de pacotes, `.env`, banco de dados, portas).
 
-**Resolução proposta:** worktree por **frente de trabalho**, não por tarefa. Uma frente é uma linha de
-mudança que vive horas ou dias e justifica o setup uma vez. Tarefa dentro da frente reusa o worktree da
-frente. Leitura e exploração sem alteração nunca justificam um.
+**Resolução Consolidada (`RGIT-11`):** Worktree é dimensionado por **frente de trabalho**, nunca por tarefa individual. Uma frente é uma unidade de mudança relevante que justifica o setup inicial. Tarefas sucessivas da mesma frente reusam o worktree existente. Leituras e investigações usam subagentes na sessão principal sem criar worktree.
 
-**Condição de falsificação:** se o setup do worktree for automatizável a custo próximo de zero no
-projeto (via `.worktreeinclude` + hook de instalação + `pnpm`), a hipótese cai e o default oficial
-passa a valer.
+**Enforcement:** Definido em `RULES.md` (`RGIT-05`, `RGIT-11`) e automatizado por Git Hooks e pela esteira de templates (`RULE_AUTOMATIC_WORKTREE_SDD_GRILLING.md`).
 
 ---
 

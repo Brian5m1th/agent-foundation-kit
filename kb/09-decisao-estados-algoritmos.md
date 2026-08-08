@@ -147,6 +147,25 @@ anexado a uma resposta confiante não funciona, porque o leitor ancora na respos
 Abaixo do limiar, a resposta sai da posição de resposta e vira inventário do que se sabe, do que não se
 sabe, e uma pergunta.
 
+## AD-05 · Árvore de decisão Git e Worktree
+
+`[CONSOLIDADO]` Aplica-se a todo pedido de alteração para determinar o fluxo de isolamento, branching e commits.
+
+```mermaid
+graph TD
+    A[Demanda de Alteracao] --> B{Envolve alteracao<br/>de codigo/docs?}
+    B -->|nao - so leitura/busca| C[Usar Subagente/Sessao Atual<br/>Sem Worktree]
+    B -->|sim| D{Ja existe Worktree<br/>para esta Frente?}
+    D -->|sim| E[Reusar Worktree Existente<br/>na Branch feat/slug]
+    D -->|nao| F[Criar Worktree + Branch Convencional<br/>claude --worktree tipo/slug]
+    F --> G[Executar Mudancas & Commits<br/>por Task RGIT-03]
+    E --> G
+    G --> H{Frente Concluida &<br/>Verificada /sdd-converge?}
+    H -->|nao| G
+    H -->|sim| I[Rebase contra main,<br/>Squash & Merge RGIT-12]
+    I --> J[Remover Worktree & Branch<br/>git worktree remove RGIT-14]
+```
+
 ---
 
 # Parte II — Máquinas de estado
@@ -185,16 +204,40 @@ stateDiagram-v2
     [*] --> Pendente
     Pendente --> Bloqueada: dependencia nao satisfeita
     Bloqueada --> Pendente: dependencia concluida
-    Pendente --> EmExecucao: envelope verificado
-    EmExecucao --> AguardandoHumano: acao fora do envelope
-    AguardandoHumano --> EmExecucao: aprovado
-    AguardandoHumano --> Pendente: recusado - replanejar
-    EmExecucao --> Verificando: implementacao pronta
-    Verificando --> EmExecucao: harness reprovou
-    Verificando --> NaoVerificavel: comando nao roda no ambiente
-    Verificando --> Concluida: harness aprovou + evidencia registrada
-    NaoVerificavel --> Concluida: humano aceitou o risco explicitamente
-    Concluida --> [*]
+Processos com estados discretos e transições válidas.
+
+## ME-01 · Estado da especificação
+
+```mermaid
+stateDiagram-v2
+    [*] --> Rascunho: /sdd-specify
+    Rascunho --> Rascunho: /sdd-clarify (preenche lacunas)
+    Rascunho --> Esclarecida: 0 bloqueantes abertos (ADR-002)
+    Esclarecida --> Planejada: /sdd-plan + /sdd-tasks
+    Planejada --> EmImplementacao: /sdd-implement (task a task)
+    EmImplementacao --> Implementada: todas as tasks concluidas
+    Implementada --> Convergida: /sdd-converge aprovado (I-09)
+    Convergida --> [*]
+
+    EmImplementacao --> Planejada: desvio estrutural encontrado
+    Rascunho --> Abandono: spec recusada pelo humano
+    Abandono --> [*]
+```
+
+## ME-02 · Estado da task individual
+
+```mermaid
+stateDiagram-v2
+    [*] --> PENDENTE
+    PENDENTE --> EM_EXECUCAO: selecionada pelo runner
+    EM_EXECUCAO --> CONCLUIDA: evidencia de teste anexada
+    EM_EXECUCAO --> BLOQUEADA: obstaculo nao previsto
+    BLOQUEADA --> EM_EXECUCAO: obstaculo resolvido pelo humano
+    CONCLUIDA --> VERIFICADA: teste independente passou (VER-01)
+    VERIFICADA --> [*]
+
+    CONCLUIDA --> PENDENTE: regressao encontrada
+    EM_EXECUCAO --> NAO_VERIFICAVEL: sem harness de teste
 ```
 
 `NaoVerificavel` é um estado **de primeira classe**, não um atalho para `Concluida`. Colapsar os dois
@@ -219,6 +262,24 @@ stateDiagram-v2
 
 `Poluido` **não** se resolve compactando — a compactação preserva as abordagens falhas. Só `/clear`
 com prompt reescrito sai desse estado.
+
+## ME-04 · Ciclo de vida de Frente/Worktree
+
+`[CONSOLIDADO]` Estado do checkout isolado por frente de trabalho (`RGIT-11`).
+
+```mermaid
+stateDiagram-v2
+    [*] --> Criada: claude --worktree <tipo>/<slug>
+    Criada --> EmDesenvolvimento: setup de ambiente (.env, deps)
+    EmDesenvolvimento --> EmDesenvolvimento: commit por task (RGIT-03)
+    EmDesenvolvimento --> EmVerificacao: build + testes + /sdd-converge
+    EmVerificacao --> EmDesenvolvimento: falha na auditoria / testes
+    EmVerificacao --> Integrada: rebase + squash merge para main (RGIT-12)
+    EmDesenvolvimento --> Orfa: sessao abandonada sem merge
+    Integrada --> Removida: git worktree remove + git branch -d (RGIT-14)
+    Orfa --> Removida: sweep de limpeza
+    Removida --> [*]
+```
 
 ---
 

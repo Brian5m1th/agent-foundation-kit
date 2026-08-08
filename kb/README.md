@@ -37,6 +37,7 @@ inchados e constituições decorativas:
 | # | Documento | Tipo |
 |---|---|---|
 | — | [Anthropic · Claude Code](anthropic-claude-code.md) | Destilação das fontes oficiais |
+| — | [Git Strategy](git-strategy.md) | Destilação das fontes oficiais — convenções de branch, commits, worktree por frente e hooks |
 | — | [Worktrees](worktrees.md) | Destilação das fontes oficiais — isolamento de arquivos para trabalho paralelo |
 | — | [Subagentes](sub-agents.md) | Destilação das fontes oficiais — coordenação de trabalho em contexto isolado |
 | — | [Biblioteca de prompts](prompt-library.md) | Os 52 prompts oficiais + índice de gatilho (intenção → prompt) |

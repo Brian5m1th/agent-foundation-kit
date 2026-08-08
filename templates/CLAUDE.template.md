@@ -70,7 +70,7 @@ Se a verificação não puder rodar neste ambiente, diga **não verificado**. Nu
      Detalhe: labs/kb/worktrees.md -->
 
 - **Só leitura ou investigação** → subagente. Worktree não resolve contexto, e custa setup.
-- **Toda nova task de alteração** → `claude --worktree <assunto>` (automático, impede sujeira na branch `main`).
+- **Uma por frente de trabalho (nunca por task)** → `claude --worktree <tipo>/<assunto>` (impede sujeira na branch `main`, `EXE-05`, `RGIT-11`).
 - **Setup obrigatório num worktree novo:** `<comando de install>` `<+ subir serviços/portas próprias>`.
 - `<.worktreeinclude do projeto, se houver — os gitignorados que precisam ir junto>`
 - `<worktree.baseRef: "fresh" (default) ou "head" — e por quê neste projeto>`

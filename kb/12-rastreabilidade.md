@@ -102,7 +102,7 @@ Mapeamento dos artefatos reais para a cadeia:
 | PROP | `spec.md` §9 | — | — (lacuna) |
 | Critério | `spec.md` §10 | `acceptance_criteria` | SC-NNN |
 | Task | `tasks.md` | `tasks.json` `depends_on` | `tasks.md` `[P]` + história |
-| Execução | commit por task | commit por task | commit por task |
+| Execução | commit por task (RGIT-02/05) | commit por task | commit por task (`RGIT-02`, `RGIT-05`, `RGIT-11`) |
 | Verificação | harness + `/spec-review` | validadores + `sdd-validator-runner` | `/sdd-converge` |
 | Matriz | `spec.md` §13 | — | `tasks.md` Rastreabilidade |
 
