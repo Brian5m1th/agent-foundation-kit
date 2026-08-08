@@ -404,6 +404,12 @@ ausente, porque produz confiança falsa.
 **Evidência.** `[CAMPO]` Identificado durante a auditoria de QA do InscreveAI (`AG-Document-8496b372-qa_master_prompt.md`).
 **Correção.** Enforçar tokens de idempotência no backend e desabilitar botões de ação transacional no frontend após o primeiro clique.
 
+### AP-45 · Patching Prematuro Sem Diagnóstico Concluído 🔴
+**Sintoma.** O agente tenta alterar ou "corrigir" o código de produção enquanto ainda está investigando o sintoma de um bug.
+**Mecanismo.** Confundir a fase de diagnóstico (leitura, formulação e teste de hipótese) com a fase de execução/escrita. Isso gera correções superficiais de sintomas que introduzem regressões e mascaram a causa raiz real.
+**Evidência.** `[CAMPO]` Identificado no protocolo de auditoria do `auto-slide` (`docs/investigacao/PROMPT-AGENTE-INVESTIGACAO.md`).
+**Correção.** Aplicar a regra de modo **Somente-Leitura** (`EXE-08`) durante a fase de investigação, exigindo um relatório formal com veredito registrado (`VER-08`) antes de autorizar edições de produção.
+
 ---
 
 ## Tabela de severidade
@@ -433,6 +439,7 @@ ausente, porque produz confiança falsa.
 | AP-39 | **Conflito Resolvido em Silêncio** | D5 | 🔴 |
 | AP-42 | **Poluição Narrativa / Código Comentado Inline** | D4 | 🔴 |
 | AP-44 | **Violação de Idempotência em Transações** | D5 | 🔴 |
+| AP-45 | **Patching Prematuro Sem Diagnóstico Concluído** | D4 | 🔴 |
 | AP-04/05 | Sessão Entulhada / Exploração Infinita | D2 | 🟡 |
 | AP-06 | Pseudocódigo em Prosa | D1 | 🟡 |
 | AP-08 | Três Exemplos p/ Regra Universal | D1 | 🟡 |

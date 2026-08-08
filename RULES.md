@@ -378,6 +378,8 @@ def` trava o event loop inteiro.
 **RPY-14 · Dependências travadas e ambiente isolado** — `uv`/`venv`, versões fixadas em
 `pyproject.toml`, lockfile versionado.
 
+**RPY-15 · Ports & Adapters estrito** 🔴 — O núcleo (`core/`) nunca importa I/O, UI, HTTP ou frameworks externos. Portas são declaradas em `ports/` como `typing.Protocol`; modelos de domínio como `@dataclass(frozen=True)`; injeção de adaptadores concretos ocorre exclusivamente no composition root (`app/`).
+
 ---
 
 # 8 · TypeScript (`RTS`)

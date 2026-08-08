@@ -102,6 +102,8 @@ Quando a auditoria for exaustiva, de ponta a ponta e exigir múltiplos aspectos 
 
 - **Auditoria Completa de QA, DevTools, Personas & E2E**: [`templates/master-prompts/qa-audit-master-prompt.md`](../templates/master-prompts/qa-audit-master-prompt.md)
 - **Auditoria Premium de UX/UI, Design System, WCAG 2.2 AA & Conversão**: [`templates/master-prompts/ux-ui-master-prompt.md`](../templates/master-prompts/ux-ui-master-prompt.md)
+- **Protocolo de Investigação de Achados (Somente-Leitura + Lock MD)**: [`templates/investigacao-auditoria/PROMPT-AGENTE-INVESTIGACAO.md`](../templates/investigacao-auditoria/PROMPT-AGENTE-INVESTIGACAO.md)
+- **Protocolo de Implementação em Dupla Trilha (Trilha A / Trilha B)**: [`templates/investigacao-auditoria/PROMPT-AGENTE-IMPLEMENTACAO.md`](../templates/investigacao-auditoria/PROMPT-AGENTE-IMPLEMENTACAO.md)
 
 ## 3. Os 52 prompts
 

@@ -338,6 +338,17 @@ especificar"* — contra o de `/sdd-specify`, que é *"sei o que quero, falta es
 **Não usar quando.** O escopo já cabe numa spec. Aí o mapa é `/sdd-tasks` com passos extras.
 **Detalhe completo.** [mattpocock-skills.md](mattpocock-skills.md) §5.4.
 
+## PLN-07 · Execução em Dupla Trilha (Dual-Track)
+
+**Contexto.** Lista heterogênea de tarefas ou bugs resultantes de uma auditoria/varredura pré-produção.
+**Problema.** Aplicar o mesmo peso de processo a tudo: forçar o ciclo pesado de spec (SDD) para correções triviais de 1 linha causa paralisia por burocracia; dispensar a spec para mudanças estruturais causa degradação de arquitetura.
+**Solução.** `[CAMPO]` Triagem e separação formal em duas trilhas independentes:
+- **Trilha A (Ajuste Simples)**: Fixes diretos sem alteração de contrato ou máquina de estados. Executados 1 a 1 via Plan Mode / direct fix sem criar arquivos de spec.
+- **Trilha B (Clusters de Spec)**: Mudanças de domínio ou arquitetura agrupadas em clusters funcionais, executadas obrigatoriamente através do ciclo SDD (`specify` → `clarify` → `plan` → `tasks` → `implement`).
+**Trade-offs.** Necessidade de triagem inicial rigorosa × velocidade máxima em one-liners com proteção arquitetural nos clusters críticos.
+**Relacionados.** INT-05, PLN-02, EXE-01. **Combate.** AP-03 (Marreta na Noz), AP-11.
+**Origem.** Protocolo de implementação pós-auditoria do `auto-slide`.
+
 ---
 
 ## EXE-01 · Explore → Plan → Implement → Commit
@@ -418,6 +429,17 @@ ruidosa.
 é o defeito mais comum — um laço pode consumir o orçamento inteiro sem nunca disparar o teto de retry.
 **Não usar quando.** A execução é de passo único, sem laço.
 **Detalhe completo.** [kbmain-corpus.md](kbmain-corpus.md) §2.4.
+
+## EXE-08 · Investigação Somente-Leitura com Lock Concorrente em Markdown
+
+**Contexto.** Diagnóstico de bugs ou varredura de código por múltiplos agentes autônomos em paralelo.
+**Problema.** Agentes investigando tendem a aplicar "patches prematuros" no código de produção sem entender a causa raiz completa. Além disso, em ambientes multi-agente sem servidor de lock dedicado, múltiplos agentes tentam pegar o mesmo item ao mesmo tempo.
+**Solução.** `[CAMPO]` Dois mecanismos combinados:
+1. **Regra de Somente-Leitura (Read-Only Enforcement)**: Bloqueio estrito de escrita em código de produção (`src/`) durante a fase de investigação. O agente apenas lê, testa em bancada externa e emite relatório `.md`.
+2. **Reivindicação Otimista em Markdown (Markdown Optimistic Locking)**: O agente gera um ID único temporário (`sess-XXXX`), registra seu estado em uma tabela markdown (`ESTADO-BUGS.md`), salva o arquivo e **re-lê o arquivo imediatamente**. Se o seu ID foi preservado, o item é dele; se foi sobrescrito por outro agente concorrente, ele desiste e pega o próximo item `pendente`.
+**Trade-offs.** Um turno extra de leitura para validar a reivindicação × zero race-condition e zero degradação de código durante diagnósticos.
+**Relacionados.** EXE-04, EXE-05, VER-01, VER-08. **Combate.** AP-45 (Patching Prematuro), AP-17.
+**Origem.** Protocolo de investigação de auditoria do `auto-slide`.
 
 ---
 
@@ -536,6 +558,19 @@ propriedade **não** é decidível.
 é ruído com aparência de rigor (H-19). E quando há uma só fonte: escore sobre fonte única é tautologia.
 **Detalhe completo.** [kbmain-corpus.md](kbmain-corpus.md) §2.1.
 
+## VER-08 · Auditoria e Investigação com Veredito Quadripartido
+
+**Contexto.** Conclusão do relatório de investigação de um achado de auditoria.
+**Problema.** Agentes tendem a dar pareceres vagos ("parece ser um bug", "talvez precise de ajustinho"), resultando em decisões de engenharia indecisas ou na criação de fakes sintéticos para contornar a falta de hardware/ambiente real de produção.
+**Solução.** `[CAMPO]` Todo relatório de investigação fecha obrigatoriamente em **exatamente um** dos quatro vereditos formais:
+1. `ajuste_simples`: Bug confirmado, correção direta e inequívoca (vai para Trilha A).
+2. `merece_spec`: Bug confirmado, alteração estrutural/domínio (vai para Trilha B/SDD).
+3. `sem_evidencia_refutado`: Falso positivo, erro de leitura ou já corrigido.
+4. `sem_evidencia_precisa_producao`: Impossível confirmar sem hardware/ambiente de produção real. Proíbe simulações sintéticas enganosas e exige a especificação de um plano de telemetria/logging adicional.
+**Trade-offs.** Honestidade rigorosa sobre limitações de bancada × exige disciplina do investigador.
+**Relacionados.** VER-01, VER-07, EXE-08. **Combate.** AP-20 (Auto-validação), AP-38 (Escore Inventado).
+**Origem.** Protocolo de auditoria pré-produção do `auto-slide`.
+
 ---
 
 ## LRN-01 · Lições Aprendidas Consumíveis
@@ -588,6 +623,7 @@ como padrão.
 | PLN-04 Disjunção | D3 | P08 | — |
 | PLN-05 Módulo profundo | D3 | P02 | AP-24 |
 | PLN-06 Mapa sob névoa | D3 | P03 | AP-19 |
+| PLN-07 Dupla trilha | D3 | P03/P08 | AP-03/11 |
 | EXE-01 Explore→Plan | D4 | P01 | AP-16 |
 | EXE-02 Hook | D4 | P11 | AP-02 |
 | EXE-03 Harness | D4 | P11 | AP-17 |
@@ -595,6 +631,7 @@ como padrão.
 | EXE-05 Worktree | D4 | P10 | — |
 | EXE-06 Interpretação | D4 | P04 | AP-19 |
 | EXE-07 Disjuntor de loop | D4 | P10 | AP-17/30 |
+| EXE-08 Investigação Read-Only + Lock MD | D4 | P10 | AP-45/17 |
 | VER-01 Independente | D5 | P12 | AP-20 |
 | VER-02 Cruzada | D5 | P09 | AP-21 |
 | VER-03 Quarentena | D5 | P13 | AP-22 |
@@ -602,6 +639,7 @@ como padrão.
 | VER-05 Proporcional | D5 | P13 | AP-24 |
 | VER-06 Loop de feedback | D5 | P13 | AP-17 |
 | VER-07 Matriz de acordo | D5 | P12 | AP-38/39 |
+| VER-08 Veredito Quadripartido | D5 | P12 | AP-20/38 |
 | LRN-01 Lições | D6 | P14 | AP-25 |
 | LRN-02 Promoção | D6 | P14 | AP-25 |
 

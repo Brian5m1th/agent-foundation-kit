@@ -183,6 +183,7 @@ Regras que nunca podem ser violadas. Cada uma declara **como é imposta** — in
 | **I-17** | A constitution não muda no meio de uma task | D1 | Processo de emenda próprio |
 | **I-18** | Task não fecha sem que a verificação declarada tenha rodado | D5 | Harness obrigatório |
 | **I-19** | Conflito entre fontes é escalado, nunca resolvido pelo agente | D5 | Célula de conflito abaixo de todos os limiares (VER-07) |
+| **I-20** | Princípio de Decisão Defensiva: Na dúvida, não agir | D1/D4 | Threshold de segurança; transiciona para alerta ao humano quando abaixo do piso |
 
 ## Os oito do esboço original, auditados
 
