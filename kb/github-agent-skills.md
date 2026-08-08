@@ -70,6 +70,17 @@ graph LR
 
 ---
 
+### 2.5 Designer & UI/UX Engineer — Design System, Estética & Prototipagem
+
+| Skill / Comando | Origem / Estrelas | O que faz | Selo | Template no `labs` |
+|---|---|---|---|---|
+| `design-system-tokens` | GitHub / `DESIGN.md` | Sistema de design canônico: criação de `DESIGN.md`, tokens CSS (paletas HSL, tipografia fluida, espaçamentos) e regras anti-AI-slop. | `[INDÚSTRIA]` | [`design-system-tokens/SKILL.md`](../templates/skills/design-system-tokens/SKILL.md) |
+| `premium-frontend-ui` | GitHub Community | Interfaces de alto impacto visual: dark mode profundo, glassmorphism, degradês harmônicos, tipografia moderna e responsividade fluida. | `[CAMPO]` | [`premium-frontend-ui/SKILL.md`](../templates/skills/premium-frontend-ui/SKILL.md) |
+| `motion-design-css` | GitHub Community | Micro-animações CSS e transições de alta performance (keyframes, transform GPU-accelerated, física de mola em hover/clicks). | `[INDÚSTRIA]` | [`motion-design-css/SKILL.md`](../templates/skills/motion-design-css/SKILL.md) |
+| `design-to-code-proto` | GitHub / Anthropic | Conversão de mockups, wireframes e screenshots em protótipos funcionais HTML/CSS/JS e React com paridade visual. | `[OFICIAL]` | [`design-to-code-proto/SKILL.md`](../templates/skills/design-to-code-proto/SKILL.md) |
+
+---
+
 ## 3. Matriz de Decisão: Qual Skill Usar em Cada Etapa?
 
 ```mermaid
