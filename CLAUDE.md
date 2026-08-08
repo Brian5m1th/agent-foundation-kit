@@ -4,6 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Regras de engenharia, mapa da KB e invariantes deste repositório: @AGENTS.md
 
+**Regras de código — leia antes de escrever ou editar qualquer arquivo de código:** @RULES.md
+Cobre estilo universal (`RG`), git e commits (`RGIT`), segurança (`RSEC`), testes (`RTEST`) e as
+convenções por linguagem e framework (`RJ` Java · `RSB` Spring Boot · `RPY` Python · `RTS` TypeScript ·
+`RNG` Angular · `RRE` React · `RDB` banco · `RDK` Docker · `RCI` CI · `RCFG` configuração).
+Duas que valem citar de cor: **RG-01** (nada de comentário narrativo no código; ao tocar um arquivo
+que já tem, apague) e **RGIT-01** (nenhum agente se atribui autoria ou co-autoria em commit ou PR).
+
 ## Biblioteca de prompts — consulte antes de agir
 
 [kb/prompt-library.md](kb/prompt-library.md) contém os **52 prompts oficiais** da Anthropic, cada um
@@ -70,7 +77,7 @@ tarefa de leitura (caro e inútil) e edição concorrente sem isolamento.
   consumir esta sessão.
 - Duas frentes escrevendo nos mesmos arquivos → `claude --worktree <assunto>`, uma por frente, nunca
   uma por task (`EXE-05`, `PLN-04`).
-- Detalhe operacional: [kb/worktrees.md](kb/worktrees.md) · [kb/sub-agents.md](kb/sub-agents.md).
+- Detalhe operacional: [kb/git-strategy.md](kb/git-strategy.md) · [kb/worktrees.md](kb/worktrees.md) · [kb/sub-agents.md](kb/sub-agents.md).
 
 ## Instalação nos projetos consumidores
 

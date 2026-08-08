@@ -92,7 +92,44 @@ durante a execução"*. Some-se a isso a ausência de **descoberta em tempo de e
 precisam ser definidas estaticamente.
 **Custo escondido.** Cada agente é um artefato a manter e sincronizar (AP-15).
 
-## 4. Comparativo das arquiteturas de contexto observadas
+## 4. AR-04 · Topologias de orquestração multi-agente
+
+`[CAMPO]` Destilado de um framework de decisão observado em produção
+([kbmain-corpus.md](kbmain-corpus.md) §2.5). AR-01 a AR-03 descrevem **formas concretas**; AR-04 é o
+eixo que as classifica e diz **qual escolher**.
+
+| Dimensão | Supervisor | Enxame | Quadro-negro | Esteira |
+|---|---|---|---|---|
+| Controle | centralizado | descentralizado | espaço compartilhado | sequencial |
+| Melhor para | auditabilidade, <10 agentes | resiliência, exploração | convergência multi-especialista | processamento em fases |
+| Modo de falha | ponto único | degradação graciosa | fatos obsoletos/conflitantes | estágio bloqueia tudo |
+| Depuração | **alta** | **baixa** (emergente) | média | alta |
+| Comece aqui? | **sim** | não | não | junto ao supervisor |
+
+**As três regras que carregam o padrão:**
+
+1. **Comece centralizado.** Topologia descentralizada exige maturidade que não se pula, e sua
+   depuração é emergente — portanto cara exatamente quando você mais precisa dela.
+2. **O supervisor cuida só de roteamento, estado e decisão — nunca de lógica de domínio.** Violar isso
+   cria o *agente-deus*: o orquestrador acumula regras de negócio e vira o gargalo que ele existia
+   para evitar. É a violação mais comum.
+3. **O quadro-negro exige mecanismo de esquecimento.** Sem descarte, o espaço compartilhado vira
+   rascunho ruidoso e os agentes passam a raciocinar sobre fatos vencidos.
+
+**Escada de maturidade de tolerância a falha** — o nível exigido é **propriedade da topologia
+escolhida**, não uma decisão separada: básico (erro + log) → resiliente (retry, alternativa) →
+recuperável (checkpoint) → redundante (validação múltipla, voto) → auto-curativo (decaimento de
+confiança, canário). Enxame só é viável a partir do quarto degrau.
+
+**Relação com o resto.** AR-02 (Builder/Critic) é um supervisor de dois papéis; AR-03 (frota) é um
+supervisor com roteamento estático — e a limitação de papéis fixos de arXiv 2508.10146 é exatamente o
+que o enxame resolve, ao custo da depuração. **Nenhuma das topologias dispensa EXE-07** (disjuntor):
+laço sem teto é laço sem fim em qualquer uma delas.
+
+**Não usar quando.** Um agente resolve. A escolha de topologia só existe a partir de dois — e a
+pergunta anterior, quase sempre pulada, é se a decomposição em agentes se justifica (CTX-03).
+
+## 5. Comparativo das arquiteturas de contexto observadas
 
 | Dimensão | Claude Code `[OFICIAL]` | Spec Kit `[INDÚSTRIA]` | Kiro `[INDÚSTRIA]` | sdd-kit `[CAMPO]` | InscreveAI `[CAMPO]` |
 |---|---|---|---|---|---|
@@ -107,7 +144,7 @@ precisam ser definidas estaticamente.
 Os dois que mais acertam em portão determinístico são Claude Code (hooks) e sdd-kit (validadores
 shell). **Nenhum** tem enforcement mecânico do envelope de autonomia por task — é a lacuna comum.
 
-## 5. Pipelines
+## 6. Pipelines
 
 ### PL-01 · Ciclo canônico (por porte)
 
@@ -199,7 +236,24 @@ provedores concretos.
 etapa) mas merece ser explícita, porque significa que nenhum estágio do pipeline é responsável por
 **verificar** se a intenção foi preservada. É a mesma lacuna do AR-01 sem o laço de aprendizado.
 
-## 6. Automação — o que deve ser mecânico
+### PL-06 · Pipeline Integrado SDD + Worktree + Grilling + Subagentes
+
+`[CAMPO]` Formalizado no whitepaper `[[docs/paper-fluxo-integrado|paper-fluxo-integrado.md]]`. É a integração do ciclo SDD completo com isolamento preventivo em controle de versão e entrevista de intenção:
+
+```mermaid
+graph LR
+    A[Task/Sprint] --> B["Worktree Init<br/>(EXE-05)"]
+    B --> C["sdd-specify + Skill grill-me<br/>(INT-08)"]
+    C --> D["sdd-plan & tasks<br/>(PLN-02)"]
+    D --> E["Subagentes Workers<br/>(CTX-03 & EXE-04)"]
+    E --> F["sdd-converge Auditor<br/>(AR-02 / I-09)"]
+    F -->|Aprovado| G[Merge to Main & Cleanup]
+```
+
+**Diferencial Operacional**: O Git Worktree é disparado **na recepção da tarefa**, isolando rascunhos de especificação (`specs/NNN-slug/`) e impedindo que a branch principal seja poluída durante a fase de entrevista/grilling (`[[kb/mattpocock-skills#51-grill-me--grilling--a-entrevista-conduzida--int-08-h-17|INT-08]]`).
+
+
+## 7. Automação — o que deve ser mecânico
 
 Hierarquia de confiabilidade, do mais forte ao mais fraco:
 

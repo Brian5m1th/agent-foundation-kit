@@ -2,6 +2,8 @@
 
 Regras de engenharia deste repositório, portáveis para qualquer agente.
 A camada específica do Claude Code está em [CLAUDE.md](CLAUDE.md).
+As regras de **como o código sai** — estilo, git, segurança e convenções por linguagem/framework —
+estão em [RULES.md](RULES.md); este arquivo trata do **processo**.
 
 ## O que é este diretório
 
@@ -32,13 +34,13 @@ nunca reusam um prefixo (AP-14 · Namespace Colidido). Ao citar, use o identific
 | O que um termo significa aqui | [02-glossario](kb/02-glossario.md) | — |
 | **Por que** fazemos assim | [03-principios](kb/03-principios.md) | `P01`–`P14` |
 | **Padrões** — problema recorrente resolvido | [04-padroes](kb/04-padroes.md) | `CTX-`, `INT-`, `PLN-`, `EXE-`, `VER-`, `LRN-` |
-| **Anti-padrões** — o que falha repetidamente | [05-antipadroes](kb/05-antipadroes.md) | `AP-01`–`AP-37` (🔴 grave / 🟡 moderado) |
-| **Regras absolutas** e apostas sob incerteza | [06-heuristicas-e-invariantes](kb/06-heuristicas-e-invariantes.md) | `I-01`–`I-18` · `H-01`–`H-18` |
+| **Anti-padrões** — o que falha repetidamente | [05-antipadroes](kb/05-antipadroes.md) | `AP-01`–`AP-41` (🔴 grave / 🟡 moderado) |
+| **Regras absolutas** e apostas sob incerteza | [06-heuristicas-e-invariantes](kb/06-heuristicas-e-invariantes.md) | `I-01`–`I-19` · `H-01`–`H-20` |
 | Como raciocinar sobre algo | [07-modelos-mentais](kb/07-modelos-mentais.md) | — |
-| **Arquiteturas** de referência e pipelines | [08-arquiteturas-e-pipelines](kb/08-arquiteturas-e-pipelines.md) | `AR-01`–`AR-03` · `PL-01`–`PL-05` |
-| O que fazer **neste ponto** | [09-decisao-estados-algoritmos](kb/09-decisao-estados-algoritmos.md) | `AD-01`–`AD-03` · `ME-01`–`ME-03` · `AL-01`–`AL-05` |
+| **Arquiteturas** de referência e pipelines | [08-arquiteturas-e-pipelines](kb/08-arquiteturas-e-pipelines.md) | `AR-01`–`AR-04` · `PL-01`–`PL-05` |
+| O que fazer **neste ponto** | [09-decisao-estados-algoritmos](kb/09-decisao-estados-algoritmos.md) | `AD-01`–`AD-05` · `ME-01`–`ME-04` · `AL-01`–`AL-05` |
 | Como sei se está funcionando | [10-metricas](kb/10-metricas.md) | — |
-| **Por que** escolhemos isto e não aquilo | [11-adrs](kb/11-adrs.md) | `ADR-001`–`ADR-011` (imutáveis) |
+| **Por que** escolhemos isto e não aquilo | [11-adrs](kb/11-adrs.md) | `ADR-001`–`ADR-012` (imutáveis) |
 | Isto cobre aquilo? | [12-rastreabilidade](kb/12-rastreabilidade.md) | — |
 | De onde vem a afirmação | [13-bibliografia](kb/13-bibliografia.md) | — |
 
@@ -46,9 +48,13 @@ As cinco famílias de padrões seguem as disciplinas: `CTX` contexto · `INT` in
 planejamento · `EXE` execução · `VER` verificação · `LRN` aprendizado.
 
 Destilações fora da numeração. **Oficiais** `[OFICIAL]`: [anthropic-claude-code](kb/anthropic-claude-code.md),
-[worktrees](kb/worktrees.md), [sub-agents](kb/sub-agents.md), [prompt-library](kb/prompt-library.md).
+[git-strategy](kb/git-strategy.md), [worktrees](kb/worktrees.md), [sub-agents](kb/sub-agents.md), [prompt-library](kb/prompt-library.md).
 **De indústria** `[INDÚSTRIA]`: [mattpocock-skills](kb/mattpocock-skills.md) — absorvida, não instalada
-(ADR-011); toda afirmação vinda dela é `[INDÚSTRIA]`, nunca `[OFICIAL]`.
+(ADR-011); [github-agent-skills](kb/github-agent-skills.md) — matriz de skills por papel (PO, QA, QC, Dev). Toda afirmação vinda delas é `[INDÚSTRIA]`, nunca `[OFICIAL]`.
+**De campo, de terceiro** `[CAMPO]`: [kbmain-corpus](kb/kbmain-corpus.md) — acervo agêntico em produção,
+absorvido por destilação (ADR-012). Rende padrão **e** anti-padrão: VER-07 e AP-38 saem do mesmo lugar.
+Observar não é endossar — a §5 de lá registra o que foi **recusado**, e a §7 o material sensível que
+não entrou.
 
 **Selo epistêmico é obrigatório e nunca se mistura** (ADR-010): `[CONSOLIDADO]` `[INDÚSTRIA]`
 `[RECENTE]` `[EXPERIMENTAL]` `[ACADÊMICO]` `[HIPÓTESE]` `[OFICIAL]` `[CAMPO]`. Ao citar a KB,
@@ -112,6 +118,7 @@ estrutura de pastas é a mesma.
 
 | Precisa de | Vá para |
 |---|---|
+| Regra de código, commit, segurança ou convenção de stack | [RULES.md](RULES.md) — `RG`, `RGIT`, `RSEC`, `RTEST`, `RJ`, `RSB`, `RPY`, `RTS`, `RNG`, `RRE`, `RDB`, `RDK`, `RCI`, `RCFG` |
 | Roteamento de pedido → prompt oficial | [kb/prompt-library.md](kb/prompt-library.md), com a tabela de gatilho em [CLAUDE.md](CLAUDE.md) |
 | Instalar o fluxo ou os templates em outro projeto | [CLAUDE.md](CLAUDE.md) · [templates/README.md](templates/README.md) |
 | O par CLAUDE.md/AGENTS.md para um projeto novo | [templates/](templates/README.md) — regra em ADR-001 |
