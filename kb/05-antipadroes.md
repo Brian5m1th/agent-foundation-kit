@@ -410,7 +410,20 @@ ausente, porque produz confiança falsa.
 **Evidência.** `[CAMPO]` Identificado no protocolo de auditoria do `auto-slide` (`docs/investigacao/PROMPT-AGENTE-INVESTIGACAO.md`).
 **Correção.** Aplicar a regra de modo **Somente-Leitura** (`EXE-08`) durante a fase de investigação, exigindo um relatório formal com veredito registrado (`VER-08`) antes de autorizar edições de produção.
 
+### AP-46 · Purga de Transcrição sem Persistência (Context Auto-Eviction) 🔴
+**Sintoma.** O agente perde todo o histórico, aprendizados e decisões da conversa quando a janela expira (ex: limite de 30 dias de sessão) ou sofre compreesão automática (`/compact`).
+**Mecanismo.** Confiar na retenção volátil do harness de chat sem configurar hooks de auto-save (`EXE-09`) em background para minerar e armazenar as transcrições verbatim em disco local.
+**Evidência.** `[CAMPO]` Documentado na análise da arquitetura de retenção do MemPalace (`docs/HISTORY.md` do mempalace) e discussões da comunidade Claude Code.
+**Correção.** Configurar retention auto-save hooks (`pre-compact`, `stop`, `session-end`) para minerar transcrições e alimentá-las num sistema de memória persistente local ([mempalace-memory-system.md](mempalace-memory-system.md)).
+
+### AP-47 · Contaminação de Query por System Prompt 🟡
+**Sintoma.** Pesquisas semânticas ou RAG do agente retornam resultados completamente irrelevantes ou vazios.
+**Mecanismo.** O agente concatena acidentalmente instruções do seu system prompt (2000+ caracteres) na string de busca enviada ao modelo de embedding. O vetor do prompt sufoca a pergunta real (10–50 caracteres), reduzindo o recall a níveis catastróficos (de ~89.8% para 1.0%).
+**Evidência.** `[CAMPO]` Descoberta e benchmark documentados na Issue #333 do MemPalace.
+**Correção.** Implementar um **Query Sanitizer** (`mempalace/query_sanitizer.py`) na camada de busca que detecta e extrai a pergunta real da string antes da geração de embeddings.
+
 ---
+
 
 ## Tabela de severidade
 
@@ -440,6 +453,7 @@ ausente, porque produz confiança falsa.
 | AP-42 | **Poluição Narrativa / Código Comentado Inline** | D4 | 🔴 |
 | AP-44 | **Violação de Idempotência em Transações** | D5 | 🔴 |
 | AP-45 | **Patching Prematuro Sem Diagnóstico Concluído** | D4 | 🔴 |
+| AP-46 | **Purga de Transcrição sem Persistência** | D2 | 🔴 |
 | AP-04/05 | Sessão Entulhada / Exploração Infinita | D2 | 🟡 |
 | AP-06 | Pseudocódigo em Prosa | D1 | 🟡 |
 | AP-08 | Três Exemplos p/ Regra Universal | D1 | 🟡 |
@@ -457,6 +471,7 @@ ausente, porque produz confiança falsa.
 | AP-40 | **Cerimônia Herdada** | D2 | 🟡 |
 | AP-41 | **Registro sem Portão** | D2 | 🟡 |
 | AP-43 | **Ausência de Worktree em Sessões Concorrentes** | D3 | 🟡 |
+| AP-47 | **Contaminação de Query por System Prompt** | D2 | 🟡 |
 
 **Os quatro achados `[CAMPO]` inéditos** — AP-14, AP-15, AP-26, AP-27 — não aparecem em nenhuma fonte
 oficial ou acadêmica deste corpus. São observações dos seus próprios repositórios, e por isso são a

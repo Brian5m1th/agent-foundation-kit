@@ -37,7 +37,7 @@ nunca reusam um prefixo (AP-14 · Namespace Colidido). Ao citar, use o identific
 | **Anti-padrões** — o que falha repetidamente | [05-antipadroes](kb/05-antipadroes.md) | `AP-01`–`AP-41` (🔴 grave / 🟡 moderado) |
 | **Regras absolutas** e apostas sob incerteza | [06-heuristicas-e-invariantes](kb/06-heuristicas-e-invariantes.md) | `I-01`–`I-19` · `H-01`–`H-20` |
 | Como raciocinar sobre algo | [07-modelos-mentais](kb/07-modelos-mentais.md) | — |
-| **Arquiteturas** de referência e pipelines | [08-arquiteturas-e-pipelines](kb/08-arquiteturas-e-pipelines.md) | `AR-01`–`AR-04` · `PL-01`–`PL-05` |
+| **Arquiteturas** de referência e pipelines | [08-arquiteturas-e-pipelines](kb/08-arquiteturas-e-pipelines.md) | `AR-01`–`AR-05` · `PL-01`–`PL-05` |
 | O que fazer **neste ponto** | [09-decisao-estados-algoritmos](kb/09-decisao-estados-algoritmos.md) | `AD-01`–`AD-05` · `ME-01`–`ME-04` · `AL-01`–`AL-05` |
 | Como sei se está funcionando | [10-metricas](kb/10-metricas.md) | — |
 | **Por que** escolhemos isto e não aquilo | [11-adrs](kb/11-adrs.md) | `ADR-001`–`ADR-012` (imutáveis) |
@@ -49,10 +49,10 @@ planejamento · `EXE` execução · `VER` verificação · `LRN` aprendizado.
 
 Destilações fora da numeração. **Oficiais** `[OFICIAL]`: [anthropic-claude-code](kb/anthropic-claude-code.md),
 [git-strategy](kb/git-strategy.md), [worktrees](kb/worktrees.md), [sub-agents](kb/sub-agents.md), [prompt-library](kb/prompt-library.md).
-**De indústria** `[INDÚSTRIA]`: [mattpocock-skills](kb/mattpocock-skills.md) — absorvida, não instalada
-(ADR-011); [github-agent-skills](kb/github-agent-skills.md) — matriz de skills por papel (PO, QA, QC, Dev). Toda afirmação vinda delas é `[INDÚSTRIA]`, nunca `[OFICIAL]`.
-**De campo, de terceiro** `[CAMPO]`: [kbmain-corpus](kb/kbmain-corpus.md) — acervo agêntico em produção,
-absorvido por destilação (ADR-012). Rende padrão **e** anti-padrão: VER-07 e AP-38 saem do mesmo lugar.
+**De indústria / Recente** `[INDÚSTRIA]` `[RECENTE]`: [mattpocock-skills](kb/mattpocock-skills.md) — absorvida, não instalada
+(ADR-011); [github-agent-skills](kb/github-agent-skills.md) — matriz de skills por papel (PO, QA, QC, Dev); [ai-workflows-eval-pipelines](kb/ai-workflows-eval-pipelines.md) — taxonomia de motores de IA e pipelines de avaliação offline (Evals). Toda afirmação vinda delas é `[INDÚSTRIA]` ou `[RECENTE]`, nunca `[OFICIAL]`.
+**De campo, de terceiro** `[CAMPO]`: [kbmain-corpus](kb/kbmain-corpus.md) — acervo agêntico em produção; [mempalace-memory-system](kb/mempalace-memory-system.md) — sistema local-first de memória verbatim.
+
 Observar não é endossar — a §5 de lá registra o que foi **recusado**, e a §7 o material sensível que
 não entrou.
 
