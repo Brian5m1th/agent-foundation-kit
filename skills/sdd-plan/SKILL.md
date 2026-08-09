@@ -1,5 +1,7 @@
 ---
+name: sdd-plan
 description: Cria o plano técnico (COMO) a partir da spec
+disable-model-invocation: true
 argument-hint: [NNN-slug | restrições e stack desejadas]
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash(ls:*), Bash(dir:*)
 ---

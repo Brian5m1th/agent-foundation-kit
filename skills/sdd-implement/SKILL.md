@@ -1,5 +1,7 @@
 ---
+name: sdd-implement
 description: Executa as tasks pendentes, uma por vez, respeitando o envelope
+disable-model-invocation: true
 argument-hint: [T001 | US1 | fase 2 | vazio = todas as pendentes]
 ---
 

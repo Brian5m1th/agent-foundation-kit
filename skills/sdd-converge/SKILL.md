@@ -1,5 +1,7 @@
 ---
+name: sdd-converge
 description: Audita o código entregue contra spec, plan e constitution
+disable-model-invocation: true
 argument-hint: [NNN-slug opcional]
 allowed-tools: Read, Glob, Grep, Bash
 ---

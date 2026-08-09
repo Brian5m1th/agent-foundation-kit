@@ -1,5 +1,7 @@
 ---
+name: sdd-specify
 description: Cria a especificação (o QUÊ e POR QUÊ) de uma nova feature
+disable-model-invocation: true
 argument-hint: <descrição da feature em uma ou duas frases>
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash(ls:*), Bash(dir:*)
 ---

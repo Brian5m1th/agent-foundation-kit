@@ -1,5 +1,7 @@
 ---
+name: sdd-constitution
 description: Cria ou emenda a constitution do projeto (princípios inegociáveis)
+disable-model-invocation: true
 argument-hint: [princípios em linguagem livre | vazio para revisar a existente]
 allowed-tools: Read, Write, Edit, Glob, Grep
 ---

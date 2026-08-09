@@ -106,7 +106,7 @@ estrutura de pastas é a mesma.
 - **Numeração é sequencial e imutável** — specs (`001-`) e identificadores da KB. Item errado é
   corrigido no lugar ou marcado obsoleto; **nunca renumerado**, porque quebra citação externa.
 - **Toda afirmação nova na KB entra com selo** e, quando `[CAMPO]`, com o arquivo citado.
-- **Uso obrigatório de Sequential Thinking:** No fluxo SDD, após a fase de intenção e partindo de `spec-init` em conjunto com a skill `grill-me`, o agente (Antigravity) DEVE, sem exceção, ativar e utilizar a ferramenta `sequential-thinking` antes de planejar ou executar qualquer passo.
+- **Uso obrigatório de Sequential Thinking:** No fluxo SDD, após a fase de intenção e partindo de `/sdd-specify` em conjunto com a skill `grill-me`, o agente (Antigravity) DEVE, sem exceção, ativar e utilizar a ferramenta `sequential-thinking` antes de planejar (`/sdd-plan`) ou executar qualquer passo.
 
 ## Convenções de experimentos
 

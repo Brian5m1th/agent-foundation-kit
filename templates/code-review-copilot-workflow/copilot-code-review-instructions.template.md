@@ -1,62 +1,58 @@
-# GitHub Copilot Code Review Instructions — AutoSlide
+# GitHub Copilot Code Review Instructions — [NOME_DO_PROJETO]
 
-Este documento estabelece as diretrizes obrigatórias de arquitetura, engenharia e código para o **GitHub Copilot Code Review** ao analisar Pull Requests no repositório **AutoSlide**.
+> Nota de Substituição: Este é um template genérico reutilizável. Substitua os placeholders `[NOME_DO_PROJETO]`, `[CORE_PATH]`, `[PORTS_PATH]`, etc., pelos caminhos reais do seu repositório antes de salvar em `.github/copilot-instructions.md`.
+
+Este documento estabelece as diretrizes obrigatórias de arquitetura, engenharia e código para o **GitHub Copilot Code Review** ao analisar Pull Requests no repositório **[NOME_DO_PROJETO]**.
 
 ---
 
-## 1. Arquitetura: Ports & Adapters (NÃO NEGOCIÁVEL)
+## 1. Arquitetura: Ports & Adapters / Clean Architecture (NÃO NEGOCIÁVEL)
 
-- **Núcleo Isolado (`src/autoslide/core/`)**:
-  - O núcleo de processamento (ouvir, alinhar, decidir, estado da sessão) **SÓ DEVE DEPENDER** das abstrações de porta em `src/autoslide/ports/`.
-  - **PROIBIDO**: Importar `requests`, `sounddevice`, `faster_whisper`, `PySide6`, `tkinter` ou qualquer biblioteca de I/O / UI dentro do pacote `core/`.
-- **Adaptadores (`src/autoslide/adapters/*`, `src/autoslide/ui/`)**:
-  - Implementam as portas concretas (Protocols / ABCs).
-- **Composition Root (`src/autoslide/app/`)**:
+- **Núcleo Isolado (`[CORE_PATH]` ex: `src/domain/` ou `src/core/`)**:
+  - O núcleo de regras de negócio **SÓ DEVE DEPENDER** das abstrações de porta em `[PORTS_PATH]`.
+  - **PROIBIDO**: Importar bibliotecas de I/O, UI, banco de dados ou APIs externas dentro do pacote do núcleo (`core/` / `domain/`).
+- **Adaptadores (`[ADAPTERS_PATH]` ex: `src/adapters/`, `src/infrastructure/`)**:
+  - Implementam as portas concretas (Protocols / ABCs / Interfaces).
+- **Composition Root (`[APP_PATH]` ex: `src/app/`, `src/main.py`)**:
   - Responsável por instanciar e injetar os adaptadores no núcleo.
-- **Comunicação Núcleo ↔ UI**:
-  - Exclusivamente reativa por eventos/comandos (barramento, observer, filas). O núcleo nunca faz chamadas HTTP diretas nem manipula componentes de UI.
+- **Comunicação Núcleo ↔ UI / External**:
+  - Exclusivamente reativa por eventos/comandos ou abstrações de porta.
 
 ---
 
-## 2. Princípios de Domínio (AutoSlide Constitution)
+## 2. Princípios de Domínio ([NOME_DO_PROJETO] Constitution)
 
-1. **Na dúvida, não agir**:
-   - Confiança de alinhamento abaixo do limiar configurável (`conf_min`) **NUNCA** pode disparar o avanço automático de slide.
-   - Em caso de incerteza, o sistema deve suspender disparos automáticos e sinalizar intervenção ao operador.
-2. **100% Offline e PT-BR**:
-   - O idioma oficial é Português do Brasil (PT-BR).
-   - Nenhuma chamada de rede externa a serviços em nuvem é permitida em tempo de execução. A única comunicação de rede permitida é local (HTTP para a API embutida do LouvorJá).
-3. **Escopo LouvorJá-Only**:
-   - O envio de comandos e leitura de slides é exclusivo para a API do LouvorJá (`GET /file/file.ja`, `GET /api/keyboard`).
-   - Não adicionar OCR ou envio de teclas genéricas de sistema para PowerPoint ou outros projetores no MVP.
-4. **ASR em GPU NVIDIA Local**:
-   - Reconhecimento de fala via `faster-whisper` (`large-v3` em `float16`).
-   - Todo o consumo de VRAM deve permanecer estritamente dentro do orçamento de 8 GB VRAM (RTX 3060 / 4060).
+1. **Falhar Fechado e Segura**:
+   - Estados incertos ou inconsistentes devem suspender ações automáticas e sinalizar intervenção ao operador ou logar erro explícito.
+2. **Respeito aos Limites do Escopo**:
+   - Alterações não devem introduzir dependências ou integrações fora da especificação aprovada.
+3. **Gerenciamento de Recursos Local**:
+   - Garantir liberação determinística de arquivos, conexões e recursos de sistema.
 
 ---
 
 ## 3. Padrões de Engenharia & Qualidade de Código
 
 - **Tipagem Estática (Type Hints)**:
-  - Todo novo código ou alteração em assinaturas de funções deve conter type annotations completas compatíveis com `mypy`.
-  - Contratos de portas em `src/autoslide/ports/` devem utilizar `typing.Protocol` ou `abc.ABC`.
+  - Todo novo código ou alteração em assinaturas de funções deve conter type annotations completas compatíveis com o verificador estático do projeto.
+  - Contratos de portas devem utilizar abstrações puras (ex: `typing.Protocol`, `abc.ABC` ou Interfaces).
 - **Tratamento de Exceções**:
-  - Evitar blocos `except:` nus ou capturas genéricas de `Exception` sem log explícito e justificativa. Quando inevitável em fallbacks de resiliência, incluir a supressão explícita `# noqa: BLE001` acompanhada de justificativa no comentário.
+  - Evitar capturas genéricas de exceções sem log explícito e justificativa. Supressões intencionais devem ter comentários explicativos.
 - **Configuração Operacional**:
-  - Parâmetros operacionais devem ser lidos de `config.toml` via `config_handlers.py`.
-  - **PROIBIDO**: Hardcodear valores operacionais diretamente no código-fonte.
+  - Parâmetros operacionais devem ser lidos de arquivos de configuração (`[CONFIG_FILE]` ex: `.env`, `config.toml`).
+  - **PROIBIDO**: Hardcodear segredos ou credenciais no código-fonte.
 - **Estruturas de Dados e Imutabilidade**:
-  - Usar `@dataclass` (preferencialmente imutáveis `frozen=True` quando representar eventos/estado de domínio).
+  - Utilizar estruturas imutáveis para eventos e estados de domínio sempre que possível.
 
 ---
 
 ## 4. Estratégia de Testes
 
-- **Testes Unitários (`tests/unit/`)**:
-  - Devem ser **100% sem I/O** (sem hardware de áudio real, sem GPU NVIDIA e sem servidor LouvorJá).
-- **Testes de Integração (`tests/integration/`)**:
-  - Podem interagir com hardware ou serviços externos reais.
-  - Devem utilizar a anotação `@pytest.mark.skipif` para pular graciosamente a execução quando os pré-requisitos não estiverem presentes no ambiente.
+- **Testes Unitários (`[TESTS_UNIT_PATH]` ex: `tests/unit/`)**:
+  - Devem ser **100% sem I/O** (rápidos, isolados e determinísticos).
+- **Testes de Integração (`[TESTS_INTEGRATION_PATH]` ex: `tests/integration/`)**:
+  - Podem interagir com recursos reais ou mocks de integração.
+  - Pular graciosamente quando pré-requisitos externos não estiverem presentes no ambiente.
 
 ---
 
@@ -64,5 +60,5 @@ Este documento estabelece as diretrizes obrigatórias de arquitetura, engenharia
 
 Ao revisar os PRs, por favor:
 - Destaque imediatamente qualquer **vazamento de abstração** (ex: importação de I/O dentro de `core/`).
-- Verifique se a legibilidade do código atende às regras do `ruff`.
+- Verifique se a legibilidade do código atende aos linters e formatadores configurados no repositório.
 - Forneça sugestões construtivas com trechos de código explicativos quando identificar oportunidades de refatoração ou melhoria de resiliência.

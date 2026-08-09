@@ -1,5 +1,7 @@
 ---
+name: sdd-analyze
 description: Audita a coerência entre constitution, spec, plan e tasks — antes de implementar
+disable-model-invocation: true
 argument-hint: [NNN-slug opcional]
 allowed-tools: Read, Glob, Grep
 ---

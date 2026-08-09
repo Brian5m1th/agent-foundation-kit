@@ -15,4 +15,4 @@ Sempre que você finalizar uma funcionalidade, correção de bug ou refatoraçã
    - Inclua a menção `@github-copilot review` na descrição ou poste como comentário no PR.
 
 4. **Respeito às Instruções do Repositório**:
-   - Verifique se `.github/copilot-code-review-instructions.md` e `.github/skills/code-review/SKILL.md` existem no repositório antes de solicitar a revisão.
+   - Verifique se `.github/copilot-instructions.md` (ou `.github/copilot-code-review-instructions.md`) e `.github/skills/code-review/SKILL.md` existem no repositório antes de solicitar a revisão.

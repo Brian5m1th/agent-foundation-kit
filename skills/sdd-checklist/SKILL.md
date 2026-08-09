@@ -1,5 +1,7 @@
 ---
+name: sdd-checklist
 description: Gera um checklist de qualidade da especificação numa dimensão
+disable-model-invocation: true
 argument-hint: <dimensão: requisitos | segurança | UX | operação | dados | acessibilidade>
 allowed-tools: Read, Write, Edit, Glob, Grep
 ---

@@ -1,5 +1,7 @@
 ---
+name: sdd-tasks
 description: Quebra spec e plano em tasks ordenadas, agrupadas por história
+disable-model-invocation: true
 argument-hint: [NNN-slug opcional]
 allowed-tools: Read, Write, Edit, Glob, Grep
 ---

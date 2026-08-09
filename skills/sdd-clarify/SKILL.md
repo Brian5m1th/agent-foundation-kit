@@ -1,5 +1,7 @@
 ---
+name: sdd-clarify
 description: Resolve as ambiguidades da spec perguntando ao responsável humano
+disable-model-invocation: true
 argument-hint: [NNN-slug opcional]
 allowed-tools: Read, Edit, Glob, Grep, AskUserQuestion
 ---
