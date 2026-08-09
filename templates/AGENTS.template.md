@@ -81,6 +81,8 @@ Apague todos estes comentários ao instanciar.
 - **Nunca** segredo com valor default no código; configuração ausente derruba o boot em produção.
 - **Nunca** executar operação destrutiva (drop, force push, reset --hard, rm -rf) sem aprovação humana explícita — vale inclusive em modo automático.
 - **Nunca** duas frentes de trabalho editando o mesmo arquivo ao mesmo tempo: ou os conjuntos são disjuntos, ou cada frente trabalha em checkout isolado.
+- **Nunca** deixar rastro de IA em commits, PRs ou comentários (sem `Co-Authored-By` de agente, sem emojis de IA, autor/committer = usuário git local).
+- **Jira First:** O Jira é a única fonte de verdade para o backlog dinâmico. Arquivos `.md` são snapshots estáticos; `.spec/jira/mapa.tsv` é o checkpoint de sincronização.
 - `<invariante do seu domínio, com enforcement>`
 
 ## Fluxo de trabalho
