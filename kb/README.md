@@ -43,6 +43,7 @@ inchados e constituições decorativas:
 | — | [Biblioteca de prompts](prompt-library.md) | Os 52 prompts oficiais + índice de gatilho (intenção → prompt) |
 | — | [mattpocock/skills](mattpocock-skills.md) | Destilação `[INDÚSTRIA]` — disciplinas de engenharia empacotadas como skills |
 | — | [Agent Skills do GitHub](github-agent-skills.md) | Destilação `[INDÚSTRIA]` / `[OFICIAL]` / `[CAMPO]` — matriz extensiva de skills (PO, QA, QC, Dev) |
+| — | [PM Agent Skills](pm-agent-skills.md) | Destilação `[INDÚSTRIA]` / `[CONSOLIDADO]` / `[CAMPO]` — acervo de produto (PRDs, Discovery, Estratégia, Métricas, GTM) |
 | — | [Corpus KbMain](kbmain-corpus.md) | Destilação `[CAMPO]` — acervo agêntico de terceiro em produção, com seus modos de apodrecimento |
 | — | [MemPalace Memory System](mempalace-memory-system.md) | Destilação `[CAMPO]` — sistema de memória local verbatim (Wings/Rooms/Drawers, AAAK dialect, L0-L3 stack e query sanitizer) |
 | — | [AI Workflows & Eval Pipelines](ai-workflows-eval-pipelines.md) | Destilação `[INDÚSTRIA]` / `[RECENTE]` — taxonomia de motores de IA e pipelines de avaliação offline (Evals) |

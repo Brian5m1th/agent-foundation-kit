@@ -11,10 +11,10 @@ estão em [RULES.md](RULES.md); este arquivo trata do **processo**.
 
 1. **Laboratório de experimentos** — protótipos descartáveis em `experiments/<data-slug>/`. Cada um é
    autocontido, com uma linha explicando a hipótese testada, e pode ser deletado sem afetar nada.
-2. **Fonte de verdade** — `kb/`, `.specify/`, `.claude/commands/` e `templates/` são o **upstream**
+2. **Fonte de verdade** — `kb/`, `skills/`, `.specify/`, `.claude/commands/` e `templates/` são o **upstream**
    consumido pelos projetos reais em `C:\workspace\` (Back-End, Front-End, Freelancer, WWMA-Tech).
 
-Consequência prática: mudanças em `experiments/` são livres. Mudanças em `.specify/`,
+Consequência prática: mudanças em `experiments/` são livres. Mudanças em `skills/`, `.specify/`,
 `.claude/commands/` e `templates/` afetam outros projetos — trate-as como mudança de biblioteca
 compartilhada, e edite sempre aqui, **nunca na cópia instalada** (AP-15 · Cópia Manual Multi-Harness).
 
@@ -106,6 +106,7 @@ estrutura de pastas é a mesma.
 - **Numeração é sequencial e imutável** — specs (`001-`) e identificadores da KB. Item errado é
   corrigido no lugar ou marcado obsoleto; **nunca renumerado**, porque quebra citação externa.
 - **Toda afirmação nova na KB entra com selo** e, quando `[CAMPO]`, com o arquivo citado.
+- **Uso obrigatório de Sequential Thinking:** No fluxo SDD, após a fase de intenção e partindo de `spec-init` em conjunto com a skill `grill-me`, o agente (Antigravity) DEVE, sem exceção, ativar e utilizar a ferramenta `sequential-thinking` antes de planejar ou executar qualquer passo.
 
 ## Convenções de experimentos
 

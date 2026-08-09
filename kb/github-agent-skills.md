@@ -22,10 +22,18 @@ graph LR
 
 ## 2. Skills por Papel
 
-### 2.1 Product Owner (PO) — Especificação & Alinhamento de Produto
+### 2.1 Product Owner (PO) & Product Manager (PM) — Especificação & Alinhamento de Produto
+
+> Guia detalhado do acervo de produto: [`pm-agent-skills.md`](pm-agent-skills.md).
 
 | Skill / Comando | Origem / Estrelas | O que faz | Selo | Template no `labs` |
 |---|---|---|---|---|
+| `pm-prd-spec` | Snyk / Enterpret / PM Skills | Elabora PRDs (Product Requirement Documents), RFCS e especificações funcionais completas com user flows e análise de riscos. | `[CONSOLIDADO]` | [`pm-prd-spec/SKILL.md`](../templates/skills/pm-prd-spec/SKILL.md) |
+| `pm-feedback-analyzer` | Enterpret / Snyk | Ingestão e clustering de feedback de usuários, tickets e pesquisas em JTBD (Jobs-to-be-Done) e matrizes de dor. | `[INDÚSTRIA]` | [`pm-feedback-analyzer/SKILL.md`](../templates/skills/pm-feedback-analyzer/SKILL.md) |
+| `pm-strategy-prioritization` | Snyk / `phuryn/pm-skills` | Priorização de iniciativas por RICE, ICE e Kano Model, teardowns de concorrentes e roadmaps de produto. | `[CONSOLIDADO]` | [`pm-strategy-prioritization/SKILL.md`](../templates/skills/pm-strategy-prioritization/SKILL.md) |
+| `pm-jira-linear-stories` | Mohit / `phuryn/pm-skills` | Quebra épicos em User Stories prontas para Jira/Linear com critérios de aceite em Gherkin (`Given/When/Then`). | `[INDÚSTRIA]` | [`pm-jira-linear-stories/SKILL.md`](../templates/skills/pm-jira-linear-stories/SKILL.md) |
+| `pm-metrics-north-star` | Mohit / Enterpret | Define a North Star Metric, árvore de métricas de suporte, especificações de telemetria e planos de teste A/B. | `[CONSOLIDADO]` | [`pm-metrics-north-star/SKILL.md`](../templates/skills/pm-metrics-north-star/SKILL.md) |
+| `pm-release-gtm` | Snyk / `phuryn/pm-skills` | Redação de Release Notes técnicas/executivas, changelogs internos e comunicações de Go-To-Market (GTM). | `[INDÚSTRIA]` | [`pm-release-gtm/SKILL.md`](../templates/skills/pm-release-gtm/SKILL.md) |
 | `po-user-stories` | GitHub / Community | Converte ideias brutas em PRDs, User Stories estruturadas com critérios de aceite em Gherkin (`Given/When/Then`) e mapeamento de riscos. | `[INDÚSTRIA]` | [`po-user-stories/SKILL.md`](../templates/skills/po-user-stories/SKILL.md) |
 | `grill-me` | `mattpocock/skills` (1.5k+ ★) | Entrevista socrática implacável de 8 regras para resolver ambiguidades de produto antes da engenharia tocar no código. | `[INDÚSTRIA]` | [`grill-me/SKILL.md`](../templates/skills/grill-me/SKILL.md) |
 | `wayfinder` | `mattpocock/skills` | Mapeia projetos complexos envoltos em incerteza em tickets de decisão desbloqueados. | `[INDÚSTRIA]` | `kb/mattpocock-skills.md` |

@@ -29,6 +29,7 @@ Workflows operacionais reutilizáveis que orquestram tarefas complexas de forma 
 - **[`teamwork-preview.md`](agent-workflows/teamwork-preview.md)** — Pipeline autônomo FIFO de tarefas (`TODO → Worktree → SDD → Code → PR → DONE`).
 - **[`orc3-sequential-pr-review.md`](agent-workflows/orc3-sequential-pr-review.md)** — Agente de remediação sequencial de PRs abertos (`Discovery → Active PR Lock → Fix → Test → Push`).
 - **[`team-agents-discovery-backlog-master.md`](agent-workflows/team-agents-discovery-backlog-master.md)** — Esteira multidisciplinar de Discovery de Produto/Código, inventário de gaps, Matriz de Saúde e Master Backlog.
+- **[`code-review-copilot-workflow/`](code-review-copilot-workflow/README.md)** — Pacote modular completo de Code Review + GitHub Copilot Pro (Prompt + Skill + Instructions).
 
 ## As quatro regras de manutenção
 
