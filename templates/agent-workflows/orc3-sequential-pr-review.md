@@ -124,7 +124,7 @@ Other PRs may only be read for context or dependency analysis. They must not rec
 Inspect:
 - PR title and description;
 - Linked issues/specs;
-- Complete commit history and full diff (`git diff`);
+- Complete commit history and full PR diff (`gh pr diff <ACTIVE_PR>` or `git diff <base>...HEAD`);
 - Changed files and surrounding code context;
 - Relevant unit/integration tests.
 
