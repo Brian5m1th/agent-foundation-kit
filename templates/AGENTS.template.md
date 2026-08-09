@@ -90,15 +90,18 @@ Apague todos estes comentários ao instanciar.
 <!-- Como o trabalho entra e sai. Calibrado por porte — este é o item de maior
      consenso em toda a literatura: o peso do processo é proporcional ao tamanho da mudança. -->
 
+- **Protocolo de Frente Automático:** Toda nova funcionalidade, sprint ou mudança relevante dispara obrigatoriamente: **Worktree por Frente (`EXE-05`, `RGIT-11`)** ──► **Spec + Entrevista (`INT-08`)** ──► **Plan & Tasks (`PLN-02`)** ──► **Execução com Commits por Task (`RGIT-02/03`)** ──► **Auditoria Converge (`I-09`)** ──► **Squash Merge & Cleanup (`RGIT-12/14`)**.
+
 | Porte | Processo |
 |---|---|
 | Correção de uma frase | Direto ao código + verificação |
-| Feature média | Plano → implementação → verificação |
-| Módulo novo / mudança estrutural | Spec → plano → tasks → implementação → auditoria |
+| Feature média | Worktree por frente → Plano → implementação → verificação |
+| Módulo novo / mudança estrutural | Worktree por frente → Spec + Entrevista → plano → tasks → subagentes → auditoria virgem |
 
-- **Branch/commit:** `<padrão>`. Commit por unidade concluída, nunca um commit no fim.
-- **Trabalho paralelo:** checkout isolado por frente — nunca por task. Isolamento é de arquivo, não de runtime: portas, banco e serviços também precisam ser separados.
-- **Definition of Done:** `<harness que precisa passar>` **e** documentação de intenção atualizada.
+- **Branch/commit:** Conventional Branch (`<tipo>/<slug>`, `RGIT-05`) e Conventional Commit por task concluída (`RGIT-02`, `RGIT-03`). Proibido `spec/` ou `sdd/` no nome da branch.
+- **Trabalho paralelo:** checkout isolado por frente (Worktree `EXE-05`, `RGIT-11`) — nunca na branch `main`. *Isolamento é de arquivo, não de runtime: portas, banco e serviços continuam compartilhados salvo se configurados explicitamente.*
+- **Definition of Done:** `<harness que precisa passar>` **e** relatório `/sdd-converge` aprovado.
+
 
 ## Autonomia
 

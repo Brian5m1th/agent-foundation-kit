@@ -1,0 +1,41 @@
+#!/bin/sh
+# Git Hook: commit-msg (RGIT-01, RGIT-02, RGIT-10, RGIT-15)
+# Valida Conventional Commits e impede atribuicao automatica de autoria a IAs.
+
+commit_msg_file="$1"
+commit_msg=$(cat "$commit_msg_file")
+
+# 1. Checa atribuicao de autoria de IA (RGIT-01)
+if echo "$commit_msg" | grep -iqE "(Co-Authored-By:.*(Claude|Copilot|GPT|Gemini|ChatGPT|AI)|Generated with.*Claude|Made with.*Claude)"; then
+    echo "❌ [RGIT-01 ERROR] Commit rejeitado: Mensagem contem assinatura de IA ou Co-Authored-By."
+    echo "    O autor do commit deve ser exclusivamente o humano."
+    exit 1
+fi
+
+# Pula checagem de formato para commits automaticos de merge ou revert
+if echo "$commit_msg" | grep -qE "^(Merge branch|Revert )"; then
+    exit 0
+fi
+
+# 2. Valida Conventional Commit (RGIT-02)
+# Formato: tipo(escopo): descricao OU tipo: descricao
+first_line=$(echo "$commit_msg" | head -n 1)
+
+pattern="^(feat|fix|refactor|test|docs|chore|perf|build|ci)(\([a-z0-9_.-]+\))?!?: .+$"
+
+if ! echo "$first_line" | grep -qE "$pattern"; then
+    echo "❌ [RGIT-02 ERROR] Mensagem de commit invalida: '$first_line'"
+    echo "    Formato esperado: tipo(escopo): descricao OU tipo: descricao"
+    echo "    Tipos permitidos: feat, fix, refactor, test, docs, chore, perf, build, ci"
+    echo "    Exemplo valido: feat(auth): adiciona suporte a login OAuth2"
+    exit 1
+fi
+
+# 3. Valida tamanho do assunto (<= 100 chars)
+subject_len=$(echo "$first_line" | wc -c)
+if [ "$subject_len" -gt 101 ]; then
+    echo "❌ [RGIT-02 ERROR] Assunto do commit excede 100 caracteres ($subject_len chars)."
+    exit 1
+fi
+
+exit 0

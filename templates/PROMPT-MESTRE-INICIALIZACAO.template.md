@@ -63,7 +63,7 @@ Formalize e siga estritamente o pipeline de desenvolvimento abaixo:
 ```text
 EnterWorktree ──> /grill-me ──> spec-new ──> spec-review ──> spec-plan ──> spec-tasks
                                                                                   │
-   ExitWorktree <── PR <── /spec-converge (sessão limpa) <── Implementação <──────┘
+   ExitWorktree <── PR <── /sdd-converge (sessão limpa) <── Implementação <───────┘
 ```
 
 **Regras Invioláveis do Pipeline:**
@@ -74,12 +74,12 @@ EnterWorktree ──> /grill-me ──> spec-new ──> spec-review ──> spe
 5. **Commit por Task Concluída**: Commits incrementais por funcionalidade concluída, em formato Conventional Commits (`tipo(escopo): descrição`).
 6. **Zero Rastro de IA**: Proibido `Co-Authored-By` de agente, emojis de IA ou menções à geração por IA em commits, PRs ou comentários. Autor e committer são sempre o usuário git local.
 7. **Stage Explícito**: `git add` por caminho explícito (nunca `git add .` ou `git add -A`).
-8. **Gate de Convergência (`/spec-converge`)**: Auditoria em sessão limpa (`/clear`) antes do PR. `CANNOT_PROCEED` impede abertura de PR.
+8. **Gate de Convergência (`/sdd-converge`)**: Auditoria em sessão limpa (`/clear`) antes do PR. `CANNOT_PROCEED` impede abertura de PR.
 
 ---
 
 ### 4. Criação e Adaptação da Skill `jira-sync`
-Crie os arquivos `.agents/skills/jira-sync/SKILL.md` e `.claude/skills/jira-sync/SKILL.md` adaptados ao projeto `<PROJ>` no Jira (`<SITE>`):
+Crie o arquivo `.claude/skills/jira-sync/SKILL.md` (localização canônica no Claude Code) e, opcionalmente, `.agents/skills/jira-sync/SKILL.md` (para compatibilidade multi-agente), adaptados ao projeto `<PROJ>` no Jira (`<SITE>`):
 - **Regra Zero (Jira First)**: O backlog operacional vive no Jira (`<PROJ>`). Os arquivos `.md` são apenas snapshots datados.
 - **Coordenadas**: Registrar site, board URL, cloudId (descobrindo automaticamente via MCP `getAccessibleAtlassianResources` se não informado), projeto (`<PROJ>`), tipos (`Epic`, `Task`, `Bug`, `Story`, `Subtask`), statuses (`To Do`, `In Progress`, `In Review`, `Done`) e transições (`11` → To Do, `21` → In Progress, `31` → In Review, `41` → Done).
 - **Cascata em 4 Degraus (JQL)**: Deduplicação por **substantivos do domínio** (descartando palavras genéricas como `bug`, `erro`, `corrigir`, `ajuste`).
