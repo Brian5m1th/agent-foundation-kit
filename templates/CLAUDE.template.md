@@ -82,7 +82,12 @@ Se a verificação não puder rodar neste ambiente, diga **não verificado**. Nu
 
 | Comando | Para quê |
 |---|---|
-| `/<comando>` | `<uma linha>` |
+| `/grill-me` | Entrevista interativa de alinhamento e desafio de design |
+| `/sdd-specify` | Criar nova especificação de intenção (`spec.md`) |
+| `/sdd-plan` | Elaborar plano de implementação e arquitetura (`plan.md`) |
+| `/sdd-tasks` | Decompor plano em tarefas testáveis por história (`tasks.md`) |
+| `/sdd-converge` | Auditar código contra especificação em sessão limpa (`/clear`) |
+| `/jira-sync` | Sincronizar backlog e ciclo de vida de status com o Jira |
 
 Skills em `.claude/skills/` são carregadas sozinhas quando relevantes — não precisa invocá-las.
 

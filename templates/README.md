@@ -22,6 +22,9 @@ Copy-Item C:\workspace\labs\templates\CLAUDE.template.md "$p\CLAUDE.md"
 Depois: preencha os `<placeholders>`, **apague todos os comentários HTML**, e rode uma sessão real para
 observar se o comportamento mudou.
 
+### Prompt Mestre para Inicialização
+Para automatizar a inicialização de governança, pipeline SDD, integração Jira First e aferição empírica em um novo projeto, utilize o prompt mestre disponível em [`PROMPT-MESTRE-INICIALIZACAO.template.md`](PROMPT-MESTRE-INICIALIZACAO.template.md).
+
 ## Agent Workflows (`templates/agent-workflows/`)
 
 Workflows operacionais reutilizáveis que orquestram tarefas complexas de forma serializada:
