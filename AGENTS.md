@@ -100,6 +100,7 @@ estrutura de pastas é a mesma.
 - **Numeração é sequencial e imutável** — specs (`001-`) e identificadores da KB. Item errado é
   corrigido no lugar ou marcado obsoleto; **nunca renumerado**, porque quebra citação externa.
 - **Toda afirmação nova na KB entra com selo** e, quando `[CAMPO]`, com o arquivo citado.
+- **Integração Jira + SDD:** Quando a tarefa tiver ticket Jira associado (ex: `IA-148`), o agente transiciona o status automaticamente via `.specify/scripts/sync-jira.ps1` ou Atlassian MCP (`todo` -> `implement` -> `review` -> `done`).
 
 ## Convenções de experimentos
 

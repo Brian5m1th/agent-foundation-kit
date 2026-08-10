@@ -96,6 +96,7 @@ Apague todos estes comentários ao instanciar.
 
 - **Branch/commit:** `<padrão>`. Commit por unidade concluída, nunca um commit no fim.
 - **Trabalho paralelo:** checkout isolado por frente — nunca por task. Isolamento é de arquivo, não de runtime: portas, banco e serviços também precisam ser separados.
+- **Integração Jira + SDD:** Quando a tarefa tiver ticket Jira (ex: `PROJ-123`), o agente transiciona automaticamente o status via `pwsh .specify/scripts/sync-jira.ps1 -IssueKey "<TICKET>" -Stage <todo|implement|review|done>` ou via Atlassian MCP (`transitionJiraIssue`).
 - **Definition of Done:** `<harness que precisa passar>` **e** documentação de intenção atualizada.
 
 ## Autonomia
