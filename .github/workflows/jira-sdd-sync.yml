@@ -3,8 +3,6 @@ name: Automated Jira SDD Workflow Sync
 on:
   pull_request:
     types: [opened, ready_for_review, closed]
-  push:
-    branches: [main]
 
 jobs:
   jira-sync:
@@ -27,8 +25,8 @@ jobs:
           issue: ${{ steps.extract_key.outputs.issue_key }}
           transition: "In Review"
 
-      - name: Transition to 'Done' on PR Merged / Main Push
-        if: (github.event.pull_request.merged == true || github.event_name == 'push') && steps.extract_key.outputs.issue_key != ''
+      - name: Transition to 'Done' on PR Merged
+        if: github.event.pull_request.merged == true && steps.extract_key.outputs.issue_key != ''
         uses: atlassian/gajira-transition@v3
         with:
           issue: ${{ steps.extract_key.outputs.issue_key }}

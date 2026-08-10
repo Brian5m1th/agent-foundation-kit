@@ -1,7 +1,7 @@
 # Arquitetura de Automação do Fluxo Jira + SDD & Agentes AI
 
 > **Instância Jira:** [wwmatech.atlassian.net](https://wwmatech.atlassian.net)  
-> **Cloud ID:** `5db89c98-8586-4822-b62c-132ad106010b`  
+> **Cloud ID:** `<JIRA_CLOUD_ID>` (configurado via ambiente / MCP)  
 > **Repositório:** Upstream `labs`  
 > **Última Atualização:** 2026-08-10
 

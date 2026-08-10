@@ -39,18 +39,23 @@ $TargetTransition = $TransitionMap[$Stage]
 
 Write-Host "🔄 [Jira Sync] Transicionando $IssueKey para '$($TargetTransition.Name)' (Stage: $Stage)..." -ForegroundColor Cyan
 
-# Se variáveis de ambiente do Jira estiverem configuradas, executa REST API direto
-if ($env:JIRA_SITE_URL -and $env:JIRA_EMAIL -and $env:JIRA_API_TOKEN) {
+# Suporte duplo de variáveis de ambiente (gajira vs padrão customizado)
+$JiraBaseUrl = if ($env:JIRA_BASE_URL) { $env:JIRA_BASE_URL } else { $env:JIRA_SITE_URL }
+$JiraEmail   = if ($env:JIRA_USER_EMAIL) { $env:JIRA_USER_EMAIL } elseif ($env:JIRA_EMAIL) { $env:JIRA_EMAIL } else { $env:JIRA_API_USER }
+$JiraApiToken = $env:JIRA_API_TOKEN
+
+if ($JiraBaseUrl -and $JiraEmail -and $JiraApiToken) {
+    $AuthString = "$($JiraEmail):$($JiraApiToken)"
     $Headers = @{
-        Authorization = "Basic " + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($env:JIRA_EMAIL):$($env:JIRA_API_TOKEN)"))
-        "Content-Type" = "application/json"
+        Authorization = "Basic " + [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($AuthString))
+        "Content-Type"  = "application/json"
     }
 
     $Body = @{
         transition = @{ id = $TargetTransition.Id }
     } | ConvertTo-Json
 
-    $Url = "$($env:JIRA_SITE_URL)/rest/api/3/issue/$IssueKey/transitions"
+    $Url = "$($JiraBaseUrl.TrimEnd('/'))/rest/api/3/issue/$IssueKey/transitions"
 
     try {
         $Response = Invoke-RestMethod -Uri $Url -Method Post -Headers $Headers -Body $Body
@@ -59,7 +64,7 @@ if ($env:JIRA_SITE_URL -and $env:JIRA_EMAIL -and $env:JIRA_API_TOKEN) {
         Write-Error "❌ Falha ao transicionar no Jira REST API: $_"
     }
 } else {
-    Write-Host "ℹ️ Variáveis de ambiente JIRA_SITE_URL/JIRA_EMAIL/JIRA_API_TOKEN não encontradas." -ForegroundColor Yellow
+    Write-Host "ℹ️ Variáveis de ambiente JIRA_BASE_URL (ou JIRA_SITE_URL), JIRA_USER_EMAIL (ou JIRA_EMAIL) e JIRA_API_TOKEN não encontradas." -ForegroundColor Yellow
     Write-Host "💡 Transição simulada localmente / delegada ao Atlassian MCP Tool (transitionJiraIssue)." -ForegroundColor Yellow
     Write-Host "   Issue: $IssueKey | Transição Alvo ID: $($TargetTransition.Id) ($($TargetTransition.Name))" -ForegroundColor Gray
 }
