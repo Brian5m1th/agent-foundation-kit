@@ -106,7 +106,7 @@ estrutura de pastas é a mesma.
 - **Numeração é sequencial e imutável** — specs (`001-`) e identificadores da KB. Item errado é
   corrigido no lugar ou marcado obsoleto; **nunca renumerado**, porque quebra citação externa.
 - **Toda afirmação nova na KB entra com selo** e, quando `[CAMPO]`, com o arquivo citado.
-- **Integração Jira + SDD:** Quando a tarefa tiver ticket Jira associado (ex: `IA-148`), o agente transiciona o status automaticamente via `.specify/scripts/sync-jira.ps1` ou Atlassian MCP (`todo` -> `implement` -> `review` -> `done`).
+- **Integração Jira + SDD:** Quando a tarefa tiver ticket Jira associado (ex: `IA-148`), o agente transiciona o status automaticamente do Backlog para o Quadro Ativo ao iniciar (`todo` -> `implement` -> `review`) e remove do Quadro Ativo ao finalizar (`done`) via `.specify/scripts/sync-jira.ps1` ou Atlassian MCP (`transitionJiraIssue`).
 - **Uso obrigatório de Sequential Thinking:** No fluxo SDD, após a fase de intenção e partindo de `/sdd-specify` em conjunto com a skill `grill-me`, o agente (Antigravity) DEVE, sem exceção, ativar e utilizar a ferramenta `sequential-thinking` antes de planejar (`/sdd-plan`) ou executar qualquer passo.
 
 ## Convenções de experimentos

@@ -102,7 +102,7 @@ Apague todos estes comentários ao instanciar.
 - **Trabalho paralelo:** checkout isolado por frente (Worktree `EXE-05`, `RGIT-11`) — nunca na branch `main`. *Isolamento é de arquivo, não de runtime: portas, banco e serviços continuam compartilhados salvo se configurados explicitamente.*
 - **Definition of Done:** `<harness que precisa passar>` **e** relatório `/sdd-converge` aprovado.
 
-- **Integração Jira + SDD:** Quando a tarefa tiver ticket Jira (ex: `PROJ-123`), o agente transiciona automaticamente o status via `pwsh .specify/scripts/sync-jira.ps1 -IssueKey "<TICKET>" -Stage <todo|implement|review|done>` ou via Atlassian MCP (`transitionJiraIssue`).
+- **Integração Jira + SDD:** Quando a tarefa tiver ticket Jira (ex: `PROJ-123`), o agente move a tarefa automaticamente do Backlog para o Quadro Ativo ao iniciar (`todo` / `implement` / `review`) e a conclui/remove do Quadro Ativo ao finalizar (`done`) via `pwsh .specify/scripts/sync-jira.ps1 -IssueKey "<TICKET>" -Stage <todo|implement|review|done>` ou via Atlassian MCP (`transitionJiraIssue`).
 
 ## Autonomia
 

@@ -67,3 +67,25 @@ Disparado automaticamente ao abrir PR ou ao realizar merge na branch `main`. Ext
 
 ### C. Hook nos Agentes AI (Atlassian MCP Tool)
 Quando o agente executa comandos como `/sdd-implement` ou `/sdd-converge`, ele utiliza a ferramenta `transitionJiraIssue` nativa do MCP Server do Atlassian para transicionar o ticket sem intervenção manual.
+
+---
+
+## 4. Política de Visibilidade no Quadro (Backlog vs. Active Board)
+
+Para garantir que o **Quadro de Trabalho (Active Board)** exiba **apenas as tarefas que estão sendo executadas no momento**, a automação segue a seguinte regra de visibilidade:
+
+```mermaid
+graph LR
+    Backlog["📦 Backlog (To Do / Rascunho)"] -->|Selecionado / SDD Start| Board["📌 Quadro Ativo (In Progress / In Review)"]
+    Board -->|Merge em Main / Done| Archived["✅ Concluído (Removido do Quadro Ativo)"]
+```
+
+1. **Entrada no Quadro Ativo (`To Do` / `In Progress`):**
+   - Sempre que uma tarefa, bug ou story é selecionada para execução (ao rodar `/sdd-specify`, `/sdd-plan` ou `/sdd-implement`), o item sai do Backlog e entra no **Quadro Ativo**.
+
+2. **Manutenção no Quadro (`In Progress` & `In Review`):**
+   - O item permanece visível no Quadro Ativo durante todo o ciclo de desenvolvimento e auditoria de código (PR).
+
+3. **Remoção do Quadro Ativo após Conclusão (`Done`):**
+   - Assim que o PR é mesclado e o status muda para `Done`, o item é concluído. O filtro do Quadro Ativo (`status != Done`) remove a tarefa concluída da visualização principal, deixando o quadro **limpo e focado exclusivamente nas tarefas em andamento**.
+
