@@ -276,6 +276,49 @@ Claude Code passar a resolver colisão de nome entre plugin e comando de projeto
 
 ---
 
+## ADR-012 · Absorver o corpus KbMain por destilação, sem importar a frota de agentes
+
+**Problema.** Um acervo pessoal em produção — 619 arquivos, 493 de KB em 36 domínios, 58 agentes, um
+dossiê metodológico e um kit de verificação — cobre lacunas reais desta KB e, diferente de qualquer
+fonte anterior, **traz evidência do que apodreceu**. Importamos, destilamos, ou ignoramos?
+
+**Alternativas.**
+
+| # | Alternativa | Avaliação |
+|---|---|---|
+| A | Importar a frota de 58 agentes para `.claude/agents/` | Mesma objeção de ADR-011, agora com 58 itens: `.claude/` é upstream de quatro projetos reais. Pior — ~12 são vendor-locked e 6 são inseparáveis de um produto educacional de terceiro. Colisão de gatilho garantida com os 9 `sdd-*` (AP-14) |
+| B | Copiar a árvore `kb/` do corpus para cá | Duplicaria 36 domínios majoritariamente vendor-específicos, e a estrutura de origem tem defeitos documentados (7 domínios fora do registro, dois templates mortos). Importaria a doença junto com a cura |
+| C | Ignorar | Perde o único acervo `[CAMPO]` disponível que documenta **os próprios modos de apodrecimento** — evidência que nenhuma fonte oficial oferece |
+| D | **Destilar na KB com identificadores citáveis, incluindo o que foi recusado** | Escolhida |
+
+**Critérios.** Efeito nos projetos consumidores · custo de contexto por sessão · rastreabilidade da
+afirmação · **e um critério novo, que ADR-011 não precisou**: separabilidade do material sensível.
+
+**Trade-offs.** O critério novo é o que decide. O corpus contém identidade de cliente com esquema de
+dados sensíveis, endpoint de produção com identificadores acionáveis, documentação corporativa restrita
+e regras comerciais proprietárias. **A alternativa B tornaria a KB — que é upstream de quatro projetos —
+um vetor de propagação desse material.** A destilação permite absorver a engenharia e deixar o resto
+para trás por construção, não por diligência: o que não foi escrito não pode vazar.
+
+**Escolha.** D. A destilação vira [kbmain-corpus.md](kbmain-corpus.md): cinco padrões (CTX-08, CTX-09,
+EXE-07, VER-07 e a arquitetura AR-04), quatro anti-padrões (AP-38 a AP-41), duas heurísticas (H-19,
+H-20), um invariante (I-19) e uma árvore de decisão (AD-04). O que foi **recusado** está na §5 de lá,
+e o manuseio do material sensível na §7 — sem as duas, a destilação seria propaganda.
+
+**Consequências.** Confirma o precedente de ADR-011 e o estende em três pontos:
+
+1. **Fonte `[CAMPO]` de terceiro é admissível**, desde que a distinção entre observar e endossar fique
+   explícita. O corpus é evidência de que algo foi feito, não de que foi feito certo — daí AP-38 a
+   AP-41 saírem do mesmo acervo que fornece VER-07.
+2. **O selo `[CAMPO]` passa a ter duas origens** — projetos do titular e acervos de terceiros
+   observados. A distinção fica no cabeçalho de cada destilação, não no selo, porque criar um selo novo
+   violaria ADR-010 (selos não se multiplicam por conveniência).
+3. **Material sensível vira critério de decisão de ADR**, não etapa de revisão posterior. É a diferença
+   entre não vazar por processo e não vazar por arquitetura.
+
+O inventário sensível completo **não vive nesta KB** — fica no relatório de análise que acompanhou a
+leitura, fora do que é consumido pelos projetos. Aqui só a categoria e a lição de engenharia (§7 de lá).
+
 ## Grafo de dependência
 
 ```mermaid
@@ -290,10 +333,16 @@ graph TD
     A2 --> A3
     A9 --> A11[ADR-011 Absorver em vez de instalar]
     A10 --> A11
+    A11 --> A12[ADR-012 Absorver KbMain]
+    A10 --> A12
 ```
 
 **ADR-009 é a raiz.** Se ela cair, quase tudo é reconstruído. **ADR-003 é a de maior efeito prático**:
 é a que separa fluxo com garantia de fluxo com aparência de garantia.
+
+**ADR-011 → ADR-012 é a única cadeia de precedente da lista.** ADR-011 decidiu *como* absorver
+conhecimento externo; ADR-012 aplicou a decisão a um caso com uma variável nova (material sensível) e
+a estendeu. Precedente que sobrevive ao segundo caso é precedente; ao primeiro, é só uma decisão.
 
 ---
 

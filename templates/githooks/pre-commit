@@ -1,0 +1,28 @@
+#!/bin/sh
+# Git Hook: pre-commit (RGIT-08, RSEC-01, RGIT-15)
+# Valida ausencia de credenciais, arquivos .env e artefatos de build staging.
+
+# 1. Impede staging de arquivos .env (RGIT-08)
+if git diff --cached --name-only | grep -E "(^|/)\.env($|\..*)"; then
+    echo "❌ [RGIT-08 ERROR] Rejeitado: Tentativa de commitar arquivo .env ou variante."
+    echo "    Utilize .env.example e adicione .env ao .gitignore."
+    exit 1
+fi
+
+# 2. Impede staging de artefatos pesados / venvs (RGIT-08)
+if git diff --cached --name-only | grep -E "(^|/)(node_modules|target|dist|\.venv)/"; then
+    echo "❌ [RGIT-08 ERROR] Rejeitado: Tentativa de commitar diretorios de build/deps (node_modules, target, dist, .venv)."
+    exit 1
+fi
+
+# 3. Varredura basica de segredos / chaves privadas no diff (RSEC-01)
+# Exclui o proprio arquivo de hook para evitar falso-positivo na definicao do regex
+staged_files=$(git diff --cached --name-only | grep -v "^templates/githooks/")
+if [ -n "$staged_files" ]; then
+    if git diff --cached -U0 -- $staged_files | grep -iE "(BEGIN PRIVATE KEY|AWS_SECRET_ACCESS_KEY|AKIA[0-9A-Z]{16}|ghp_[a-zA-Z0-9]{36})"; then
+        echo "❌ [RSEC-01 ERROR] Rejeitado: Detectada possivel chave privada ou token no diff."
+        exit 1
+    fi
+fi
+
+exit 0

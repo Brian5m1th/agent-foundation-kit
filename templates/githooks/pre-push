@@ -1,0 +1,31 @@
+#!/bin/sh
+# Git Hook: pre-push (RGIT-05, RGIT-15)
+# Valida nome da branch (Conventional Branching) e proibe uso de spec/ ou sdd/ no nome da branch.
+
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+# Permite push se estiver na main/master com confirmacao ou bypass explicito se necessario
+if [ "$current_branch" = "main" ] || [ "$current_branch" = "master" ]; then
+    echo "⚠️ [RGIT-05 WARNING] Voce esta fazendo push direto na branch default '$current_branch'."
+fi
+
+# Rejeita estritamente prefixos spec/ ou sdd/
+if echo "$current_branch" | grep -qE "^(spec|sdd)/"; then
+    echo "❌ [RGIT-05 ERROR] Nome de branch invalido: '$current_branch'"
+    echo "    E PROIBIDO usar os prefixos 'spec/' ou 'sdd/' no nome da branch."
+    echo "    Use tipos do RGIT-02: feat/<slug>, fix/<slug>, refactor/<slug>, etc."
+    exit 1
+fi
+
+# Valida se a branch segue Conventional Branching (exceto main/master/worktree-*)
+if [ "$current_branch" != "main" ] && [ "$current_branch" != "master" ] && ! echo "$current_branch" | grep -qE "^worktree-"; then
+    pattern="^(feat|fix|refactor|test|docs|chore|perf|build|ci)/.+$"
+    if ! echo "$current_branch" | grep -qE "$pattern"; then
+        echo "❌ [RGIT-05 ERROR] Branch '$current_branch' nao segue a convenção de Conventional Branching."
+        echo "    Prefixos permitidos: feat/, fix/, refactor/, test/, docs/, chore/, perf/, build/, ci/"
+        echo "    Exemplo valido: feat/001-autenticacao"
+        exit 1
+    fi
+fi
+
+exit 0

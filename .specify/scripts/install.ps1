@@ -1,16 +1,16 @@
 <#
 .SYNOPSIS
-    Instala o fluxo SDD (upstream: C:\workspace\labs) em outro projeto ou globalmente.
+    Instala o fluxo SDD, Git Hooks e comandos (upstream: C:\workspace\labs) em outro projeto ou globalmente.
 
 .DESCRIPTION
     Estrutura espelhada do GitHub Spec Kit (github.github.io/spec-kit), em português e com as
     extensões do corpus de Engenharia de Intenção (docs/intent-engineering).
 
-    Sem -Target: instala apenas os slash commands em ~/.claude/commands.
-    Com -Target <pasta>: instala em <pasta>/.claude/commands e copia .specify/ (constitution,
-    templates) para o projeto.
+    Sem -Target: instala apenas os slash commands em ~/.claude/commands e os Git Hooks no repo labs local.
+    Com -Target <pasta>: instala em <pasta>/.claude/commands, Git Hooks em <pasta>/.git/hooks e copia .specify/.
 
-    Commands sdd-*.md são SOBRESCRITOS — labs é a fonte de verdade.
+    Commands *.md são SOBRESCRITOS — labs é a fonte de verdade.
+    Git Hooks em templates/githooks/ são instalados para garantir o enforcamento do RGIT-02, RGIT-05, RSEC-01.
     constitution.md e templates NÃO são sobrescritos, para preservar edições do projeto.
     Use -Force para sobrescrever também esses.
 
@@ -29,6 +29,7 @@ $ErrorActionPreference = 'Stop'
 $specifyRoot = Split-Path -Parent $PSScriptRoot          # <labs>\.specify
 $labs        = Split-Path -Parent $specifyRoot           # <labs>
 $srcCommands = Join-Path $labs '.claude\commands'
+$srcHooks    = Join-Path $labs 'templates\githooks'
 
 if (-not (Test-Path $srcCommands)) {
     throw "Commands de origem não encontrados em $srcCommands"
@@ -38,20 +39,35 @@ if ($Target) {
     if (-not (Test-Path $Target)) { throw "Target não existe: $Target" }
     $dstCommands = Join-Path $Target '.claude\commands'
     $dstSpecify  = Join-Path $Target '.specify'
+    $targetGit   = Join-Path $Target '.git'
 } else {
     $dstCommands = Join-Path $HOME '.claude\commands'
     $dstSpecify  = $null
+    $targetGit   = Join-Path $labs '.git'
 }
 
 New-Item -ItemType Directory -Force -Path $dstCommands | Out-Null
 
-$installed = foreach ($cmd in Get-ChildItem -Path $srcCommands -Filter 'sdd-*.md' | Sort-Object Name) {
+$installed = foreach ($cmd in Get-ChildItem -Path $srcCommands -Filter '*.md' | Sort-Object Name) {
     Copy-Item -Path $cmd.FullName -Destination $dstCommands -Force
     $cmd.BaseName
 }
 
 Write-Host "Commands instalados em $dstCommands" -ForegroundColor Green
 $installed | ForEach-Object { Write-Host "  /$_" }
+
+# Instalação de Git Hooks
+if ((Test-Path $srcHooks) -and (Test-Path $targetGit)) {
+    $dstHooks = Join-Path $targetGit 'hooks'
+    New-Item -ItemType Directory -Force -Path $dstHooks | Out-Null
+    Write-Host ''
+    Write-Host "Instalando Git Hooks em $dstHooks..." -ForegroundColor Green
+    foreach ($hook in Get-ChildItem -Path $srcHooks) {
+        $hookTarget = Join-Path $dstHooks $hook.Name
+        Copy-Item -Path $hook.FullName -Destination $hookTarget -Force
+        Write-Host "  hook instalado: $($hook.Name)" -ForegroundColor Green
+    }
+}
 
 if ($dstSpecify) {
     New-Item -ItemType Directory -Force -Path (Join-Path $dstSpecify 'memory'),

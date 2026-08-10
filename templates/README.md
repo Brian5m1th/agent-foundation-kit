@@ -22,6 +22,18 @@ Copy-Item C:\workspace\labs\templates\CLAUDE.template.md "$p\CLAUDE.md"
 Depois: preencha os `<placeholders>`, **apague todos os comentários HTML**, e rode uma sessão real para
 observar se o comportamento mudou.
 
+### Prompt Mestre para Inicialização
+Para automatizar a inicialização de governança, pipeline SDD, integração Jira First e aferição empírica em um novo projeto, utilize o prompt mestre disponível em [`PROMPT-MESTRE-INICIALIZACAO.template.md`](PROMPT-MESTRE-INICIALIZACAO.template.md).
+
+## Agent Workflows (`templates/agent-workflows/`)
+
+Workflows operacionais reutilizáveis que orquestram tarefas complexas de forma serializada:
+
+- **[`teamwork-preview.md`](agent-workflows/teamwork-preview.md)** — Pipeline autônomo FIFO de tarefas (`TODO → Worktree → SDD → Code → PR → DONE`).
+- **[`orc3-sequential-pr-review.md`](agent-workflows/orc3-sequential-pr-review.md)** — Agente de remediação sequencial de PRs abertos (`Discovery → Active PR Lock → Fix → Test → Push`).
+- **[`team-agents-discovery-backlog-master.md`](agent-workflows/team-agents-discovery-backlog-master.md)** — Esteira multidisciplinar de Discovery de Produto/Código, inventário de gaps, Matriz de Saúde e Master Backlog.
+- **[`code-review-copilot-workflow/`](code-review-copilot-workflow/README.md)** — Pacote modular completo de Code Review + GitHub Copilot Pro (Prompt + Skill + Instructions).
+
 ## As quatro regras de manutenção
 
 1. **Teste de inclusão, linha a linha:** *"remover isto faria o agente errar?"* Se não, apague.

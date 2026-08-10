@@ -48,8 +48,11 @@ Se a verificação não puder rodar neste ambiente, diga **não verificado**. Nu
      e a documentação oficial é explícita: "se você descreve o diff em uma frase, pule o plano". -->
 
 - **Uma frase de diff** (typo, log, renomear local) → faça direto, verifique, pronto.
-- **Vários arquivos ou abordagem incerta** → plan mode primeiro (`Shift+Tab`), plano aprovado, depois implementar.
-- **Módulo novo ou mudança estrutural** → `/<seu-comando-de-spec>` antes de qualquer código.
+- **Mudança estrutural ou feature** → **DISPARO AUTOMÁTICO DE WORKTREE E SDD**:
+  1. `claude --worktree <task>` (isola arquivos preventivamente - `EXE-05`).
+  2. `/sdd-specify` + invocação obrigatória da skill `grill-me` (`INT-08`) para entrevistar o usuário.
+  3. `/sdd-plan` + `/sdd-tasks` (decomposição por história).
+  4. Execução por subagentes e auditoria em sessão limpa `/sdd-converge` (`I-09`) antes do merge.
 
 ## Contexto
 
@@ -67,11 +70,11 @@ Se a verificação não puder rodar neste ambiente, diga **não verificado**. Nu
      Detalhe: labs/kb/worktrees.md -->
 
 - **Só leitura ou investigação** → subagente. Worktree não resolve contexto, e custa setup.
-- **Duas frentes escrevendo nos mesmos arquivos** → `claude --worktree <assunto>` (uma por frente, não
-  uma por task).
+- **Uma por frente de trabalho (nunca por task)** → `claude --worktree <tipo>/<assunto>` (impede sujeira na branch `main`, `EXE-05`, `RGIT-11`).
 - **Setup obrigatório num worktree novo:** `<comando de install>` `<+ subir serviços/portas próprias>`.
 - `<.worktreeinclude do projeto, se houver — os gitignorados que precisam ir junto>`
 - `<worktree.baseRef: "fresh" (default) ou "head" — e por quê neste projeto>`
+
 
 ## Comandos e skills deste projeto
 
@@ -79,7 +82,12 @@ Se a verificação não puder rodar neste ambiente, diga **não verificado**. Nu
 
 | Comando | Para quê |
 |---|---|
-| `/<comando>` | `<uma linha>` |
+| `/grill-me` | Entrevista interativa de alinhamento e desafio de design |
+| `/sdd-specify` | Criar nova especificação de intenção (`spec.md`) |
+| `/sdd-plan` | Elaborar plano de implementação e arquitetura (`plan.md`) |
+| `/sdd-tasks` | Decompor plano em tarefas testáveis por história (`tasks.md`) |
+| `/sdd-converge` | Auditar código contra especificação em sessão limpa (`/clear`) |
+| `/jira-sync` | Sincronizar backlog e ciclo de vida de status com o Jira |
 
 Skills em `.claude/skills/` são carregadas sozinhas quando relevantes — não precisa invocá-las.
 
