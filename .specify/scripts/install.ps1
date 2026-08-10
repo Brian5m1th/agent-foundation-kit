@@ -71,11 +71,17 @@ if ((Test-Path $srcHooks) -and (Test-Path $targetGit)) {
 
 if ($dstSpecify) {
     New-Item -ItemType Directory -Force -Path (Join-Path $dstSpecify 'memory'),
-                                             (Join-Path $dstSpecify 'templates') | Out-Null
+                                             (Join-Path $dstSpecify 'templates'),
+                                             (Join-Path $dstSpecify 'scripts'),
+                                             (Join-Path $Target '.github\workflows') | Out-Null
 
     $pairs = @(
         @{ From = (Join-Path $specifyRoot 'memory\constitution.md')
-           To   = (Join-Path $dstSpecify  'memory\constitution.md') }
+           To   = (Join-Path $dstSpecify  'memory\constitution.md') },
+        @{ From = (Join-Path $specifyRoot 'scripts\sync-jira.ps1')
+           To   = (Join-Path $dstSpecify  'scripts\sync-jira.ps1') },
+        @{ From = (Join-Path $labs        '.github\workflows\jira-sdd-sync.yml')
+           To   = (Join-Path $Target      '.github\workflows\jira-sdd-sync.yml') }
     )
     foreach ($tpl in Get-ChildItem -Path (Join-Path $specifyRoot 'templates') -Filter '*.md') {
         $pairs += @{ From = $tpl.FullName

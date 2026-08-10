@@ -8,7 +8,7 @@ REGRA ABSOLUTA: nenhuma tecnologia nesta página. Sem framework, banco, endpoint
 Se você sentir vontade de escrever "endpoint", escreva o comportamento observável.
 -->
 
-- **ID:** NNN-slug · **Branch:** `feat/NNN-slug`
+- **ID:** NNN-slug · **Branch:** `feat/NNN-slug` · **Jira Ticket:** `<CHAVE-TICKET>` (ex: IA-148)
 - **Status:** rascunho | esclarecida | planejada | implementada
 - **Responsável (humano):** <nome>
 - **Criada em:** AAAA-MM-DD

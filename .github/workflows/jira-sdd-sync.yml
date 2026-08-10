@@ -1,0 +1,33 @@
+name: Automated Jira SDD Workflow Sync
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, closed]
+
+jobs:
+  jira-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract Jira Issue Key from Branch Name / Commit
+        id: extract_key
+        run: |
+          # Extrai chaves como IA-123, CAR-45, KAN-88 do nome da branch ou mensagem do commit
+          ISSUE_KEY=$(echo "${{ github.head_ref || github.ref_name }}" | grep -oE '[A-Z]{2,5}-[0-9]+' | head -n 1)
+          if [ -z "$ISSUE_KEY" ]; then
+            ISSUE_KEY=$(echo "${{ github.event.head_commit.message }}" | grep -oE '[A-Z]{2,5}-[0-9]+' | head -n 1)
+          fi
+          echo "issue_key=$ISSUE_KEY" >> $GITHUB_OUTPUT
+
+      - name: Transition to 'In Review' on PR Opened
+        if: github.event_name == 'pull_request' && github.event.action != 'closed' && steps.extract_key.outputs.issue_key != ''
+        uses: atlassian/gajira-transition@v3
+        with:
+          issue: ${{ steps.extract_key.outputs.issue_key }}
+          transition: "In Review"
+
+      - name: Transition to 'Done' on PR Merged
+        if: github.event.pull_request.merged == true && steps.extract_key.outputs.issue_key != ''
+        uses: atlassian/gajira-transition@v3
+        with:
+          issue: ${{ steps.extract_key.outputs.issue_key }}
+          transition: "Done"
