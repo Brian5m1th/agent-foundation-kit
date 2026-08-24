@@ -1,0 +1,5 @@
+# Graphify runtime state local to the current machine.
+graphify-out/.graphify_python
+graphify-out/.graphify_root
+graphify-out/.graphify_uncached.txt
+kb/graphify-out/cache/stat-index.json

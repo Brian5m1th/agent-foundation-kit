@@ -9,11 +9,11 @@ A camada específica do Claude Code está em [CLAUDE.md](CLAUDE.md).
 
 1. **Laboratório de experimentos** — protótipos descartáveis em `experiments/<data-slug>/`. Cada um é
    autocontido, com uma linha explicando a hipótese testada, e pode ser deletado sem afetar nada.
-2. **Fonte de verdade** — `kb/`, `.specify/`, `.claude/commands/` e `templates/` são o **upstream**
+2. **Fonte de verdade** — `kb/`, `.specify/`, `.claude/commands/`, `skills/` e `templates/` são o **upstream**
    consumido pelos projetos reais em `C:\workspace\` (Back-End, Front-End, Freelancer, WWMA-Tech).
 
 Consequência prática: mudanças em `experiments/` são livres. Mudanças em `.specify/`,
-`.claude/commands/` e `templates/` afetam outros projetos — trate-as como mudança de biblioteca
+`.claude/commands/`, `skills/` e `templates/` afetam outros projetos — trate-as como mudança de biblioteca
 compartilhada, e edite sempre aqui, **nunca na cópia instalada** (AP-15 · Cópia Manual Multi-Harness).
 
 ## Base de conhecimento — o mapa dos identificadores
@@ -32,13 +32,13 @@ nunca reusam um prefixo (AP-14 · Namespace Colidido). Ao citar, use o identific
 | O que um termo significa aqui | [02-glossario](kb/02-glossario.md) | — |
 | **Por que** fazemos assim | [03-principios](kb/03-principios.md) | `P01`–`P14` |
 | **Padrões** — problema recorrente resolvido | [04-padroes](kb/04-padroes.md) | `CTX-`, `INT-`, `PLN-`, `EXE-`, `VER-`, `LRN-` |
-| **Anti-padrões** — o que falha repetidamente | [05-antipadroes](kb/05-antipadroes.md) | `AP-01`–`AP-37` (🔴 grave / 🟡 moderado) |
-| **Regras absolutas** e apostas sob incerteza | [06-heuristicas-e-invariantes](kb/06-heuristicas-e-invariantes.md) | `I-01`–`I-18` · `H-01`–`H-18` |
+| **Anti-padrões** — o que falha repetidamente | [05-antipadroes](kb/05-antipadroes.md) | `AP-01`–`AP-39` (🔴 grave / 🟡 moderado) |
+| **Regras absolutas** e apostas sob incerteza | [06-heuristicas-e-invariantes](kb/06-heuristicas-e-invariantes.md) | `I-01`–`I-18` · `H-01`–`H-20` |
 | Como raciocinar sobre algo | [07-modelos-mentais](kb/07-modelos-mentais.md) | — |
-| **Arquiteturas** de referência e pipelines | [08-arquiteturas-e-pipelines](kb/08-arquiteturas-e-pipelines.md) | `AR-01`–`AR-03` · `PL-01`–`PL-05` |
-| O que fazer **neste ponto** | [09-decisao-estados-algoritmos](kb/09-decisao-estados-algoritmos.md) | `AD-01`–`AD-03` · `ME-01`–`ME-03` · `AL-01`–`AL-05` |
+| **Arquiteturas** de referência e pipelines | [08-arquiteturas-e-pipelines](kb/08-arquiteturas-e-pipelines.md) | `AR-01`–`AR-04` · `PL-01`–`PL-06` |
+| O que fazer **neste ponto** | [09-decisao-estados-algoritmos](kb/09-decisao-estados-algoritmos.md) | `AD-01`–`AD-04` · `ME-01`–`ME-04` · `AL-01`–`AL-06` |
 | Como sei se está funcionando | [10-metricas](kb/10-metricas.md) | — |
-| **Por que** escolhemos isto e não aquilo | [11-adrs](kb/11-adrs.md) | `ADR-001`–`ADR-011` (imutáveis) |
+| **Por que** escolhemos isto e não aquilo | [11-adrs](kb/11-adrs.md) | `ADR-001`–`ADR-012` (imutáveis) |
 | Isto cobre aquilo? | [12-rastreabilidade](kb/12-rastreabilidade.md) | — |
 | De onde vem a afirmação | [13-bibliografia](kb/13-bibliografia.md) | — |
 
@@ -49,6 +49,8 @@ Destilações fora da numeração. **Oficiais** `[OFICIAL]`: [anthropic-claude-c
 [worktrees](kb/worktrees.md), [sub-agents](kb/sub-agents.md), [prompt-library](kb/prompt-library.md).
 **De indústria** `[INDÚSTRIA]`: [mattpocock-skills](kb/mattpocock-skills.md) — absorvida, não instalada
 (ADR-011); toda afirmação vinda dela é `[INDÚSTRIA]`, nunca `[OFICIAL]`.
+**Temática recente**: [loop-engineering](kb/loop-engineering.md) — preserva separadamente
+`[RECENTE]`, `[EXPERIMENTAL]`, `[ACADÊMICO]`, `[OFICIAL]` e `[INDÚSTRIA]`.
 
 **Selo epistêmico é obrigatório e nunca se mistura** (ADR-010): `[CONSOLIDADO]` `[INDÚSTRIA]`
 `[RECENTE]` `[EXPERIMENTAL]` `[ACADÊMICO]` `[HIPÓTESE]` `[OFICIAL]` `[CAMPO]`. Ao citar a KB,
@@ -67,11 +69,12 @@ Aprofundamento de **uma** das disciplinas (D1 · Intent): [docs/intent-engineeri
 | 2 | `/sdd-plan` | `specs/NNN-slug/plan.md` | COMO — stack, contratos, riscos |
 | 3 | `/sdd-tasks` | `specs/NNN-slug/tasks.md` | Passos por história, verificáveis |
 | 3.5 | `/sdd-analyze` | relatório | Os artefatos são coerentes entre si? |
+| 3.75 | `/sdd-loop` | `specs/NNN-slug/loop.md` | Como iterar com feedback, memória e parada? |
 | 4 | `/sdd-implement` | código | Execução, uma task por vez |
 | 5 | `/sdd-converge` | relatório | O código satisfaz a spec? |
 | — | `/sdd-checklist <dimensão>` | `specs/NNN-slug/checklists/` | A spec está bem escrita? |
 
-Opcionais: `clarify`, `analyze`, `checklist`. O restante é o caminho principal, e a ordem é rígida —
+Opcionais: `clarify`, `analyze`, `loop`, `checklist`. O restante é o caminho principal, e a ordem é rígida —
 não se planeja antes de especificar, não se implementa sem tasks.
 
 **Distinção que confunde:** `/sdd-analyze` audita **artefato contra artefato**, antes de implementar.
@@ -83,7 +86,8 @@ mesma estrutura de diretórios, mesmos artefatos. Diferenças deliberadas: **por
 fundamentadas em `docs/intent-engineering/` — análise de obstáculos (KAOS), envelope de autonomia por
 task (P10/EXE-04), modo de interpretação declarado, registro de interpretação (EXE-06), e bloqueio por
 ambiguidade calibrado por custo de reversão (P04/ADR-002). Migrar para o Spec Kit oficial é direto: a
-estrutura de pastas é a mesma.
+estrutura de pastas é a mesma. A fase opcional 3.75 (`/sdd-loop`) é uma sexta extensão, fundamentada
+separadamente em Loop Engineering e ADR-012; ela não altera o caminho principal.
 
 ## Invariantes deste repositório
 

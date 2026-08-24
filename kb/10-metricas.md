@@ -57,6 +57,8 @@ falta só registrar em que faixa cada task terminou.
 | **Granularidade de commit** | commits / task concluída | ≈ 1 | Commits vazios |
 | **Aprovações por hora** | prompts de permissão / hora de sessão | < 10 | Auto-aprovar tudo, inclusive destrutivo |
 | **Tamanho do lote** | linhas alteradas por PR | pequeno | Fatiar PR sem fatiar risco |
+| **Custo por mudança aceita** | tokens/tempo/R$ do loop / mudanças que sobreviveram aos checks | estável ou ↓ | Contar mudança não verificada como aceita |
+| **Voltas sem progresso** | voltas sem ganho mensurável / voltas totais | < 20% | Trocar a métrica a cada volta |
 
 **Tamanho do lote é a métrica com melhor lastro externo:** DORA 2024 atribui a queda de ~7,2% em
 estabilidade com adoção de IA a um mecanismo mecânico — *a IA facilita produzir mudanças maiores, e
@@ -72,6 +74,8 @@ lotes maiores carregam mais risco* `[EXPERIMENTAL]`.
 | **Taxa de falha forçada** | propriedades que já foram vistas falhando / total | 100% | Pular o passo |
 | **Achados por auditoria** | achados que afetam correção / total de achados | > 50% | Reportar preferência de estilo como achado |
 | **Escape de defeito** | defeitos achados em produção / total | decrescente | Não classificar como defeito |
+| **Nível real do verifier** | distribuição dos loops nos níveis 1–5 | 1–2 quando unattended | Rotular juiz-LLM como determinístico |
+| **Regressão protegida** | mudanças aceitas que mantêm todos os checks protegidos / aceitas | 100% | Proteger só o alvo fácil |
 
 **Cobertura sem mutation score é teatro.** Robert C. Martin, sobre governar qualidade por sinais:
 *"meço coisas como cobertura de teste, estrutura de dependências, complexidade ciclomática, tamanho de
@@ -88,9 +92,18 @@ código gerado**.
 | **Idade da constituição** | tempo desde a última emenda com justificativa | 1–6 meses | Emendas cosméticas |
 | **Uso efetivo de padrão** | padrões citados em review nos últimos 90 dias / total | > 60% | — (baixo indica catálogo morto) |
 | **Meia-vida da documentação** | tempo até um doc ser contrariado pelo código | crescente | — |
+| **Promoção de harness** | propostas que passam held-in e held-out / propostas avaliadas | baixa mas positiva | Expor o holdout ao proposer |
+| **Regressão held-out** | candidatos promovidos que pioram holdout | **0** | Mudar evaluator/split após ver o resultado |
 
 **A primeira é o melhor indicador único de maturidade de um time com agentes.** Se a mesma classe de
 falha reaparece, D6 não está funcionando, independentemente de quantos artefatos existam.
+
+### Painel mínimo de um loop
+
+`[ACADÊMICO]` Até existir ROI controlado, o painel honesto é pequeno: estado terminal · nível real do
+verifier · voltas totais/sem progresso · mudanças propostas/aceitas · custo por mudança aceita ·
+regressões protegidas. Para Self-Harness, acrescente pass rate held-in/held-out por versão e lineage de
+aceite/rejeição. Token gasto sozinho mede atividade, não saúde.
 
 ## 7. Métricas de negócio (o que a diretoria pergunta)
 

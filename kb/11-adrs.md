@@ -276,6 +276,38 @@ Claude Code passar a resolver colisão de nome entre plugin e comando de projeto
 
 ---
 
+## ADR-012 · Loop como artefato opcional entre tasks e implementação
+
+**Problema.** A absorção de Loop Engineering introduz gatilho, memória, estados e verificação por
+volta. Isso vira fase obrigatória do SDD, detalhe dentro de `/sdd-implement`, ou artefato separado?
+
+**Alternativas.**
+
+| # | Alternativa | Avaliação |
+|---|---|---|
+| A | Tornar loop obrigatório em toda spec | Viola calibração e produz AP-03 quando feedback não muda a próxima ação |
+| B | Embutir política de loop em `/sdd-implement` | Esconde estados/budget/memória num prompt e mistura autoria com execução |
+| C | Manter só uma skill genérica, fora do SDD | Portátil, mas perde rastreabilidade entre loop, task, SC e envelope |
+| D | **Artefato opcional `loop.md` após tasks/analyze, antes de implement** | Escolhida |
+
+**Critérios.** Regra H-19 · separação planejamento/execução · rastreabilidade · progressive disclosure
+· compatibilidade com Spec Kit · custo para mudanças pequenas.
+
+**Escolha.** D. `/sdd-loop` é fase 3.75 opcional e **só especifica**; o template mora em `.specify/`.
+A disciplina portátil mora uma vez em `skills/loop-engineering/` e o instalador gera as cópias para
+`.agents/skills/` e `.claude/skills/`, evitando AP-15. O loop autorizado envolve tasks aprovadas; não
+substitui spec, plan, tasks, envelope ou `/sdd-converge` independente.
+
+**Consequências.** O caminho principal continua leve. Trabalho iterativo ganha artefato versionável e
+auditável, mas o humano precisa decidir se a triagem aprovou o uso e revisar o loop antes da execução.
+Projetos consumidores recebem uma skill adicional; a description precisa continuar discriminante para
+não capturar toda tarefa recorrente.
+
+**Revisar quando.** Houver dados de campo sobre custo por mudança aceita e taxa de AP-38 comparando
+execução com e sem `loop.md`, estratificados por porte e nível do verifier.
+
+---
+
 ## Grafo de dependência
 
 ```mermaid
@@ -290,6 +322,10 @@ graph TD
     A2 --> A3
     A9 --> A11[ADR-011 Absorver em vez de instalar]
     A10 --> A11
+    A2 --> A12[ADR-012 Loop opcional]
+    A3 --> A12
+    A5 --> A12
+    A9 --> A12
 ```
 
 **ADR-009 é a raiz.** Se ela cair, quase tudo é reconstruído. **ADR-003 é a de maior efeito prático**:

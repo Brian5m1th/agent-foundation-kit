@@ -112,6 +112,27 @@ graph TD
 O nó `K` é o mais desobedecido: sob pressão de "precisamos de uma métrica", inventa-se uma proxy — e
 daí nasce AP-05 do corpus de intenção (proxy capturada, Goodhart).
 
+## AD-04 · Execução única, agenda ou loop?
+
+```mermaid
+graph TD
+    A[Tarefa recorrente ou iterativa] --> B{Resultado de uma volta<br/>muda a proxima acao?}
+    B -->|nao| C{Precisa rodar<br/>em cadencia/evento?}
+    C -->|nao| D[Execucao unica]
+    C -->|sim| E[Prompt agendado ou evento]
+    B -->|sim| F{Existe check<br/>reproduzivel?}
+    F -->|nao| G[Fluxo assistido nivel 4/5<br/>sem alegar autonomia]
+    F -->|sim| H{Custo do loop<br/>se paga?}
+    H -->|nao| D
+    H -->|sim| I[EXE-07 + AR-04<br/>especificar loop]
+    I --> J{Check e nivel 4?}
+    J -->|sim| K[Maker-checker separado<br/>rubrica congelada]
+    J -->|nao| L[Loop verificavel]
+```
+
+O primeiro losango é H-19. “Rodar várias vezes” não basta: feedback precisa selecionar retry,
+prioridade, escopo, skill ou escalonamento diferente.
+
 ---
 
 # Parte II — Máquinas de estado
@@ -184,6 +205,36 @@ stateDiagram-v2
 
 `Poluido` **não** se resolve compactando — a compactação preserva as abordagens falhas. Só `/clear`
 com prompt reescrito sai desse estado.
+
+## ME-04 · Ciclo de vida de uma especificação de loop
+
+```mermaid
+stateDiagram-v2
+    [*] --> Candidato
+    Candidato --> Descartado: feedback nao muda proxima acao
+    Candidato --> Rascunho: triagem aprovada
+    Rascunho --> Assistido: check nivel 4 ou 5
+    Rascunho --> Pronto: check nivel 1 a 3 + guardrails completos
+    Assistido --> Pronto: check endurecido e aprovacoes definidas
+    Pronto --> Rodando: gatilho autorizado
+    Rodando --> Rodando: volta aceita ou rejeitada + estado persistido
+    Rodando --> Bloqueado: falta decisao/acesso/autoridade
+    Rodando --> Estagnado: sem ganho ou oscilacao
+    Rodando --> Esgotado: teto atingido
+    Rodando --> Erro: ambiente ou check invalido
+    Rodando --> Sucesso: meta provada
+    Rodando --> SemAcao: check limpo e nada acionavel
+    Bloqueado --> Rodando: humano resolveu
+    Estagnado --> Rascunho: redesenhar loop
+    Esgotado --> Rascunho: novo budget explicitamente aprovado
+    Erro --> Rascunho: reparar verifier/ambiente
+    Sucesso --> [*]
+    SemAcao --> [*]
+    Descartado --> [*]
+```
+
+Não existem transições `Erro → Sucesso` ou `Esgotado → Sucesso`. Novo budget é uma decisão de
+redesenho/autorização, não continuação silenciosa.
 
 ---
 
@@ -289,6 +340,37 @@ aprender(incidente):
 
 A última linha é o que separa aprendizado de arquivamento: **se o novo padrão não muda nenhuma decisão
 concreta, ele não foi aprendido.**
+
+## AL-06 · Executar uma volta de loop
+
+```
+rodar_volta(loop, estado):
+    exigir(loop.aprovado)
+    exigir(budget_restante(loop, estado) > 0)
+    exigir(envelope_autoriza_proxima_acao(loop, estado))
+
+    antes = medir(loop.check_alvo, loop.regressoes)
+    alvo = escolher_maior_obstaculo(antes, estado.tentativas)
+    mudanca = executar_uma_mudanca(alvo, skills=loop.skills)
+    depois = medir(loop.check_alvo, loop.regressoes)
+
+    se check_invalido(depois):
+        restaurar_variante_ativa(); registrar(ERROR, depois); devolve error
+    se requer_aprovacao(mudanca):
+        restaurar_variante_ativa(); registrar(BLOCKED, mudanca); devolve blocked
+    se melhorou_alvo(antes, depois) e nao_regrediu(antes, depois):
+        aceitar(mudanca)
+    senao:
+        restaurar_variante_ativa(); registrar_rejeicao(mudanca, depois)
+
+    persistir_compacto(evidencia=depois, custo, decisao, proximo_candidato)
+    devolve avaliar_terminal_em_ordem(error, blocked, success, no_op,
+                                      stalled, exhausted, continue)
+```
+
+O check escolhe e julga; o prompt só executa a volta. Alterar/desligar o próprio check para obter
+verde é AP-22/AP-31, salvo quando a meta explícita é reparar o verifier e um holdout independente
+prova a correção.
 
 ---
 

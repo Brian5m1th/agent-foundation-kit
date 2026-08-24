@@ -109,7 +109,7 @@ excelente entregue num contexto poluído falha; um contexto impecável sem inten
 **Pergunta.** Quem pode fazer o quê, com qual salvaguarda, e o que fica registrado?
 **Herda de.** Engenharia de automação, teoria de controle, princípio do menor privilégio.
 **Objetos.** Envelope de autonomia, *harness* (teste/lint/typecheck/CI), hook, permissão, sandbox,
-worktree, commit atômico, registro de interpretação, telemetria.
+worktree, commit atômico, registro de interpretação, telemetria, especificação de loop externo.
 
 ### D5 · Verification Engineering
 
@@ -144,6 +144,10 @@ Artefato de AI Systems Engineering
 ├── Probatório ........ teste, PBT, relatório de verificação, evidência     (D5)
 └── Reflexivo ......... lessons learned, métrica, retrospectiva, backlog    (D6)
 ```
+
+`[RECENTE]` A especificação de loop é composta: o artefato mora primariamente em D4 porque governa a
+execução, mas seu check pertence a D5 e sua memória/seleção da próxima ação a D6. Classificá-la só
+como prompt apaga justamente as duas relações que a tornam loop.
 
 **Regra de colocação** `[HIPÓTESE]`: um artefato pertence à categoria da **pergunta que responde**,
 não do formato em que está escrito. Um markdown pode ser qualquer uma das sete. O erro mais comum de

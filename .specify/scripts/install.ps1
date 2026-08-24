@@ -4,11 +4,11 @@
 
 .DESCRIPTION
     Estrutura espelhada do GitHub Spec Kit (github.github.io/spec-kit), em português e com as
-    extensões do corpus de Engenharia de Intenção (docs/intent-engineering).
+    extensões do corpus de Engenharia de Intenção (docs/intent-engineering) e Loop Engineering.
 
-    Sem -Target: instala apenas os slash commands em ~/.claude/commands.
-    Com -Target <pasta>: instala em <pasta>/.claude/commands e copia .specify/ (constitution,
-    templates) para o projeto.
+    Sem -Target: instala slash commands e a skill loop-engineering globalmente.
+    Com -Target <pasta>: instala commands, a skill em .agents/.claude e copia .specify/
+    (constitution, templates) para o projeto.
 
     Commands sdd-*.md são SOBRESCRITOS — labs é a fonte de verdade.
     constitution.md e templates NÃO são sobrescritos, para preservar edições do projeto.
@@ -29,18 +29,31 @@ $ErrorActionPreference = 'Stop'
 $specifyRoot = Split-Path -Parent $PSScriptRoot          # <labs>\.specify
 $labs        = Split-Path -Parent $specifyRoot           # <labs>
 $srcCommands = Join-Path $labs '.claude\commands'
+$srcLoopSkill = Join-Path $labs 'skills\loop-engineering'
 
 if (-not (Test-Path $srcCommands)) {
     throw "Commands de origem não encontrados em $srcCommands"
+}
+if (-not (Test-Path $srcLoopSkill)) {
+    throw "Skill de origem não encontrada em $srcLoopSkill"
 }
 
 if ($Target) {
     if (-not (Test-Path $Target)) { throw "Target não existe: $Target" }
     $dstCommands = Join-Path $Target '.claude\commands'
     $dstSpecify  = Join-Path $Target '.specify'
+    $dstSkillRoots = @(
+        (Join-Path $Target '.agents\skills'),
+        (Join-Path $Target '.claude\skills')
+    )
 } else {
-    $dstCommands = Join-Path $HOME '.claude\commands'
+    $userProfile = [Environment]::GetFolderPath('UserProfile')
+    $dstCommands = Join-Path $userProfile '.claude\commands'
     $dstSpecify  = $null
+    $dstSkillRoots = @(
+        (Join-Path $userProfile '.agents\skills'),
+        (Join-Path $userProfile '.claude\skills')
+    )
 }
 
 New-Item -ItemType Directory -Force -Path $dstCommands | Out-Null
@@ -52,6 +65,19 @@ $installed = foreach ($cmd in Get-ChildItem -Path $srcCommands -Filter 'sdd-*.md
 
 Write-Host "Commands instalados em $dstCommands" -ForegroundColor Green
 $installed | ForEach-Object { Write-Host "  /$_" }
+
+Write-Host ''
+foreach ($skillRoot in $dstSkillRoots) {
+    $dstLoopSkill = Join-Path $skillRoot 'loop-engineering'
+    New-Item -ItemType Directory -Force -Path $dstLoopSkill | Out-Null
+    foreach ($sourceFile in Get-ChildItem -Path $srcLoopSkill -Recurse -File) {
+        $relative = [IO.Path]::GetRelativePath($srcLoopSkill, $sourceFile.FullName)
+        $destination = Join-Path $dstLoopSkill $relative
+        New-Item -ItemType Directory -Force -Path (Split-Path -Parent $destination) | Out-Null
+        Copy-Item -LiteralPath $sourceFile.FullName -Destination $destination -Force
+    }
+    Write-Host "Skill instalada em $dstLoopSkill" -ForegroundColor Green
+}
 
 if ($dstSpecify) {
     New-Item -ItemType Directory -Force -Path (Join-Path $dstSpecify 'memory'),

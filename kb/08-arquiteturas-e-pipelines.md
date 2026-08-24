@@ -92,6 +92,31 @@ durante a execução"*. Some-se a isso a ausência de **descoberta em tempo de e
 precisam ser definidas estaticamente.
 **Custo escondido.** Cada agente é um artefato a manter e sincronizar (AP-15).
 
+## 3.1. AR-04 · Loop Externo Verificável
+
+`[RECENTE]` Arquitetura da especificação de loop que opera o harness sem confundir-se com seu ciclo
+interno:
+
+```mermaid
+graph LR
+    T[Gatilho] --> S[Spec do loop + estado]
+    S --> A[Agente chama skills]
+    A --> V[Check alvo + regressões]
+    V -->|aceita| M[Persistir evidência e próximo candidato]
+    V -->|rejeita| R[Restaurar variante aceita e registrar rejeição]
+    M --> X{Estado terminal?}
+    R --> X
+    X -->|não| S
+    X -->|success/no-op/blocked/stalled/exhausted/error| F[Devolver controle]
+```
+
+**Invariantes arquiteturais.** Feedback escolhe a próxima ação · maker ≠ checker quando houver
+juiz-LLM · erro/budget nunca viram sucesso · memória está em disco · teto e detector de estagnação
+são obrigatórios · o envelope da task vale em toda volta.
+**Composição.** Task fornece unidade autorizada; skill fornece capacidade; harness fornece ambiente e
+checks; loop fornece política temporal.
+**Não usar quando.** H-19 reprova a triagem.
+
 ## 4. Comparativo das arquiteturas de contexto observadas
 
 | Dimensão | Claude Code `[OFICIAL]` | Spec Kit `[INDÚSTRIA]` | Kiro `[INDÚSTRIA]` | sdd-kit `[CAMPO]` | InscreveAI `[CAMPO]` |
@@ -198,6 +223,30 @@ provedores concretos.
 **fora** do pipeline — o que é uma escolha defensável (a intenção persiste entre ciclos e não é uma
 etapa) mas merece ser explícita, porque significa que nenhum estágio do pipeline é responsável por
 **verificar** se a intenção foi preservada. É a mesma lacuna do AR-01 sem o laço de aprendizado.
+
+### PL-06 · Self-Harness
+
+`[EXPERIMENTAL]` Pipeline de arXiv 2606.09498 para modificar somente o harness, mantendo fixos
+modelo, evaluator, ambiente, budget e corpus:
+
+```mermaid
+graph LR
+    H[Harness ativo h_t] --> E[Avaliar held-in + held-out]
+    E --> W[Weakness Mining em traces falhos]
+    W --> P[Propostas mínimas e distintas]
+    P --> C[Variantes candidatas]
+    C --> G{Sem regressão nos dois splits e ganho em pelo menos um?}
+    G -->|não| J[Rejeitar + registrar]
+    G -->|sim| K[Promover variante compatível]
+    K --> H2[Harness h_t+1 versionado]
+```
+
+**Portão.** `Δheld_in ≥ 0 ∧ Δheld_out ≥ 0 ∧ max(Δheld_in, Δheld_out) > 0`.
+**Separações.** Evaluator diagnostica; proposer sugere; promotion gate decide. O evidence bundle
+descreve mecanismo recorrente, não prescreve edição.
+**Limite.** Sem holdout invisível e evaluator fixo, o pipeline não mede melhoria; produz AP-39.
+**Ativação.** Passar no benchmark autoriza a hipótese, não a mutação de harness compartilhado — a
+promoção ainda respeita aprovação, lineage e rollback.
 
 ## 6. Automação — o que deve ser mecânico
 

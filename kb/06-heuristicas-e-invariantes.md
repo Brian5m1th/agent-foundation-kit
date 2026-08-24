@@ -132,6 +132,26 @@ loop custa mais que o defeito vale (script de uso único, defeito cosmético).
 **Custo.** Dez a trinta minutos antes de tocar no bug. **Exemplo.** Regressão de desempenho: medir a
 linha de base e automatizar a medição antes de otimizar qualquer coisa.
 
+## H-19 · Se o feedback não muda a próxima ação, não construa um loop
+**Justificativa.** `[RECENTE]` O valor do loop é adaptação com verificação. Repetir uma tarefa fixa em
+cadência fixa é prompt agendado; embrulhá-la em memória, estados e retries adiciona superfície de
+falha sem informação nova.
+**Quando falha.** A ação parece fixa, mas o resultado altera prioridade, escopo, retry, escalonamento
+ou escolha de skill; então há feedback real e EXE-07 se aplica.
+**Custo.** Recusar automação excessiva pode manter intervenção humana onde um check ainda precisa ser
+descoberto. **Exemplo.** Gerar o mesmo relatório toda noite é agenda; corrigir o maior desvio revelado
+pelo relatório e medir de novo é loop.
+
+## H-20 · Harness só melhora quando o holdout também não piora
+**Justificativa.** `[EXPERIMENTAL]` No protocolo Self-Harness, o held-in prova que a mudança trata a
+fraqueza observada; o held-out detecta regressão e overfit invisíveis ao proposer. Aceitar ganho apenas
+no alvo conhecido premia specification gaming.
+**Quando falha.** Não existe corpus repetível/evaluator fixo; nesse caso não há base para afirmar
+autoaperfeiçoamento — trate a edição como hipótese humana comum, com revisão e rollout controlado.
+**Custo.** Dobra a superfície de avaliação e preserva casos que o proposer não pode inspecionar.
+**Exemplo.** Mudança em `AGENTS.md` que melhora SWE-bench visível só é promovida se o conjunto
+reservado também não regredir.
+
 ---
 
 # Parte II — Invariantes
