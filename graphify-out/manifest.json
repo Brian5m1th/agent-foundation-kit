@@ -1,0 +1,112 @@
+{
+  "00-taxonomia.md": {
+    "mtime": 1787598210.692278,
+    "ast_hash": "c8b1d1361444a1d33697ad074357191d",
+    "semantic_hash": "c8b1d1361444a1d33697ad074357191d"
+  },
+  "01-ontologia.md": {
+    "mtime": 1787597874.8533125,
+    "ast_hash": "b8c3513d7ecce2f417be100510186844",
+    "semantic_hash": "b8c3513d7ecce2f417be100510186844"
+  },
+  "03-principios.md": {
+    "mtime": 1787598229.587163,
+    "ast_hash": "8ea5ee4c118f6a9e4f9212e91abef3e6",
+    "semantic_hash": "8ea5ee4c118f6a9e4f9212e91abef3e6"
+  },
+  "04-padroes.md": {
+    "mtime": 1787597928.1371515,
+    "ast_hash": "467bf12a07873ea34a67c501c3f30f7b",
+    "semantic_hash": "467bf12a07873ea34a67c501c3f30f7b"
+  },
+  "05-antipadroes.md": {
+    "mtime": 1787597966.853147,
+    "ast_hash": "59be9d22e9ca6c19967ad9f01fcef870",
+    "semantic_hash": "59be9d22e9ca6c19967ad9f01fcef870"
+  },
+  "06-heuristicas-e-invariantes.md": {
+    "mtime": 1787597986.9345863,
+    "ast_hash": "05857d1557250d1c302567d30f4d1e6f",
+    "semantic_hash": "05857d1557250d1c302567d30f4d1e6f"
+  },
+  "07-modelos-mentais.md": {
+    "mtime": 1785718431.6506622,
+    "ast_hash": "c25ab836e96ee5d082b8d15abdaafd6c",
+    "semantic_hash": "c25ab836e96ee5d082b8d15abdaafd6c"
+  },
+  "08-arquiteturas-e-pipelines.md": {
+    "mtime": 1787598017.1117902,
+    "ast_hash": "ca8b672679b4f7d3b57067abdec5a284",
+    "semantic_hash": "ca8b672679b4f7d3b57067abdec5a284"
+  },
+  "09-decisao-estados-algoritmos.md": {
+    "mtime": 1787598052.1226776,
+    "ast_hash": "531c7cb93e2ffc149831d449cff274bc",
+    "semantic_hash": "531c7cb93e2ffc149831d449cff274bc"
+  },
+  "10-metricas.md": {
+    "mtime": 1787598072.9859602,
+    "ast_hash": "1d7eddf1900bcf0978c29ded2b044a79",
+    "semantic_hash": "1d7eddf1900bcf0978c29ded2b044a79"
+  },
+  "11-adrs.md": {
+    "mtime": 1787598259.4323337,
+    "ast_hash": "f26c211589e66c229d30e44e0c8ec92d",
+    "semantic_hash": "f26c211589e66c229d30e44e0c8ec92d"
+  },
+  "12-rastreabilidade.md": {
+    "mtime": 1787598112.956281,
+    "ast_hash": "5fae30cdf9ff998d21e4e8dd6ba14894",
+    "semantic_hash": "5fae30cdf9ff998d21e4e8dd6ba14894"
+  },
+  "13-bibliografia.md": {
+    "mtime": 1787598187.0205033,
+    "ast_hash": "0f4d74dde662f0646c5161c1580184b1",
+    "semantic_hash": "0f4d74dde662f0646c5161c1580184b1"
+  },
+  "README.md": {
+    "mtime": 1787597871.309975,
+    "ast_hash": "effc77d7a73ca3696b441830188d0981",
+    "semantic_hash": "effc77d7a73ca3696b441830188d0981"
+  },
+  "anthropic-claude-code.md": {
+    "mtime": 1785719749.6677165,
+    "ast_hash": "608583e7d1548688c321c88ceb69736a",
+    "semantic_hash": "608583e7d1548688c321c88ceb69736a"
+  },
+  "mattpocock-skills.md": {
+    "mtime": 1785725687.5509598,
+    "ast_hash": "71405e8d9c2ec7e54b97a166c6181f33",
+    "semantic_hash": "71405e8d9c2ec7e54b97a166c6181f33"
+  },
+  "prompt-library.md": {
+    "mtime": 1787596812.782398,
+    "ast_hash": "4dd29716645c5492133ff403d0158075",
+    "semantic_hash": "4dd29716645c5492133ff403d0158075"
+  },
+  "sub-agents.md": {
+    "mtime": 1787596812.8198004,
+    "ast_hash": "d5908e16ea336ea160bf2c14b9439e61",
+    "semantic_hash": "d5908e16ea336ea160bf2c14b9439e61"
+  },
+  "worktrees.md": {
+    "mtime": 1787596812.8336666,
+    "ast_hash": "f5c54ce04e8251573fd3ceb4a6505036",
+    "semantic_hash": "f5c54ce04e8251573fd3ceb4a6505036"
+  },
+  "02-glossario.md": {
+    "mtime": 1787597873.204226,
+    "ast_hash": "7d70908be88a56dd241d4f24b3cdc2a6",
+    "semantic_hash": "7d70908be88a56dd241d4f24b3cdc2a6"
+  },
+  "loop-engineering.md": {
+    "mtime": 1787598185.6116652,
+    "ast_hash": "4b5db9532d37ed1e8b47e12482a3e9c3",
+    "semantic_hash": "4b5db9532d37ed1e8b47e12482a3e9c3"
+  },
+  "pesquisa-loops-agenticos-2026.md": {
+    "mtime": 1787599168.2901163,
+    "ast_hash": "b93f84c369e9e9132bd7fc424ab3f3d9",
+    "semantic_hash": "b93f84c369e9e9132bd7fc424ab3f3d9"
+  }
+}

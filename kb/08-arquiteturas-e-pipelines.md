@@ -165,8 +165,32 @@ graph TD
 - **Wake-up em 4 Camadas (L0–L3)**: Boot com L0 (Identidade) e L1 (História Essencial) custando ~600–900 tokens (economiza >95% do contexto); L2 e L3 só entram sob demanda (`CTX-10`).
 - **Hooks de Persistência Assíncronos**: Desencadeados em eventos `pre-compact`, `stop` e `session-end` (`EXE-09`).
 
-## 6. Comparativo das arquiteturas de contexto observadas
+## 5.1. AR-06 · Loop Externo Verificável
 
+`[RECENTE]` Arquitetura da especificação de loop que opera o harness sem confundir-se com seu ciclo
+interno:
+
+```mermaid
+graph LR
+    T[Gatilho] --> S[Spec do loop + estado]
+    S --> A[Agente chama skills]
+    A --> V[Check alvo + regressões]
+    V -->|aceita| M[Persistir evidência e próximo candidato]
+    V -->|rejeita| R[Restaurar variante aceita e registrar rejeição]
+    M --> X{Estado terminal?}
+    R --> X
+    X -->|não| S
+    X -->|success/no-op/blocked/stalled/exhausted/error| F[Devolver controle]
+```
+
+**Invariantes arquiteturais.** Feedback escolhe a próxima ação · maker ≠ checker quando houver
+juiz-LLM · erro/budget nunca viram sucesso · memória está em disco · teto e detector de estagnação
+são obrigatórios · o envelope da task vale em toda volta.
+**Composição.** Task fornece unidade autorizada; skill fornece capacidade; harness fornece ambiente e
+checks; loop fornece política temporal.
+**Não usar quando.** H-21 reprova a triagem.
+
+## 6. Comparativo das arquiteturas de contexto observadas
 
 | Dimensão | Claude Code `[OFICIAL]` | Spec Kit `[INDÚSTRIA]` | Kiro `[INDÚSTRIA]` | sdd-kit `[CAMPO]` | InscreveAI `[CAMPO]` |
 |---|---|---|---|---|---|
@@ -289,6 +313,29 @@ graph LR
 
 **Diferencial Operacional**: O Git Worktree é disparado **na recepção da tarefa**, isolando rascunhos de especificação (`specs/NNN-slug/`) e impedindo que a branch principal seja poluída durante a fase de entrevista/grilling (`[[kb/mattpocock-skills#51-grill-me--grilling--a-entrevista-conduzida--int-08-h-17|INT-08]]`).
 
+### PL-07 · Self-Harness
+
+`[EXPERIMENTAL]` Pipeline de arXiv 2606.09498 para modificar somente o harness, mantendo fixos
+modelo, evaluator, ambiente, budget e corpus:
+
+```mermaid
+graph LR
+    H[Harness ativo h_t] --> E[Avaliar held-in + held-out]
+    E --> W[Weakness Mining em traces falhos]
+    W --> P[Propostas mínimas e distintas]
+    P --> C[Variantes candidatas]
+    C --> G{Sem regressão nos dois splits e ganho em pelo menos um?}
+    G -->|não| J[Rejeitar + registrar]
+    G -->|sim| K[Promover variante compatível]
+    K --> H2[Harness h_t+1 versionado]
+```
+
+**Portão.** `Δheld_in ≥ 0 ∧ Δheld_out ≥ 0 ∧ max(Δheld_in, Δheld_out) > 0`.
+**Separações.** Evaluator diagnostica; proposer sugere; promotion gate decide. O evidence bundle
+descreve mecanismo recorrente, não prescreve edição.
+**Limite.** Sem holdout invisível e evaluator fixo, o pipeline não mede melhoria; produz AP-49.
+**Ativação.** Passar no benchmark autoriza a hipótese, não a mutação de harness compartilhado — a
+promoção ainda respeita aprovação, lineage e rollback.
 
 ## 7. Automação — o que deve ser mecânico
 

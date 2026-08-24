@@ -283,6 +283,16 @@ correção. **Evidência.** `[CAMPO]` *Anti-Skip Rule*: *"NUNCA pule, desabilite
 fazer o build passar"*. **Correção.** VER-03 (quarentena **com link para a task**) é a única forma
 legítima de adiar — e ela é rastreável.
 
+### AP-48 · Loop sem Saída 🔴
+**Sintoma.** “Continue melhorando” ou retry recorrente sem check externo, estados terminais, detector
+de estagnação, memória curada ou teto de custo; às vezes o agente executa a mesma skill indefinidamente.
+**Mecanismo.** `[RECENTE]` Nenhuma evidência nova empurra a próxima ação e erro/budget esgotado acabam
+tratados como conclusão. Em versão autônoma, custo e dano acumulam sem ponto explícito de devolução ao
+humano.
+**Detecção.** O resultado de uma volta muda a próxima ação? Existe um estado diferente para sucesso,
+`blocked`, `stalled`, `exhausted` e `error`? Existe hard cap?
+**Correção.** EXE-10/AR-06. Sem feedback adaptativo, substituir por execução única ou prompt agendado.
+
 ---
 
 ## Verificação
@@ -422,6 +432,16 @@ ausente, porque produz confiança falsa.
 **Evidência.** `[CAMPO]` Descoberta e benchmark documentados na Issue #333 do MemPalace.
 **Correção.** Implementar um **Query Sanitizer** (`mempalace/query_sanitizer.py`) na camada de busca que detecta e extrai a pergunta real da string antes da geração de embeddings.
 
+### AP-49 · Autoaperfeiçoamento sem Holdout 🔴
+**Sintoma.** O agente edita seu prompt/harness a partir dos mesmos traces e testes usados para julgar
+a mudança, depois declara que “aprendeu”.
+**Mecanismo.** O proposer vê o alvo completo, otimiza a superfície avaliada e não há como distinguir
+mecanismo reutilizável de overfit, specification gaming ou ruído favorável.
+**Evidência.** `[EXPERIMENTAL]` Self-Harness (arXiv 2606.09498) evita isso fixando evaluator e usando
+splits held-in/held-out; a promoção só aceita melhora sem regressão em ambos.
+**Correção.** LRN-03: evaluator fixo, holdout invisível, variantes versionadas, rollback e promoção
+humana para harness compartilhado. Sem esses controles, registrar hipótese; não autoeditar.
+
 ---
 
 
@@ -454,6 +474,8 @@ ausente, porque produz confiança falsa.
 | AP-44 | **Violação de Idempotência em Transações** | D5 | 🔴 |
 | AP-45 | **Patching Prematuro Sem Diagnóstico Concluído** | D4 | 🔴 |
 | AP-46 | **Purga de Transcrição sem Persistência** | D2 | 🔴 |
+| AP-48 | **Loop sem Saída** | D4/D5 | 🔴 |
+| AP-49 | **Autoaperfeiçoamento sem Holdout** | D6 | 🔴 |
 | AP-04/05 | Sessão Entulhada / Exploração Infinita | D2 | 🟡 |
 | AP-06 | Pseudocódigo em Prosa | D1 | 🟡 |
 | AP-08 | Três Exemplos p/ Regra Universal | D1 | 🟡 |

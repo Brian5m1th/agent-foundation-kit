@@ -319,6 +319,38 @@ e o manuseio do material sensível na §7 — sem as duas, a destilação seria 
 O inventário sensível completo **não vive nesta KB** — fica no relatório de análise que acompanhou a
 leitura, fora do que é consumido pelos projetos. Aqui só a categoria e a lição de engenharia (§7 de lá).
 
+---
+
+## ADR-013 · Loop como artefato opcional entre tasks e implementação
+
+**Problema.** A absorção de Loop Engineering introduz gatilho, memória, estados e verificação por
+volta. Isso vira fase obrigatória do SDD, detalhe dentro de `/sdd-implement`, ou artefato separado?
+
+**Alternativas.**
+
+| # | Alternativa | Avaliação |
+|---|---|---|
+| A | Tornar loop obrigatório em toda spec | Viola calibração e produz AP-03 quando feedback não muda a próxima ação |
+| B | Embutir política de loop em `/sdd-implement` | Esconde estados/budget/memória num prompt e mistura autoria com execução |
+| C | Manter só uma skill genérica, fora do SDD | Portátil, mas perde rastreabilidade entre loop, task, SC e envelope |
+| D | **Artefato opcional `loop.md` após tasks/analyze, antes de implement** | Escolhida |
+
+**Critérios.** Regra H-21 · separação planejamento/execução · rastreabilidade · progressive disclosure
+· compatibilidade com Spec Kit · custo para mudanças pequenas.
+
+**Escolha.** D. `/sdd-loop` é fase 3.75 opcional e **só especifica**; o template mora em `.specify/`.
+A disciplina portátil mora uma vez em `skills/loop-engineering/` e o instalador gera as cópias para
+`.agents/skills/` e `.claude/skills/`, evitando AP-15. O loop autorizado envolve tasks aprovadas; não
+substitui spec, plan, tasks, envelope ou `/sdd-converge` independente.
+
+**Consequências.** O caminho principal continua leve. Trabalho iterativo ganha artefato versionável e
+auditável, mas o humano precisa decidir se a triagem aprovou o uso e revisar o loop antes da execução.
+Projetos consumidores recebem uma skill adicional; a description precisa continuar discriminante para
+não capturar toda tarefa recorrente.
+
+**Revisar quando.** Houver dados de campo sobre custo por mudança aceita e taxa de AP-48 comparando
+execução com e sem `loop.md`, estratificados por porte e nível do verifier.
+
 ## Grafo de dependência
 
 ```mermaid
@@ -335,6 +367,10 @@ graph TD
     A10 --> A11
     A11 --> A12[ADR-012 Absorver KbMain]
     A10 --> A12
+    A2 --> A13[ADR-013 Loop opcional]
+    A3 --> A13
+    A5 --> A13
+    A9 --> A13
 ```
 
 **ADR-009 é a raiz.** Se ela cair, quase tudo é reconstruído. **ADR-003 é a de maior efeito prático**:

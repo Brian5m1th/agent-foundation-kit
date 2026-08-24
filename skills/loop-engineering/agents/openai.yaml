@@ -1,0 +1,4 @@
+interface:
+  display_name: "Loop Engineering"
+  short_description: "Projeta, executa e evolui loops verificaveis"
+  default_prompt: "Use $loop-engineering para transformar esta tarefa iterativa em um loop verificavel e limitado."

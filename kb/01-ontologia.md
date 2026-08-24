@@ -48,6 +48,13 @@ graph TD
     SKILL[Skill] -->|compoe sob demanda| CTX
     SUB[Subagente] -->|protege| CTX
     ENV[Envelope de autonomia] -->|limita| CODE
+    TASKS -->|autoriza| LOOP[Especificacao de loop]
+    SKILL -->|compoe| LOOP
+    HARNESS -->|executa| LOOP
+    LOOP -->|produz| EVID[Evidencia por volta]
+    EVID -->|verifica| LOOP
+    LOOP -->|atualiza| MEM[Estado duravel]
+    MEM -->|informa proxima acao| LOOP
 ```
 
 ## 3. Fichas de conceito
@@ -156,6 +163,16 @@ Formato: `depende-de · usa · produz · substitui · complementa · conflita-co
 - **Formulação de campo** `[CAMPO]` (`patterns.md` P_Novo3): *"o agente é um engenheiro capaz e cego
   ao contexto; o harness é o ambiente de segurança que restringe seus erros automaticamente"*.
 
+### Especificação de loop
+- **depende-de:** meta verificável, Envelope de autonomia, check externo e estados terminais
+- **usa:** Harness, Skills, Estado durável
+- **produz:** evidência por volta, mudança aceita/rejeitada, próximo candidato
+- **complementa:** Task (task declara a unidade; loop declara como iterar sobre evidência)
+- **conflita-com:** custo de verificação, context rot, compreensão humana e autonomia sem supervisão
+- **não substitui:** Prompt, Spec, Plan, Tasks ou verificação independente
+- **derivado-de:** prática de Loop Engineering sistematizada em arXiv 2607.00038 `[RECENTE]`
+- **regra:** feedback que não muda a próxima ação implica execução única/agendada, não loop.
+
 ### Hook
 - **depende-de:** evento do ciclo do agente
 - **substitui:** instrução de CLAUDE.md que precisa valer **sempre**
@@ -197,6 +214,7 @@ O núcleo da ontologia. Cada linha é uma tensão real, não um trade-off retór
 | X8 | Múltiplos harnesses de agente | Sincronização manual | `[CAMPO]` skills duplicadas em `.claude/`, `.agents/`, `.opencode/`, **versões não idênticas** | Fonte única + geração; nunca cópia manual |
 | X9 | Processo pesado | Tamanho da mudança | "marreta para quebrar noz" — consenso em 3 fontes independentes | O peso do processo é proporcional ao porte |
 | X10 | Verificação exaustiva | Over-engineering | Revisor sempre acha algo | Restringir achados a correção e requisito |
+| X11 | Autonomia longa | Custo e erro acumulados | Mais voltas ampliam tanto ganho quanto dano e comprehension debt | Check externo + estados terminais + teto + aprovação no irreversível |
 
 ## 5. Consultas que este grafo responde
 

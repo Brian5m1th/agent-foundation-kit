@@ -45,7 +45,7 @@ qual usar quando. A árvore completa de decisão é `AD-01` em
 
 ### Disciplinas fora da biblioteca de prompts
 
-Cinco pedidos que nenhum dos 52 prompts atende. O destino é um padrão da KB, não um prompt — leia a
+Pedidos que nenhum dos 52 prompts atende. O destino é um padrão/skill da KB, não um prompt — leia a
 entrada antes de agir. Detalhe em [kb/mattpocock-skills.md](kb/mattpocock-skills.md).
 
 | Pedido soa como… | Vá para |
@@ -54,6 +54,7 @@ entrada antes de agir. Detalhe em [kb/mattpocock-skills.md](kb/mattpocock-skills
 | "está tudo acoplado", desenhar a interface de um módulo, decidir onde cortar | `PLN-05` · Módulo Profundo |
 | escopo nebuloso, "não sei nem o que especificar", grande demais para uma sessão | `PLN-06` **antes** de `/sdd-specify` |
 | bug difícil, teste intermitente, regressão de desempenho | `VER-06` (construa o loop primeiro) + `find-and-fix-a` |
+| "cria/roda um loop", tarefa iterativa que deve aprender com cada volta | `EXE-10` + `skills/loop-engineering`; no SDD, `/sdd-loop` depois de tasks/analyze |
 | encerrar a sessão passando o bastão para outra | `CTX-07` · Handoff |
 | o agente é verboso, o projeto tem jargão que ele não conhece | `CTX-06` · Linguagem Ubíqua |
 
@@ -86,8 +87,9 @@ pwsh C:\workspace\labs\.specify\scripts\install.ps1                             
 pwsh C:\workspace\labs\.specify\scripts\install.ps1 -Target C:\workspace\WWMA-Tech   # projeto + .specify/
 ```
 
-Sobrescreve os `sdd-*.md` (labs é upstream), **preserva** `constitution.md` e templates já existentes
-no destino. `-Force` sobrescreve tudo.
+Sobrescreve os `sdd-*.md` e instala `loop-engineering` a partir da fonte única em `skills/` para
+`.agents/skills/` e `.claude/skills/`. **Preserva** `constitution.md` e templates já existentes no
+destino; `-Force` sobrescreve estes últimos.
 
 O par de contexto tem instalação própria — copiar `templates/AGENTS.template.md` e
 `templates/CLAUDE.template.md`, preencher os placeholders e apagar os comentários HTML. Ver

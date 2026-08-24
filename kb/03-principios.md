@@ -355,6 +355,10 @@ linter.
 **Impacto cognitivo.** Remove do humano o papel de laço de verificação.
 **Impacto multiagente.** É o **único** mecanismo que escala para N agentes sem N revisores.
 
+**Aplicação a Loop Engineering.** `[RECENTE]` O loop não torna uma instrução mais forte só por
+repeti-la. A autonomia cresce quando cada volta é empurrada por check externo, estados terminais e
+runtime que impõe o envelope; sem isso, a repetição amplifica a fragilidade da exortação (AP-48).
+
 > Regra de conversão `[OFICIAL]`: *"se o Claude já faz certo sem a instrução, apague-a — ou
 > converta-a em hook."*
 
@@ -419,6 +423,9 @@ não convertido em proxy numérica.
 **Impacto multiagente.** Evidência é o **formato de mensagem** entre agentes. Veredito não compõe;
 evidência compõe.
 
+**Aplicação à escada de verificação.** `[ACADÊMICO]` Nível 4 (juiz-LLM) continua sendo opinião por
+rubrica; não deve herdar a linguagem de certeza do nível 1. Rotular o nível real é parte da evidência.
+
 ---
 
 ## P14 · Fechar o laço: execução vira conhecimento
@@ -447,6 +454,9 @@ o benefício. É por isso que a captura de rationale falhou por décadas.
 **Conflitos.** Com prazo. É sempre a primeira coisa cortada.
 **Impacto arquitetural.** Exige que o conhecimento tenha **onde** ir: constitution, padrão, skill.
 Sem destino, a lição vira comentário de PR e morre.
+**Aplicação a Self-Harness.** `[EXPERIMENTAL]` Promover uma lição diretamente a prompt/harness não é
+aprendizado demonstrado. LRN-03 exige que a edição trate o held-in sem piorar o held-out, com lineage
+e rollback; caso contrário, é AP-49.
 **Impacto multiagente.** Sem esse laço, N agentes cometem o mesmo erro N vezes — e é por isso que a
 disciplina D6 é a menos madura e a mais cara de ignorar.
 

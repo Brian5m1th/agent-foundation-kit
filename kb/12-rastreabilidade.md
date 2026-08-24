@@ -119,6 +119,32 @@ Mapeamento dos artefatos reais para a cadeia:
 **O ideal seria a união:** EARS + PROP do InscreveAI · `depends_on` verificável do sdd-kit ·
 histórias independentemente testáveis do Spec Kit · calibração por porte dos três.
 
+## 7. Rastreabilidade de loop (ramo opcional)
+
+Loop não cria uma cadeia paralela de requisitos. Ele acrescenta evidência temporal entre Task e
+Verificação:
+
+```text
+Task autorizada → Loop spec → Volta → Mudança candidata → Check → aceita/rejeitada → Estado
+       ↑                                                               ↓
+       └──────────── spec/plan/envelope continuam governando ──────────┘
+```
+
+Integridade mínima:
+
+| # | Regra | Violação |
+|---|---|---|
+| RL1 | Toda meta do loop mapeia para task/SC existente | loop ampliou escopo |
+| RL2 | Toda mudança candidata registra check e decisão | atividade sem evidência |
+| RL3 | Toda mudança aceita preserva regressões declaradas | otimização local destrutiva |
+| RL4 | Todo estado terminal cita evidência ou causa | conclusão silenciosa/AP-48 |
+| RL5 | `error`, `stalled` e `exhausted` nunca fecham SC/task | falso sucesso |
+| RL6 | Mudança de harness promovida registra held-in, held-out e versão anterior | AP-49 sem lineage/rollback |
+
+`loop-state.md` é log operacional compacto; `tasks.md` continua fonte de verdade do trabalho e a
+matriz continua fonte de cobertura. Estado do loop não pode marcar task concluída sem o check que a
+task declarou e sem a auditoria posterior prevista no fluxo.
+
 ---
 
 **Anterior:** [11 — ADRs](11-adrs.md) · **Próximo:** [13 — Bibliografia](13-bibliografia.md)

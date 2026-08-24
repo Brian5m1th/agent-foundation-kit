@@ -42,6 +42,7 @@ inchados e constituições decorativas:
 | — | [Subagentes](sub-agents.md) | Destilação das fontes oficiais — coordenação de trabalho em contexto isolado |
 | — | [Biblioteca de prompts](prompt-library.md) | Os 52 prompts oficiais + índice de gatilho (intenção → prompt) |
 | — | [mattpocock/skills](mattpocock-skills.md) | Destilação `[INDÚSTRIA]` — disciplinas de engenharia empacotadas como skills |
+| — | [Loop Engineering](loop-engineering.md) | Destilação `[RECENTE]` — loop externo, verificação, memória e Self-Harness |
 | — | [Agent Skills do GitHub](github-agent-skills.md) | Destilação `[INDÚSTRIA]` / `[OFICIAL]` / `[CAMPO]` — matriz extensiva de skills (PO, QA, QC, Dev) |
 | — | [PM Agent Skills](pm-agent-skills.md) | Destilação `[INDÚSTRIA]` / `[CONSOLIDADO]` / `[CAMPO]` — acervo de produto (PRDs, Discovery, Estratégia, Métricas, GTM) |
 | — | [Corpus KbMain](kbmain-corpus.md) | Destilação `[CAMPO]` — acervo agêntico de terceiro em produção, com seus modos de apodrecimento |
@@ -87,10 +88,12 @@ observar não é endossar, e a mesma fonte pode render um padrão e um anti-padr
 ## Fontes primárias desta versão
 
 **Oficiais** — `code.claude.com/docs`: best-practices, common-workflows, prompt-library, worktrees,
-agents, hooks, sub-agents · `github.github.io/spec-kit` · Anthropic Agent Skills.
+agents, hooks, sub-agents · `github.github.io/spec-kit` · Anthropic Agent Skills · Anthropic
+*Effective context engineering for AI agents*.
 **De indústria** — `github.com/mattpocock/skills` (21 skills, lidas em 2026-08-02; ver ADR-011).
 **Acadêmicas** — arXiv 2508.10146 (Agentic AI Frameworks) · arXiv 2601.16809 (Will It Survive?) ·
-METR 2507.09089 · DORA 2024 · GitClear 2025 · Martin Fowler / Thoughtworks (Böckeler).
+2605.11027 (Intent-Centric SE) · 2606.09498 (Self-Harness) · 2607.00038 (Loop Engineering) · METR
+2507.09089 · DORA 2024 · GitClear 2025 · Martin Fowler / Thoughtworks (Böckeler).
 **De campo** — `WWMA-Tech/inscreveai-new-project` (.spec, CLAUDE.md, AGENTS.md, patterns.md com
 P1–P22 e P_Novo1–21, correctness/) · `Back-End/Wakanda/wakanda-ai/sdd-kit` (framework/standards,
 WORKFLOW, MODES, 11 agentes, 7 skills, 19 comandos) · `Freelancer/K.A.O.S` (CLAUDE.md, .agents) ·

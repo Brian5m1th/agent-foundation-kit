@@ -476,6 +476,24 @@ ruidosa.
 **Relacionados.** EXE-02, CTX-07, CTX-10. **Combate.** AP-11 (Amnésia de Sessão).
 **Detalhe completo.** [mempalace-memory-system.md](mempalace-memory-system.md) §1.
 
+## EXE-10 · Especificação de Loop Externo
+
+**Contexto.** Trabalho iterativo em que a evidência de uma volta muda a próxima ação.
+**Problema.** Prompt passo a passo mantém o humano como scheduler e memória; `while true` sem check
+transforma autonomia em repetição cara.
+**Solução.** `[RECENTE]` Versionar um artefato externo com **gatilho · meta · linha de base · skills ·
+check e regressões · estados terminais · memória em disco · guardrails · acionamento**. Uma volta
+mede, escolhe o maior obstáculo pela evidência, faz uma mudança reversível, verifica, aceita/rejeita e
+registra o próximo candidato. Se o feedback não muda a ação seguinte, descartar o loop em favor de
+execução única/agendada. Classificar o check pela escada 1–5; nível 4 exige maker/checker separado.
+**Trade-offs.** Menos prompting humano × maior custo de verificação, risco acumulado e comprehension
+debt. Autonomia só cresce até onde o check e o envelope permitem.
+**Relacionados.** EXE-03, EXE-04, EXE-07, VER-01, VER-04, LRN-01, AR-06.
+**Combate.** AP-48 (Loop sem Saída), AP-20 (Auto-validação), AP-32 (Falsa Sensação de Controle).
+**Não usar quando.** Feedback não muda a próxima ação; meta é gosto puro; direção greenfield ainda
+está ambígua; ou o custo de verificar excede o benefício.
+**Detalhe completo.** [loop-engineering.md](loop-engineering.md).
+
 ---
 
 
@@ -630,6 +648,23 @@ reutilizável (18 perguntas cobrindo P_Novo4–P_Novo21). Falha → padrão → 
 **Não usar quando.** A falha foi genuinamente única e não generalizável — registre como nota, não
 como padrão.
 
+## LRN-03 · Evolução de Harness com Holdout
+
+**Contexto.** Falhas recorrentes parecem vir da interação entre um modelo e seu harness, não de um
+caso isolado.
+**Problema.** Editar prompt, ferramentas ou runtime a partir de anecdotes corrige o benchmark visível
+e degrada comportamento fora dele; o próprio agente pode premiar uma mudança que facilitou seu check.
+**Solução.** `[EXPERIMENTAL]` Fixar modelo, evaluator, ambiente, budget e corpus; separar held-in
+visível do held-out invisível. Rodar **Weakness Mining → propostas mínimas e distintas → validação
+regressiva**. Promover somente se `Δheld_in ≥ 0`, `Δheld_out ≥ 0` e ao menos um delta for positivo.
+Versionar lineage, rejeições e rollback; pedir aprovação antes de ativar no harness compartilhado.
+**Evidência.** arXiv 2606.09498: melhora held-in e held-out nos nove pares modelo×benchmark testados,
+com escopo limitado a três modelos e três benchmarks.
+**Trade-offs.** Melhoria específica e auditável × custo alto de corpus, evaluator e repetições.
+**Relacionados.** EXE-03, EXE-10, VER-01, LRN-02. **Combate.** AP-49.
+**Não usar quando.** Não existe evaluator fixo ou holdout; há apenas uma falha anedótica; a superfície
+de harness não pode plausivelmente tratar o mecanismo; ou falta autoridade para promover a mudança.
+
 ---
 
 ## Índice cruzado
@@ -671,6 +706,7 @@ como padrão.
 | EXE-07 Disjuntor de loop | D4 | P10 | AP-17/30 |
 | EXE-08 Investigação Read-Only + Lock MD | D4 | P10 | AP-45/17 |
 | EXE-09 Auto-Save Hooks | D4 | P11 | AP-11 |
+| EXE-10 Loop externo | D4/D5/D6 | P10/P11/P13/P14 | AP-48 |
 | VER-01 Independente | D5 | P12 | AP-20 |
 | VER-02 Cruzada | D5 | P09 | AP-21 |
 | VER-03 Quarentena | D5 | P13 | AP-22 |
@@ -681,6 +717,7 @@ como padrão.
 | VER-08 Veredito Quadripartido | D5 | P12 | AP-20/38 |
 | LRN-01 Lições | D6 | P14 | AP-25 |
 | LRN-02 Promoção | D6 | P14 | AP-25 |
+| LRN-03 Evolução de harness | D6 | P11/P12/P13/P14 | AP-49 |
 
 ---
 

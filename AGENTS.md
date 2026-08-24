@@ -34,13 +34,13 @@ nunca reusam um prefixo (AP-14 · Namespace Colidido). Ao citar, use o identific
 | O que um termo significa aqui | [02-glossario](kb/02-glossario.md) | — |
 | **Por que** fazemos assim | [03-principios](kb/03-principios.md) | `P01`–`P14` |
 | **Padrões** — problema recorrente resolvido | [04-padroes](kb/04-padroes.md) | `CTX-`, `INT-`, `PLN-`, `EXE-`, `VER-`, `LRN-` |
-| **Anti-padrões** — o que falha repetidamente | [05-antipadroes](kb/05-antipadroes.md) | `AP-01`–`AP-41` (🔴 grave / 🟡 moderado) |
-| **Regras absolutas** e apostas sob incerteza | [06-heuristicas-e-invariantes](kb/06-heuristicas-e-invariantes.md) | `I-01`–`I-19` · `H-01`–`H-20` |
+| **Anti-padrões** — o que falha repetidamente | [05-antipadroes](kb/05-antipadroes.md) | `AP-01`–`AP-49` (🔴 grave / 🟡 moderado) |
+| **Regras absolutas** e apostas sob incerteza | [06-heuristicas-e-invariantes](kb/06-heuristicas-e-invariantes.md) | `I-01`–`I-20` · `H-01`–`H-22` |
 | Como raciocinar sobre algo | [07-modelos-mentais](kb/07-modelos-mentais.md) | — |
-| **Arquiteturas** de referência e pipelines | [08-arquiteturas-e-pipelines](kb/08-arquiteturas-e-pipelines.md) | `AR-01`–`AR-05` · `PL-01`–`PL-05` |
-| O que fazer **neste ponto** | [09-decisao-estados-algoritmos](kb/09-decisao-estados-algoritmos.md) | `AD-01`–`AD-05` · `ME-01`–`ME-04` · `AL-01`–`AL-05` |
+| **Arquiteturas** de referência e pipelines | [08-arquiteturas-e-pipelines](kb/08-arquiteturas-e-pipelines.md) | `AR-01`–`AR-06` · `PL-01`–`PL-07` |
+| O que fazer **neste ponto** | [09-decisao-estados-algoritmos](kb/09-decisao-estados-algoritmos.md) | `AD-01`–`AD-06` · `ME-01`–`ME-05` · `AL-01`–`AL-06` |
 | Como sei se está funcionando | [10-metricas](kb/10-metricas.md) | — |
-| **Por que** escolhemos isto e não aquilo | [11-adrs](kb/11-adrs.md) | `ADR-001`–`ADR-012` (imutáveis) |
+| **Por que** escolhemos isto e não aquilo | [11-adrs](kb/11-adrs.md) | `ADR-001`–`ADR-013` (imutáveis) |
 | Isto cobre aquilo? | [12-rastreabilidade](kb/12-rastreabilidade.md) | — |
 | De onde vem a afirmação | [13-bibliografia](kb/13-bibliografia.md) | — |
 
@@ -51,6 +51,8 @@ Destilações fora da numeração. **Oficiais** `[OFICIAL]`: [anthropic-claude-c
 [git-strategy](kb/git-strategy.md), [worktrees](kb/worktrees.md), [sub-agents](kb/sub-agents.md), [prompt-library](kb/prompt-library.md).
 **De indústria / Recente** `[INDÚSTRIA]` `[RECENTE]`: [mattpocock-skills](kb/mattpocock-skills.md) — absorvida, não instalada
 (ADR-011); [github-agent-skills](kb/github-agent-skills.md) — matriz de skills por papel (PO, QA, QC, Dev); [ai-workflows-eval-pipelines](kb/ai-workflows-eval-pipelines.md) — taxonomia de motores de IA e pipelines de avaliação offline (Evals). Toda afirmação vinda delas é `[INDÚSTRIA]` ou `[RECENTE]`, nunca `[OFICIAL]`.
+**Temática recente**: [loop-engineering](kb/loop-engineering.md) — preserva separadamente
+`[RECENTE]`, `[EXPERIMENTAL]`, `[ACADÊMICO]`, `[OFICIAL]` e `[INDÚSTRIA]`.
 **De campo, de terceiro** `[CAMPO]`: [kbmain-corpus](kb/kbmain-corpus.md) — acervo agêntico em produção; [mempalace-memory-system](kb/mempalace-memory-system.md) — sistema local-first de memória verbatim.
 
 Observar não é endossar — a §5 de lá registra o que foi **recusado**, e a §7 o material sensível que
@@ -73,11 +75,12 @@ Aprofundamento de **uma** das disciplinas (D1 · Intent): [docs/intent-engineeri
 | 2 | `/sdd-plan` | `specs/NNN-slug/plan.md` | COMO — stack, contratos, riscos |
 | 3 | `/sdd-tasks` | `specs/NNN-slug/tasks.md` | Passos por história, verificáveis |
 | 3.5 | `/sdd-analyze` | relatório | Os artefatos são coerentes entre si? |
+| 3.75 | `/sdd-loop` | `specs/NNN-slug/loop.md` | Como iterar com feedback, memória e parada? |
 | 4 | `/sdd-implement` | código | Execução, uma task por vez |
 | 5 | `/sdd-converge` | relatório | O código satisfaz a spec? |
 | — | `/sdd-checklist <dimensão>` | `specs/NNN-slug/checklists/` | A spec está bem escrita? |
 
-Opcionais: `clarify`, `analyze`, `checklist`. O restante é o caminho principal, e a ordem é rígida —
+Opcionais: `clarify`, `analyze`, `loop`, `checklist`. O restante é o caminho principal, e a ordem é rígida —
 não se planeja antes de especificar, não se implementa sem tasks.
 
 **Distinção que confunde:** `/sdd-analyze` audita **artefato contra artefato**, antes de implementar.
@@ -89,7 +92,8 @@ mesma estrutura de diretórios, mesmos artefatos. Diferenças deliberadas: **por
 fundamentadas em `docs/intent-engineering/` — análise de obstáculos (KAOS), envelope de autonomia por
 task (P10/EXE-04), modo de interpretação declarado, registro de interpretação (EXE-06), e bloqueio por
 ambiguidade calibrado por custo de reversão (P04/ADR-002). Migrar para o Spec Kit oficial é direto: a
-estrutura de pastas é a mesma.
+estrutura de pastas é a mesma. A fase opcional 3.75 (`/sdd-loop`) é uma sexta extensão, fundamentada
+separadamente em Loop Engineering e ADR-013; ela não altera o caminho principal.
 
 ## Invariantes deste repositório
 

@@ -92,9 +92,10 @@ um codebase existente gerando specs retroativas.
 **Guardrail** `[D4]` — mecanismo que valida saída, aplica segurança e mantém integridade do fluxo. A
 maioria dos frameworks agênticos tem suporte apenas parcial (arXiv 2508.10146).
 
-**Harness** `[D4]` — conjunto de verificações automáticas (teste, lint, typecheck, build, CI) que
-restringe os erros do agente sem julgamento de LLM. *"O agente é um engenheiro capaz e cego ao
-contexto; o harness é o ambiente de segurança."*
+**Harness** `[D4]` — sistema ao redor do modelo que medeia sua interação com o ambiente: prompts,
+ferramentas, memória, verificadores, permissões, adaptadores, orquestração e mecanismos de runtime.
+Teste, lint, typecheck, build e CI são a parte determinística que restringe erros sem julgamento de
+LLM. `[RECENTE]` arXiv 2606.09498; formulação de segurança `[CAMPO]` em EXE-03.
 
 **Hook** `[D4]` — script executado em ponto determinístico do ciclo do agente. Diferença crítica:
 instrução em CLAUDE.md é **advisory**; hook é **garantido**.
@@ -105,6 +106,11 @@ glossário versionado do projeto (`CONTEXT.md`), **só termos, zero implementaç
 
 **Localidade** `[D3]` — grau em que mudança, defeito e conhecimento se concentram num lugar só, em vez
 de se espalharem pelos chamadores. Contrapartida da alavancagem no julgamento de PLN-05.
+
+**Loop specification / especificação de loop** `[D4][D5][D6]` — artefato externo, limitado,
+reutilizável e versionável que declara gatilho, meta, execução, verificação, estados de parada,
+memória e guardrails para um harness. Distingue-se do loop de programação e do ciclo interno do
+agente. `[RECENTE]` arXiv 2607.00038; operacionalizado em EXE-10 e AR-06.
 
 **MCP (Model Context Protocol)** `[D2]` — protocolo JSON-RPC para chamada de ferramenta e troca de
 contexto, modelo cliente-servidor. Comparar com A2A (orientado a agente, Agent Cards), ACP (REST,
@@ -158,6 +164,10 @@ escolha feita. Filtro: *"outro executor competente poderia ter escolhido diferen
 (Feathers); é onde a interface de um módulo vive, e por onde chamadores e testes passam igualmente.
 Por isso *a interface é a superfície de teste* — PLN-05.
 
+**Self-Harness** `[D6]` — loop experimental que mantém modelo e evaluator fixos e melhora somente o
+harness por três estágios: mineração de fraquezas em traces, propostas mínimas e validação regressiva
+em splits held-in/held-out. `[EXPERIMENTAL]` arXiv 2606.09498; LRN-03.
+
 **Skill (SKILL.md)** `[D2]` — pasta com instruções, scripts e recursos que o agente descobre e carrega
 dinamicamente. Formato aberto desde dez/2025 (adotado também pela OpenAI). *Model-invoked* por
 padrão; `disable-model-invocation: true` torna manual.
@@ -191,6 +201,10 @@ complexidade real e merece existir.
 
 **Validator independence** `[D5]` — *"você não pode validar seu próprio código no mesmo contexto"*.
 Exige subagente ou sessão separada.
+
+**Verification ladder / escada de verificação** `[D5]` — classificação do check de um loop:
+1 determinístico · 2 regra · 3 verdade de campo atrasada · 4 modelo como juiz · 5 checkpoint humano.
+Níveis 1–2 formam a zona autônoma; 4–5 são fluxo assistido. `[ACADÊMICO]` arXiv 2607.00038.
 
 **Verbatim Storage** `[D2]` — armazenamento textual do histórico na sua forma original e exata, rejeitando paráfrases ou resumos destrutivos no nível do banco de dados base ([CTX-11](04-padroes.md#ctx-11-indexação-verbatim-com-camada-simbólica-palace--aaak-dialect)).
 

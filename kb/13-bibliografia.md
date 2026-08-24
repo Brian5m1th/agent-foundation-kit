@@ -32,12 +32,37 @@ o que o fornecedor recomenda, não o que foi medido.
   *Progressive disclosure* como mecanismo. Simon Willison: potencialmente *"maior que o MCP"* pela
   simplicidade radical — markdown + YAML contra uma especificação de protocolo inteira.
 
+- **Anthropic — [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)**
+  Contexto como recurso finito com retorno marginal decrescente; system prompts na “altura” certa,
+  recuperação *just in time*, progressive disclosure, compactação, notas estruturadas em disco e
+  subagentes. Autoriza o desenho de memória de AR-06: contexto fresco relê estado compacto; não
+  autoriza concluir que uma técnica específica sempre melhora qualquer modelo.
+
 - **GitHub — [Spec Kit](https://github.github.io/spec-kit/)** · [repo](https://github.com/github/spec-kit)
   Nove comandos (`constitution`, `specify`, `clarify`, `plan`, `tasks`, `analyze`, `checklist`,
   `implement`, `converge`). O que mais rende: **histórias independentemente testáveis com US1 = MVP**,
   tasks agrupadas por história e não por camada, e a fase Fundação como portão rígido.
 
 ## B. Pesquisa acadêmica `[EXPERIMENTAL]` / `[RECENTE]`
+
+- **Macedo — [Stop Hand-Holding Your Coding Agent: Engineering the Loops that Replace Step-by-Step Prompting](https://arxiv.org/html/2607.00038)**,
+  arXiv 2607.00038, jun/2026. `[ACADÊMICO]` Position paper + codificação descritiva de 50 loops.
+  Define especificação de loop externa (gatilho, meta, verificação, parada, memória), escada de cinco
+  níveis, arquiteturas, estados terminais e custo por mudança aceita. O corpus reporta 70% na zona
+  autônoma de verificação e 74% com estados terminais nomeados. **Não autoriza causalidade ou ROI**:
+  uma única pessoa codificou um único catálogo e o paper não executou experimento controlado.
+
+- **Zhang et al. — [Self-Harness: Harnesses That Improve Themselves](https://arxiv.org/html/2606.09498)**,
+  arXiv 2606.09498v3, ago/2026. `[EXPERIMENTAL]` Modelo/evaluator fixos; Weakness Mining → propostas
+  mínimas → validação em held-in/held-out. Nos nove pares de três modelos × três benchmarks, os
+  harnesses finais melhoraram ambos os splits; ganho relativo total máximo de 132%. **Não autoriza
+  autoedição irrestrita de harness de produção** nem generalização fora desses backends/benchmarks.
+
+- **De La Cruz — [From Code-Centric to Intent-Centric Software Engineering](https://arxiv.org/abs/2605.11027)**,
+  arXiv 2605.11027, mai/2026. `[ACADÊMICO]` Análise temática reflexiva, dominante, de literatura e
+  discurso público: código plausível fica barato enquanto intenção, contexto, arquitetura,
+  verificação, segurança, proveniência, governança e julgamento responsável ganham centralidade.
+  **Não é estudo de produtividade**; o corpus é heterogêneo e a síntese é interpretativa.
 
 - **Will It Survive? Deciphering the Fate of AI-Generated Code in Open Source** —
   [arXiv 2601.16809](https://arxiv.org/abs/2601.16809), jan/2026. `[EXPERIMENTAL]`
@@ -100,6 +125,20 @@ processo é necessário; desonesto usá-los como prova de que SDD funciona.
   este artigo.
 
 ## E. Prática de indústria `[INDÚSTRIA]`
+
+- **Addy Osmani — [Loop Engineering](https://addyo.substack.com/p/loop-engineering)**, jun/2026.
+  Compõe automações de descoberta/triagem, worktrees, skills, plugins/connectors e subagentes sobre
+  memória externa; maker/checker e estado persistido transformam prompts em sistema operável. A
+  fonte preserva a ressalva central: loops não eliminam prompting, revisão humana, custo nem dívida de
+  compreensão. É experiência/opinião de indústria, não avaliação controlada.
+
+- **Maestros da IA — [O Criador do Claude Code APOSENTOU Prompts (agora ele usa LOOPS)](https://youtu.be/4UWjYd-IUF4)**,
+  ago/2026. Divulgação operacional em quatro blocos: gatilho, skills, objetivo/verificação e
+  saída/memória; recomenda começar pequeno. Útil como tradução prática, não como evidência empírica.
+- **O Novo Programador — [Loop Engineering: Faça a IA TRABALHAR Enquanto Você DORME!](https://youtu.be/LIn5X6ObEms)**,
+  ago/2026. Demonstra a proposta de execução longa/unattended. A promessa exige a ressalva que a fonte
+  de loops acadêmica explicita: check externo, teto, isolamento, credenciais mínimas e aprovação para
+  ações consequenciais.
 
 - **Red Hat — [How spec-driven development improves AI coding quality](https://developers.redhat.com/articles/2025/10/22/how-spec-driven-development-improves-ai-coding-quality)**
   Origem do padrão `LessonsLearned.md` consumido pelo próprio agente (LRN-01) e da estratificação de

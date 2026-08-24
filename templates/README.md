@@ -60,11 +60,16 @@ Workflows operacionais reutilizáveis que orquestram tarefas complexas de forma 
 
 ## O que NÃO instalar por aqui
 
-O fluxo SDD (`/sdd-*`) tem instalador próprio:
+O fluxo SDD (`/sdd-*`) e a skill portátil `loop-engineering` têm instalador próprio:
 
 ```powershell
 pwsh C:\workspace\labs\.specify\scripts\install.ps1 -Target C:\workspace\<projeto>
 ```
+
+O instalador copia a fonte canônica da skill para `.agents/skills/loop-engineering` e
+`.claude/skills/loop-engineering`, evitando edição manual divergente (AP-15). Também instala o comando
+opcional `/sdd-loop`, que produz `specs/NNN-slug/loop.md` depois de `tasks`/`analyze` e antes de
+`implement` quando feedback realmente muda a próxima ação.
 
 ## Fundamentação
 
