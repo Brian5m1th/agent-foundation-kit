@@ -102,7 +102,7 @@ Mapeamento dos artefatos reais para a cadeia:
 | PROP | `spec.md` §9 | — | — (lacuna) |
 | Critério | `spec.md` §10 | `acceptance_criteria` | SC-NNN |
 | Task | `tasks.md` | `tasks.json` `depends_on` | `tasks.md` `[P]` + história |
-| Execução | commit por task | commit por task | commit por task |
+| Execução | commit por task (RGIT-02/05) | commit por task | commit por task (`RGIT-02`, `RGIT-05`, `RGIT-11`) |
 | Verificação | harness + `/spec-review` | validadores + `sdd-validator-runner` | `/sdd-converge` |
 | Matriz | `spec.md` §13 | — | `tasks.md` Rastreabilidade |
 
@@ -137,9 +137,9 @@ Integridade mínima:
 | RL1 | Toda meta do loop mapeia para task/SC existente | loop ampliou escopo |
 | RL2 | Toda mudança candidata registra check e decisão | atividade sem evidência |
 | RL3 | Toda mudança aceita preserva regressões declaradas | otimização local destrutiva |
-| RL4 | Todo estado terminal cita evidência ou causa | conclusão silenciosa/AP-38 |
+| RL4 | Todo estado terminal cita evidência ou causa | conclusão silenciosa/AP-48 |
 | RL5 | `error`, `stalled` e `exhausted` nunca fecham SC/task | falso sucesso |
-| RL6 | Mudança de harness promovida registra held-in, held-out e versão anterior | AP-39 sem lineage/rollback |
+| RL6 | Mudança de harness promovida registra held-in, held-out e versão anterior | AP-49 sem lineage/rollback |
 
 `loop-state.md` é log operacional compacto; `tasks.md` continua fonte de verdade do trabalho e a
 matriz continua fonte de cobertura. Estado do loop não pode marcar task concluída sem o check que a

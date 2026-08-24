@@ -9,6 +9,9 @@ Termos com ★ são propostos por esta KB.
 encaixe preenche), não substância. Um adaptador indica seam hipotético; dois indicam seam real
 (PLN-05).
 
+**AAAK Dialect** `[D2]` — formato simbólico estruturado e denso (*Structured Symbolic Summary Format*) para camadas de índice de memória (*closets*), otimizado para varredura ultra-rápida por LLMs com baixíssimo consumo de tokens ([mempalace-memory-system.md](mempalace-memory-system.md)).
+
+
 **Agente** `[D4]` — entidade autônoma que percebe, raciocina, usa ferramentas e age sobre um ambiente.
 Definição moderna (arXiv 2508.10146): *"entidade autônoma e colaborativa, dotada de capacidades de
 raciocínio e comunicação, capaz de interpretar dinamicamente contextos estruturados, orquestrar
@@ -107,7 +110,7 @@ de se espalharem pelos chamadores. Contrapartida da alavancagem no julgamento de
 **Loop specification / especificação de loop** `[D4][D5][D6]` — artefato externo, limitado,
 reutilizável e versionável que declara gatilho, meta, execução, verificação, estados de parada,
 memória e guardrails para um harness. Distingue-se do loop de programação e do ciclo interno do
-agente. `[RECENTE]` arXiv 2607.00038; operacionalizado em EXE-07 e AR-04.
+agente. `[RECENTE]` arXiv 2607.00038; operacionalizado em EXE-10 e AR-06.
 
 **MCP (Model Context Protocol)** `[D2]` — protocolo JSON-RPC para chamada de ferramenta e troca de
 contexto, modelo cliente-servidor. Comparar com A2A (orientado a agente, Agent Cards), ACP (REST,
@@ -120,6 +123,9 @@ altera aquela funcionalidade. Kiro chama de *steering*; Spec Kit, de *constituti
 **Memória (tipos)** `[D0]` — curto prazo (contexto imediato) · longo prazo (persiste entre sessões) ·
 **semântica** (conceitos e fatos) · **procedimental** (fluxos e estratégias) · **episódica**
 (instantâneos contextuais de interações passadas).
+
+**Method of Loci (Palácio da Memória)** `[D2]` — técnica de organização espacial de dados em *Wings* (alas de entidades/projetos), *Rooms* (quartos temporais) e *Drawers* (gavetas verbatim), utilizada para estruturar o armazenamento local de memória agêntica ([mempalace-memory-system.md](mempalace-memory-system.md)).
+
 
 **Modo de execução** `[D3]` — `[CAMPO]` sdd-kit: **Express** (1 comando, 3–5 perguntas, auto-aprova) ×
 **Standard** (4–5 comandos, entrevista, confirmações). Ortogonal ao **modo de template**: Full
@@ -191,6 +197,8 @@ spec **antes** de implementar; verde = task concluída.
 complexidade desaparece, ele era passa-fio; se reaparece espalhada por N chamadores, ele concentrava
 complexidade real e merece existir.
 
+**Query Sanitization** `[D4]` — algoritmo de pré-processamento de strings de busca para isolar a intenção real e eliminar contaminações causadas por system prompts concatenados antes da geração de embeddings ([AP-47](05-antipadroes.md#ap-47-contaminação-de-query-por-system-prompt)).
+
 **Validator independence** `[D5]` — *"você não pode validar seu próprio código no mesmo contexto"*.
 Exige subagente ou sessão separada.
 
@@ -198,12 +206,17 @@ Exige subagente ou sessão separada.
 1 determinístico · 2 regra · 3 verdade de campo atrasada · 4 modelo como juiz · 5 checkpoint humano.
 Níveis 1–2 formam a zona autônoma; 4–5 são fluxo assistido. `[ACADÊMICO]` arXiv 2607.00038.
 
+**Verbatim Storage** `[D2]` — armazenamento textual do histórico na sua forma original e exata, rejeitando paráfrases ou resumos destrutivos no nível do banco de dados base ([CTX-11](04-padroes.md#ctx-11-indexação-verbatim-com-camada-simbólica-palace--aaak-dialect)).
+
 **Vibe coding** `[D1]` — descrever uma feature, aceitar o que voltar e publicar. O anti-padrão que o
 SDD existe para substituir.
+
+**Wake-up Stack (L0–L3)** `[D2]` — pipeline de inicialização de sessão que pré-carrega apenas as camadas de identidade (L0) e história essencial (L1 ~600–900t), adiando buscas profundas (L3) para quando forem estritamente necessárias ([CTX-10](04-padroes.md#ctx-10-arquitetura-de-memória-l0l3-memory-wake-up-stack)).
 
 **Worktree** `[D4]` — checkout git isolado em branch própria, permitindo sessões paralelas sem
 colisão de edições. Isola **arquivos**, não trabalho: coordenação é papel de subagente, agent team ou
 workflow. Detalhe em [worktrees.md](worktrees.md).
+
 
 ---
 

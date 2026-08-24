@@ -129,8 +129,8 @@ papers e a prática mantêm prompts dentro das voltas.
 
 ## Consequência operacional para este repositório
 
-O desenho foi incorporado como EXE-07, LRN-03, AP-38, AP-39, H-19, H-20, AR-04, PL-06, AD-04,
-ME-04, AL-06 e ADR-012. A skill canônica está em
+O desenho foi incorporado como EXE-10, LRN-03, AP-48, AP-49, H-21, H-22, AR-06, PL-07, AD-06,
+ME-05, AL-06 e ADR-013. A skill canônica está em
 [`skills/loop-engineering/`](../skills/loop-engineering/), o comando SDD em
 [`../.claude/commands/sdd-loop.md`](../.claude/commands/sdd-loop.md) e o template em
 [`../.specify/templates/loop-template.md`](../.specify/templates/loop-template.md).

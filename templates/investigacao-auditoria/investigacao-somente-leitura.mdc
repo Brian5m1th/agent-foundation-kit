@@ -1,0 +1,17 @@
+---
+description: Investigação de achados de auditoria — somente leitura de produção, documentação em .md e atualização de status
+globs: docs/investigacao/**
+alwaysApply: false
+---
+
+# Investigação — Somente Leitura de Produção
+
+**Não se aplica** quando o trabalho for de implementação (Trilha A/B seguindo `PROMPT-AGENTE-IMPLEMENTACAO.md`). Aplica-se exclusivamente à fase de **investigação de bugs** (`PROMPT-AGENTE-INVESTIGACAO.md`).
+
+Quando estiver investigando um achado:
+
+- **NÃO altere código de produção** (`src/`, `apps/`, `lib/`, etc.), mesmo que a correção pareça óbvia ou de 1 linha.
+- **Escrita permitida**: arquivos em `docs/investigacao/**` (`<ID>.md` e `ESTADO-BUGS.md`) e scripts descartáveis fora do controle de versão de produção.
+- Reivindique o item com seu ID único (`sess-XXXX`) em `ESTADO-BUGS.md` e re-leia a tabela imediatamente após salvar para validar a ausência de colisão.
+- Trate todo achado da auditoria como hipótese a confirmar no HEAD atual.
+- Conclua com exatamente **um** dos 4 vereditos permitidos: `ajuste_simples`, `merece_spec`, `sem_evidencia_refutado`, `sem_evidencia_precisa_producao`.

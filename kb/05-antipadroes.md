@@ -111,6 +111,39 @@ que terminou. Numa sequência, o julgamento acumula: o passo 2 herda o "pronto" 
 pode começar sem evidência do anterior. Parente de AP-30 (Truncamento Silencioso), que é o mesmo
 defeito no **volume** da saída, e de AP-29 (Código de Fachada), que é no **conteúdo**.
 
+### AP-40 · Cerimônia Herdada 🟡
+
+**Sintoma.** Seções de template preenchidas com o mesmo placeholder em dezenas de arquivos: changelog
+de uma linha `1.0.0`, pontos de extensão genéricos, mote decorativo. Ninguém lê e ninguém remove.
+**Mecanismo.** `[CAMPO]` Um template bom é copiado inteiro, inclusive as seções que só faziam sentido
+no exemplar original. Como nada quebra quando ficam vazias, elas sobrevivem — e cada cópia legitima a
+próxima. O custo não é o disco: é **contexto gasto** a cada carregamento e a erosão da autoridade das
+seções que de fato importam, que passam a parecer igualmente opcionais.
+**Evidência.** `[CAMPO]` Em 58 agentes de um acervo real, `## Changelog` e `## Extension Points`
+aparecem em ~40 com conteúdo praticamente idêntico. No mesmo acervo, dois dos sete templates
+declarados nunca foram implementados por domínio algum — convenção morta referenciada por três outros
+templates.
+**Detecção.** O teste de inclusão de AP-02, aplicado seção a seção: *remover isto faria alguém errar?*
+Se a resposta é não em ≥3 arquivos, a seção é cerimônia, não estrutura.
+**Correção.** Remover do template, não dos arquivos — senão volta na próxima cópia. Template que
+ninguém usa é ruído que enfraquece a autoridade dos que funcionam: **ou se implementa, ou se apaga**.
+
+### AP-41 · Registro sem Portão 🟡
+
+**Sintoma.** O registro machine-readable que os agentes usam para descobrir capacidade está
+desatualizado: domínios existem em disco e não constam nele.
+**Mecanismo.** `[CAMPO]` Quando registrar é passo manual sem gate automático, o registro apodrece na
+velocidade em que o acervo cresce. O efeito é pior que documentação desatualizada: para quem descobre
+capacidade **pelo registro**, o conhecimento não desatualizado — ele **não existe**.
+**Evidência.** `[CAMPO]` Sete domínios ausentes do registro de um acervo de 36 — **incluindo o mais
+valioso do repositório**, um framework completo de decisão de orquestração. Havia um template previsto
+exatamente para evitar isso, e ele nunca foi usado.
+**Detecção.** Diff entre os diretórios em disco e as entradas do registro. É um comando; se ninguém o
+roda, é porque não está no CI.
+**Correção.** O portão, não a disciplina: CI que falha quando existe diretório sem entrada. Vale a
+regra geral — **registro mantido por boa vontade é registro que apodrece**. Parente de AP-34
+(Rastreabilidade Fantasma), que é o mesmo defeito na matriz em vez de no índice.
+
 ---
 
 ## Intenção
@@ -250,7 +283,7 @@ correção. **Evidência.** `[CAMPO]` *Anti-Skip Rule*: *"NUNCA pule, desabilite
 fazer o build passar"*. **Correção.** VER-03 (quarentena **com link para a task**) é a única forma
 legítima de adiar — e ela é rastreável.
 
-### AP-38 · Loop sem Saída 🔴
+### AP-48 · Loop sem Saída 🔴
 **Sintoma.** “Continue melhorando” ou retry recorrente sem check externo, estados terminais, detector
 de estagnação, memória curada ou teto de custo; às vezes o agente executa a mesma skill indefinidamente.
 **Mecanismo.** `[RECENTE]` Nenhuma evidência nova empurra a próxima ação e erro/budget esgotado acabam
@@ -258,7 +291,7 @@ tratados como conclusão. Em versão autônoma, custo e dano acumulam sem ponto 
 humano.
 **Detecção.** O resultado de uma volta muda a próxima ação? Existe um estado diferente para sucesso,
 `blocked`, `stalled`, `exhausted` e `error`? Existe hard cap?
-**Correção.** EXE-07/AR-04. Sem feedback adaptativo, substituir por execução única ou prompt agendado.
+**Correção.** EXE-10/AR-06. Sem feedback adaptativo, substituir por execução única ou prompt agendado.
 
 ---
 
@@ -302,6 +335,40 @@ entusiasmo demais — por exemplo, um dos artigos da constitution"* `[EXPERIMENT
 **Detecção.** Existe algum portão **determinístico** (hook, teste, CI), ou todos são julgados por LLM?
 **Correção.** EXE-02/EXE-03 — pelo menos um portão do fluxo tem de ser mecânico.
 
+### AP-38 · Escore Inventado 🔴
+
+**Sintoma.** O agente reporta um número de confiança — "0,92" — que não foi calculado a partir de
+nada. A decisão veio primeiro; o número veio depois, para justificá-la.
+**Mecanismo.** `[CAMPO]` Instruir um modelo a "avaliar sua confiança" produz um número **plausível e
+post-hoc**. O modelo é excelente em gerar o valor que torna coerente a ação que já escolheu — é
+racionalização, não medição. E como o número tem aparência de rigor, ele **transfere autoridade** para
+uma decisão que não foi verificada: o usuário não tem como distinguir 0,92 calculado de 0,92 inventado.
+**Evidência.** `[CAMPO]` O próprio acervo de origem lista *"seu escore de confiança foi inventado, não
+calculado"* como sinal de alerta em ~20 agentes — reconhece a patologia e **não a resolve**, porque
+nada no sistema verifica que o cálculo aconteceu.
+**Detecção.** Peça o traço: quais fontes foram consultadas, qual o score-base, quais modificadores.
+Se o traço não existe ou aparece só depois da conclusão, o escore é ornamental.
+**Correção.** Duas, em ordem. **Primeiro** AD-04: onde a propriedade é decidível, troque o escore por
+evidência reproduzível (o comando e sua saída). **Só onde não for**, use VER-07 com o formulário
+preenchido **antes** da conclusão — a ordem causal é o que o formulário existe para impor.
+
+### AP-39 · Conflito Resolvido em Silêncio 🔴
+
+**Sintoma.** Duas fontes discordam; a resposta apresenta uma delas como fato, sem mencionar a outra.
+**Mecanismo.** `[CAMPO]` Contradição entre fontes é desconfortável, e o caminho de menor resistência é
+escolher — pela mais recente, pela mais autoritativa, ou pela que confirma o que já se ia fazer. A
+escolha some no meio de uma resposta confiante, e o usuário perde **a informação mais valiosa
+disponível**: que existe divergência exatamente ali. É o modo de falha mais perigoso da recuperação de
+conhecimento, porque produz saída indistinguível de saída correta.
+**Evidência.** `[CAMPO]` O caso que a matriz de acordo existe para prevenir: em ~45 agentes, a célula
+de conflito recebe um valor **abaixo de todos os limiares**, e o template de resposta correspondente
+apresenta as duas posições e três opções — o agente **avalia mas não decide**.
+**Detecção.** A resposta cita mais de uma fonte e nunca reporta discordância? Ou reporta a divergência
+só quando é trivial? Conflito real que nunca aparece é conflito sendo resolvido em silêncio.
+**Correção.** Conflito é **escalonamento, não cálculo** (I-19): nem média ponderada, nem "a mais nova
+vence". Separar análise de autoridade — o agente diz qual parece mais confiável e **por quê**, e
+devolve a decisão. Ver VER-07.
+
 ---
 
 ## Aprendizado
@@ -326,9 +393,46 @@ restringir a decisão.
 fonte de verdade, não esses dois documentos"*. Reconhecer qual documento mente é bom; ter documentos
 que mentem é o anti-padrão.
 **Correção.** Rastreabilidade **verificada** (VER-02) ou nenhuma. Matriz não verificada é pior que
+**Correção.** Rastreabilidade **verificada** (VER-02) ou nenhuma. Matriz não verificada é pior que
 ausente, porque produz confiança falsa.
 
-### AP-39 · Autoaperfeiçoamento sem Holdout 🔴
+### AP-42 · Poluição Narrativa e Código Comentado Inline 🔴
+**Sintoma.** Agentes deixam blocos de código antigo comentado (`// void oldMethod()`) e parágrafos explicativos inline em arquivos de produção.
+**Mecanismo.** O agente tenta justificar a alteração para si mesmo ou "preservar" o código antigo por insegurança.
+**Evidência.** `[CAMPO]` Observado em commits gerados por IAs em projetos da workspace (violando a regra `RG-01`).
+**Correção.** Git é o histórico; código morto é deletado, não comentado. Proibir comentários explicativos/narrativos em arquivos de código.
+
+### AP-43 · Ausência de Isolamento por Worktree em Sessões Concorrentes 🟡
+**Sintoma.** Múltiplos agentes ou sessões editam a mesma branch principal simultaneamente, sobrescrevendo alterações ou gerando conflitos de merge espúrios.
+**Mecanismo.** Execução de pipelines SDD diretamente no diretório principal sem criar git worktrees isoladas por tarefa (`/sdd-implement`).
+**Evidência.** `[CAMPO]` Mapeado nas memórias de sessão do Claude Code e Antigravity (`CC-Memory-inscreveai-new-project-feedback-worktree-por-sessao-sdd.md`).
+**Correção.** Toda sessão de implementação de spec deve ser executada numa Worktree descartável (conforme `kb/worktrees.md` e `RULE_AUTOMATIC_WORKTREE_SDD_GRILLING.md`).
+
+### AP-44 · Violação de Idempotência em Fluxos Transacionais e Checkout 🔴
+**Sintoma.** Submissão duplicada de formulários (duplo clique ou falha de conexão) gera registros duplos no banco ou cobranças duplicadas em gateways de pagamento.
+**Mecanismo.** Falta de chave de idempotência (`Idempotency-Key` ou token de transação único) no contrato entre frontend e backend.
+**Evidência.** `[CAMPO]` Identificado durante a auditoria de QA do InscreveAI (`AG-Document-8496b372-qa_master_prompt.md`).
+**Correção.** Enforçar tokens de idempotência no backend e desabilitar botões de ação transacional no frontend após o primeiro clique.
+
+### AP-45 · Patching Prematuro Sem Diagnóstico Concluído 🔴
+**Sintoma.** O agente tenta alterar ou "corrigir" o código de produção enquanto ainda está investigando o sintoma de um bug.
+**Mecanismo.** Confundir a fase de diagnóstico (leitura, formulação e teste de hipótese) com a fase de execução/escrita. Isso gera correções superficiais de sintomas que introduzem regressões e mascaram a causa raiz real.
+**Evidência.** `[CAMPO]` Identificado no protocolo de auditoria do `auto-slide` (`docs/investigacao/PROMPT-AGENTE-INVESTIGACAO.md`).
+**Correção.** Aplicar a regra de modo **Somente-Leitura** (`EXE-08`) durante a fase de investigação, exigindo um relatório formal com veredito registrado (`VER-08`) antes de autorizar edições de produção.
+
+### AP-46 · Purga de Transcrição sem Persistência (Context Auto-Eviction) 🔴
+**Sintoma.** O agente perde todo o histórico, aprendizados e decisões da conversa quando a janela expira (ex: limite de 30 dias de sessão) ou sofre compreesão automática (`/compact`).
+**Mecanismo.** Confiar na retenção volátil do harness de chat sem configurar hooks de auto-save (`EXE-09`) em background para minerar e armazenar as transcrições verbatim em disco local.
+**Evidência.** `[CAMPO]` Documentado na análise da arquitetura de retenção do MemPalace (`docs/HISTORY.md` do mempalace) e discussões da comunidade Claude Code.
+**Correção.** Configurar retention auto-save hooks (`pre-compact`, `stop`, `session-end`) para minerar transcrições e alimentá-las num sistema de memória persistente local ([mempalace-memory-system.md](mempalace-memory-system.md)).
+
+### AP-47 · Contaminação de Query por System Prompt 🟡
+**Sintoma.** Pesquisas semânticas ou RAG do agente retornam resultados completamente irrelevantes ou vazios.
+**Mecanismo.** O agente concatena acidentalmente instruções do seu system prompt (2000+ caracteres) na string de busca enviada ao modelo de embedding. O vetor do prompt sufoca a pergunta real (10–50 caracteres), reduzindo o recall a níveis catastróficos (de ~89.8% para 1.0%).
+**Evidência.** `[CAMPO]` Descoberta e benchmark documentados na Issue #333 do MemPalace.
+**Correção.** Implementar um **Query Sanitizer** (`mempalace/query_sanitizer.py`) na camada de busca que detecta e extrai a pergunta real da string antes da geração de embeddings.
+
+### AP-49 · Autoaperfeiçoamento sem Holdout 🔴
 **Sintoma.** O agente edita seu prompt/harness a partir dos mesmos traces e testes usados para julgar
 a mudança, depois declara que “aprendeu”.
 **Mecanismo.** O proposer vê o alvo completo, otimiza a superfície avaliada e não há como distinguir
@@ -339,6 +443,7 @@ splits held-in/held-out; a promoção só aceita melhora sem regressão em ambos
 humana para harness compartilhado. Sem esses controles, registrar hipótese; não autoeditar.
 
 ---
+
 
 ## Tabela de severidade
 
@@ -363,8 +468,14 @@ humana para harness compartilhado. Sem esses controles, registrar hipótese; nã
 | AP-32 | Falsa Sensação de Controle | D5 | 🔴 |
 | AP-33 | Teatro de Conformidade | D6 | 🔴 |
 | AP-37 | Conclusão Prematura | D2 | 🔴 |
-| AP-38 | **Loop sem Saída** | D4/D5 | 🔴 |
-| AP-39 | **Autoaperfeiçoamento sem Holdout** | D6 | 🔴 |
+| AP-38 | **Escore Inventado** | D5 | 🔴 |
+| AP-39 | **Conflito Resolvido em Silêncio** | D5 | 🔴 |
+| AP-42 | **Poluição Narrativa / Código Comentado Inline** | D4 | 🔴 |
+| AP-44 | **Violação de Idempotência em Transações** | D5 | 🔴 |
+| AP-45 | **Patching Prematuro Sem Diagnóstico Concluído** | D4 | 🔴 |
+| AP-46 | **Purga de Transcrição sem Persistência** | D2 | 🔴 |
+| AP-48 | **Loop sem Saída** | D4/D5 | 🔴 |
+| AP-49 | **Autoaperfeiçoamento sem Holdout** | D6 | 🔴 |
 | AP-04/05 | Sessão Entulhada / Exploração Infinita | D2 | 🟡 |
 | AP-06 | Pseudocódigo em Prosa | D1 | 🟡 |
 | AP-08 | Três Exemplos p/ Regra Universal | D1 | 🟡 |
@@ -379,10 +490,20 @@ humana para harness compartilhado. Sem esses controles, registrar hipótese; nã
 | AP-30 | Truncamento Silencioso | D4 | 🟡 |
 | AP-34 | Rastreabilidade Fantasma | D6 | 🟡 |
 | AP-35/36 | Skill Negativa / Sedimento | D2 | 🟡 |
+| AP-40 | **Cerimônia Herdada** | D2 | 🟡 |
+| AP-41 | **Registro sem Portão** | D2 | 🟡 |
+| AP-43 | **Ausência de Worktree em Sessões Concorrentes** | D3 | 🟡 |
+| AP-47 | **Contaminação de Query por System Prompt** | D2 | 🟡 |
 
 **Os quatro achados `[CAMPO]` inéditos** — AP-14, AP-15, AP-26, AP-27 — não aparecem em nenhuma fonte
 oficial ou acadêmica deste corpus. São observações dos seus próprios repositórios, e por isso são a
 parte mais acionável desta KB.
+
+**Os quatro de 2026-08-04** — AP-38 a AP-41, de [kbmain-corpus.md](kbmain-corpus.md) — têm uma
+propriedade rara: foram observados num acervo que **documenta a própria patologia e mesmo assim a
+comete**. AP-38 é listado como sinal de alerta em ~20 agentes do acervo de origem; AP-41 derruba
+justamente o domínio mais valioso do repositório. Anti-padrão que sobrevive ao próprio autor conhecê-lo
+é evidência de que a correção não pode ser disciplina — precisa ser portão.
 
 ---
 

@@ -97,7 +97,68 @@ Escrito já sabendo para que a próxima sessão vai servir.
 **Não usar quando.** A próxima sessão é sobre outra coisa — aí o handoff certo é nenhum.
 **Detalhe completo.** [mattpocock-skills.md](mattpocock-skills.md) §5.6.
 
+## CTX-08 · Orçamento por Tipo de Artefato
+
+**Contexto.** Base de conhecimento consumida por agente, que carrega **arquivos inteiros**.
+**Problema.** Sem limite por tipo, o arquivo cresce até misturar assuntos — e aí carregá-lo custa 70%
+de contexto irrelevante para responder 30% da pergunta. O carregamento seletivo deixa de ser possível.
+**Solução.** `[CAMPO]` Limite declarado **por tipo de artefato**, derivado da pergunta que ele responde:
+consulta rápida ~100 linhas (é o arquivo de primeira carga; acima disso deixa de ser consulta e vira
+leitura) · conceito ~150 (força **um conceito por arquivo**) · padrão ~200 (limite antes de virar
+tutorial) · dado estruturado sem limite (é parseado, não raciocinado). O limite mora em **fonte única**
+e é **repetido no cabeçalho** do índice onde alguém adicionaria o arquivo — governança no ponto de uso.
+**Trade-offs.** Decomposição forçada × arquivo que legitimamente excede precisa de um tipo próprio
+(`referência`, sem limite) em vez de exceção silenciosa.
+**Relacionados.** CTX-02, CTX-04, CTX-09. **Combate.** AP-02 (CLAUDE.md Enciclopédia), AP-27.
+**Distinção.** CTX-04 orça a **sessão**; CTX-08 orça o **artefato**. São ortogonais: sessão disciplinada
+com arquivos monolíticos ainda satura.
+**Não usar quando.** O acervo é lido só por humanos navegando — aí o custo do limite não se paga.
+**Evidência.** `[CAMPO]` ~0 violações em 493 arquivos, com o limite repetido em cada índice de domínio.
+**Detalhe completo.** [kbmain-corpus.md](kbmain-corpus.md) §2.2.
+
+## CTX-09 · Par Contrastivo Errado/Certo
+
+**Contexto.** Documentar um padrão que o modelo vai aplicar.
+**Problema.** Um modelo treinado em código público conhece a forma certa **e** a errada com
+probabilidade parecida. Exemplo positivo isolado não desfaz esse empate — ele reforça o que o modelo
+já ia fazer, inclusive quando o que ia fazer é a forma errada.
+**Solução.** `[CAMPO]` Toda seção de erro comum traz o par: o trecho **errado** e o **corrigido**, lado
+a lado, na mesma linguagem. O negativo explícito codifica o espaço que o positivo não alcança, e
+ancora a falha num **diff** em vez de em prosa — que é o formato que o modelo sabe aplicar.
+**Trade-offs.** Dobra o volume de exemplo × é a única correção conhecida de viés de pré-treino.
+**Relacionados.** CTX-08, LRN-01. **Combate.** AP-06 (Pseudocódigo em Prosa).
+**Não usar quando.** Não existe forma errada plausível — aí o par é ruído.
+**Evidência.** `[CAMPO]` Presente em 104 de 254 arquivos; é a convenção mais respeitada do acervo, e
+os domínios que a abandonaram são visivelmente os mais fracos.
+**Detalhe completo.** [kbmain-corpus.md](kbmain-corpus.md) §2.3.
+
+## CTX-10 · Arquitetura de Memória L0–L3 (Memory Wake-up Stack)
+
+**Contexto.** Agente autônomo reiniciando sessão com necessidade de manter contexto acumulado de sessões passadas.
+**Problema.** Carregar todo o histórico de conversas passadas estoura a janela de contexto no boot (AP-04), enquanto zerar o contexto exige re-explicar tudo a cada nova sessão (AP-11).
+**Solução.** `[CAMPO]` Carregar a memória em 4 camadas hierárquicas com orçamentos rígidos:
+- **L0 (Identidade fixada ~100t)**: Quem é o agente/usuário, regras inegociáveis. Sempre carregado.
+- **L1 (História Essencial ~500–800t)**: Top momentos auto-gerados das interações mais recentes. Sempre carregado no boot.
+- **L2 (Contexto de Ala/Quarto sob Demanda ~300t)**: Carregado sob demanda quando o usuário cita uma entidade (pessoa, projeto).
+- **L3 (Busca Profunda)**: Busca semântica e híbrida (BM25 + Vetorial) acionada apenas em pesquisas explícitas.
+**Trade-offs.** Boot ultra-rápido com ~600–900 tokens (preserva >95% da janela de contexto) × exige pipeline de extração e indexação em background.
+**Relacionados.** CTX-01, CTX-04, CTX-07. **Combate.** AP-04 (Sessão Entulhada), AP-11 (Amnésia de Sessão).
+**Detalhe completo.** [mempalace-memory-system.md](mempalace-memory-system.md) §3.
+
+## CTX-11 · Indexação Verbatim com Camada Simbólica (Palace & AAAK Dialect)
+
+**Contexto.** Sistema de recuperação de memória de longo prazo para agentes de IA (RAG).
+**Problema.** RAGs tradicionais resumem ou parafraseiam o texto bruto no armazenamento base, introduzindo alucinações e perda de precisão em trechos de código, comandos ou citações literais.
+**Solução.** `[CAMPO]` Desacoplamento estrito entre duas camadas de armazenamento:
+- **Drawers (Gavetas Verbatim Imutáveis)**: Chunks contendo a fala e o código original exato do usuário, sem resumo ou alteração.
+- **Closets (Armários / Índice Simbólico AAAK)**: Camada de índice denso e lossy contendo entidades, tags emocionais, citações-chave e flags universais (`DECISION`, `PIVOT`, `TECHNICAL`).
+O LLM faz a leitura do índice simbólico compacto para identificar a coordenada exata da gaveta verbatim a abrir.
+**Trade-offs.** Zero perda de fidelidade nos dados brutos × necessidade de manter dois níveis de armazenamento sincronizados.
+**Relacionados.** CTX-01, CTX-08. **Combate.** AP-22 (Resumo Alucinatório em RAG).
+**Detalhe completo.** [mempalace-memory-system.md](mempalace-memory-system.md) §2.
+
 ---
+
 
 ## INT-01 · Constituição Executável
 
@@ -303,6 +364,17 @@ especificar"* — contra o de `/sdd-specify`, que é *"sei o que quero, falta es
 **Não usar quando.** O escopo já cabe numa spec. Aí o mapa é `/sdd-tasks` com passos extras.
 **Detalhe completo.** [mattpocock-skills.md](mattpocock-skills.md) §5.4.
 
+## PLN-07 · Execução em Dupla Trilha (Dual-Track)
+
+**Contexto.** Lista heterogênea de tarefas ou bugs resultantes de uma auditoria/varredura pré-produção.
+**Problema.** Aplicar o mesmo peso de processo a tudo: forçar o ciclo pesado de spec (SDD) para correções triviais de 1 linha causa paralisia por burocracia; dispensar a spec para mudanças estruturais causa degradação de arquitetura.
+**Solução.** `[CAMPO]` Triagem e separação formal em duas trilhas independentes:
+- **Trilha A (Ajuste Simples)**: Fixes diretos sem alteração de contrato ou máquina de estados. Executados 1 a 1 via Plan Mode / direct fix sem criar arquivos de spec.
+- **Trilha B (Clusters de Spec)**: Mudanças de domínio ou arquitetura agrupadas em clusters funcionais, executadas obrigatoriamente através do ciclo SDD (`specify` → `clarify` → `plan` → `tasks` → `implement`).
+**Trade-offs.** Necessidade de triagem inicial rigorosa × velocidade máxima em one-liners com proteção arquitetural nos clusters críticos.
+**Relacionados.** INT-05, PLN-02, EXE-01. **Combate.** AP-03 (Marreta na Noz), AP-11.
+**Origem.** Protocolo de implementação pós-auditoria do `auto-slide`.
+
 ---
 
 ## EXE-01 · Explore → Plan → Implement → Commit
@@ -349,15 +421,10 @@ humana **mesmo em modo auto-aprovar**, com o diálogo explicando o que será afe
 
 **Contexto.** Várias frentes de trabalho simultâneas **que escrevem nos mesmos arquivos**.
 **Problema.** Edições concorrentes colidem e o histórico fica ilegível.
-**Solução.** `[CAMPO]` Worktree dedicado por sessão, em branch nomeada pelo assunto
-(`spec/SPEC-NNN-slug` ou `<tipo>/<tema>`), com **commit por task concluída** — nunca um commit único
-no fim. `[OFICIAL]` No Claude Code: `claude --worktree <nome>` cria em `.claude/worktrees/<nome>/` na
-branch `worktree-<nome>`; `isolation: worktree` no frontmatter isola um subagente; `.worktreeinclude`
-carrega os gitignorados (`.env`) para dentro; um sweep periódico limpa worktrees de subagente, **nunca
-os criados por `--worktree`**.
+**Solução.** `[CAMPO]` Worktree dedicado por frente de trabalho (`RGIT-11`), em branch convencional nomeada pelo tipo e assunto (`<tipo>/<NNN>-<slug>` ou `<tipo>/<slug>`, ex.: `feat/001-autenticacao`), respeitando estritamente os tipos do `RGIT-02` (sem prefixos `spec/` ou `sdd/`), com **commit por task concluída** — nunca um commit único no fim. `[OFICIAL]` No Claude Code: `claude --worktree <nome>` cria em `.claude/worktrees/<nome>/`; `isolation: worktree` no frontmatter isola um subagente; `.worktreeinclude` carrega os gitignorados (`.env`) para dentro; um sweep periódico limpa worktrees finalizados (`RGIT-14`).
 **Trade-offs.** Isolamento de **arquivo** × custo de setup do **ambiente** (deps, `.env`, portas,
 banco) — e worktree não isola runtime: duas sessões na mesma porta continuam colidindo.
-**Relacionados.** PLN-04, EXE-04, VER-01. **Detalhe completo.** [worktrees.md](worktrees.md).
+**Relacionados.** PLN-04, EXE-04, VER-01. **Detalhes completos.** [git-strategy.md](git-strategy.md) · [worktrees.md](worktrees.md).
 **Não usar quando.** A tarefa só lê; nenhuma outra frente escreve ao mesmo tempo; os conjuntos de
 arquivos já são disjuntos; ou o setup do ambiente custa mais que o conflito que se evita.
 
@@ -370,7 +437,46 @@ poderia ter escolhido diferente?"*
 **Trade-offs.** Visibilidade × ruído.
 **Relacionados.** INT-04. **Combate.** AP-19 (Ambiguidade Silenciosa).
 
-## EXE-07 · Especificação de Loop Externo
+## EXE-07 · Disjuntor de Loop Agêntico
+
+**Contexto.** Agente executando em laço autônomo — corrigir até passar, iterar até convergir.
+**Problema.** Retry sem teto transforma falha em custo ilimitado. E há um modo pior, que o teto de
+retry não pega: **o loop que não falha e mesmo assim não avança** — cada iteração termina com sucesso
+aparente e o estado é o mesmo.
+**Solução.** `[CAMPO]` Quatro tetos independentes, porque medem coisas diferentes: **iterações**
+(loop infinito) · **retries** (task que falha) · **disjuntor de ausência de progresso** (N iterações
+sem mudança de estado) · **custo/tempo**. Cada terminação escreve um **código de saída distinto por
+causa** e um registro — falha vira artefato, não silêncio. Estado persistido permite retomada, o que
+converte interrupção de sessão em classe de erro recuperável.
+**Trade-offs.** Quatro parâmetros para calibrar × é a diferença entre degradação silenciosa e parada
+ruidosa.
+**Relacionados.** EXE-04, VER-07, CTX-07. **Combate.** AP-17 (Confiança sem Verificação), AP-30.
+**Distinção.** `max_retries` conta **falhas**; o disjuntor conta **ausência de progresso**. Confundi-los
+é o defeito mais comum — um laço pode consumir o orçamento inteiro sem nunca disparar o teto de retry.
+**Não usar quando.** A execução é de passo único, sem laço.
+**Detalhe completo.** [kbmain-corpus.md](kbmain-corpus.md) §2.4.
+
+## EXE-08 · Investigação Somente-Leitura com Lock Concorrente em Markdown
+
+**Contexto.** Diagnóstico de bugs ou varredura de código por múltiplos agentes autônomos em paralelo.
+**Problema.** Agentes investigando tendem a aplicar "patches prematuros" no código de produção sem entender a causa raiz completa. Além disso, em ambientes multi-agente sem servidor de lock dedicado, múltiplos agentes tentam pegar o mesmo item ao mesmo tempo.
+**Solução.** `[CAMPO]` Dois mecanismos combinados:
+1. **Regra de Somente-Leitura (Read-Only Enforcement)**: Bloqueio estrito de escrita em código de produção (`src/`) durante a fase de investigação. O agente apenas lê, testa em bancada externa e emite relatório `.md`.
+2. **Reivindicação Otimista em Markdown (Markdown Optimistic Locking)**: O agente gera um ID único temporário (`sess-XXXX`), registra seu estado em uma tabela markdown (`ESTADO-BUGS.md`), salva o arquivo e **re-lê o arquivo imediatamente**. Se o seu ID foi preservado, o item é dele; se foi sobrescrito por outro agente concorrente, ele desiste e pega o próximo item `pendente`.
+**Trade-offs.** Um turno extra de leitura para validar a reivindicação × zero race-condition e zero degradação de código durante diagnósticos.
+**Relacionados.** EXE-04, EXE-05, VER-01, VER-08. **Combate.** AP-45 (Patching Prematuro), AP-17.
+**Origem.** Protocolo de investigação de auditoria do `auto-slide`.
+
+## EXE-09 · Auto-Save Hooks de Preservação Temporal
+
+**Contexto.** Agente autônomo operando em ambientes interativos (Claude Code, Antigravity, Cursor) onde sessões expiram ou sofrem compreesão automática de contexto (`/compact`).
+**Problema.** O aprendizado, raciocínio e decisões tomadas durante a conversa somem silenciosamente quando a janela expira ou sofre descarte.
+**Solução.** `[CAMPO]` Scripts assíncronos acoplados ao ciclo de vida do agente (`pre-compact`, `stop`, `session-end`) que mineram e salvam a transcrição verbatim da conversa em background, extraindo entidades e registrando-a num repositório local de memória antes que o descarte ocorra.
+**Trade-offs.** Pequeno tempo de execução de hooks em background (<500ms) × preservação permanente do histórico do usuário contra amnésia de agente.
+**Relacionados.** EXE-02, CTX-07, CTX-10. **Combate.** AP-11 (Amnésia de Sessão).
+**Detalhe completo.** [mempalace-memory-system.md](mempalace-memory-system.md) §1.
+
+## EXE-10 · Especificação de Loop Externo
 
 **Contexto.** Trabalho iterativo em que a evidência de uma volta muda a próxima ação.
 **Problema.** Prompt passo a passo mantém o humano como scheduler e memória; `while true` sem check
@@ -382,13 +488,14 @@ registra o próximo candidato. Se o feedback não muda a ação seguinte, descar
 execução única/agendada. Classificar o check pela escada 1–5; nível 4 exige maker/checker separado.
 **Trade-offs.** Menos prompting humano × maior custo de verificação, risco acumulado e comprehension
 debt. Autonomia só cresce até onde o check e o envelope permitem.
-**Relacionados.** EXE-03, EXE-04, VER-01, VER-04, LRN-01, AR-04.
-**Combate.** AP-38 (Loop sem Saída), AP-20 (Auto-validação), AP-32 (Falsa Sensação de Controle).
+**Relacionados.** EXE-03, EXE-04, EXE-07, VER-01, VER-04, LRN-01, AR-06.
+**Combate.** AP-48 (Loop sem Saída), AP-20 (Auto-validação), AP-32 (Falsa Sensação de Controle).
 **Não usar quando.** Feedback não muda a próxima ação; meta é gosto puro; direção greenfield ainda
 está ambígua; ou o custo de verificar excede o benefício.
 **Detalhe completo.** [loop-engineering.md](loop-engineering.md).
 
 ---
+
 
 ## VER-01 · Verificador Independente (Writer/Critic)
 
@@ -470,6 +577,54 @@ que VER-04 vai testar.
 **Não usar quando.** A causa é óbvia e o fix cabe numa linha, com teste existente que já cobre.
 **Detalhe completo.** [mattpocock-skills.md](mattpocock-skills.md) §5.5.
 
+## VER-07 · Matriz de Acordo entre Fontes
+
+**Contexto.** Agente prestes a agir sobre conhecimento que veio de mais de uma fonte — acervo interno
+curado e consulta externa (documentação oficial, busca, exemplos de produção).
+**Problema.** O agente afirma com confiança uniforme independentemente de a evidência ser corroborada,
+única, ausente ou **contraditória**. O modo de falha mais caro não é errar — é resolver a contradição
+em silêncio e apresentar uma das versões como fato.
+**Solução.** `[CAMPO]` Cruzar as duas fontes numa matriz que produz um score-base, somar modificadores,
+comparar a um limiar por categoria de tarefa, e **agir de forma diferente por faixa**:
+
+| | Externa concorda | Externa discorda | Externa silente |
+|---|---|---|---|
+| **Acervo tem** | alto → executa | **conflito → escala** | médio → prossegue |
+| **Acervo silente** | só-externa → prossegue | n/a | baixo → pergunta |
+
+Três decisões carregam o padrão, e sem elas ele vira decoração:
+
+1. **O teto de concordância não é o máximo.** Duas fontes concordantes ainda podem estar ambas
+   obsoletas. Consequência deliberada: tarefa crítica **não passa só com concordância**.
+2. **Conflito não é média nem recência** — cai abaixo de *todos* os limiares. Ver I-19.
+3. **Os modificadores são propriedades verificáveis do artefato produzido** (tem permissão curinga?
+   tem segredo em texto plano? tem rollback?), não da fonte ("é recente?"). O escore vira função da
+   saída. Modificadores genéricos produzem agentes que herdaram a cerimônia sem a calibração.
+
+Falha de ferramenta propaga como **penalidade de confiança**, não como evento neutro — o que pode
+empurrar a tarefa abaixo do limiar e disparar a pergunta.
+**Trade-offs.** Estrutura a atenção e torna o raciocínio auditável × **nada verifica que o cálculo foi
+feito**; sem enforcement é teatro de processo. Por isso AD-04 vem antes: use este padrão só onde a
+propriedade **não** é decidível.
+**Relacionados.** VER-01, EXE-04, EXE-07, AD-04. **Combate.** AP-38 (Escore Inventado), AP-39
+(Conflito Resolvido em Silêncio), AP-17.
+**Não usar quando.** A propriedade é verificável por grep, código de saída ou validador — aí o escore
+é ruído com aparência de rigor (H-19). E quando há uma só fonte: escore sobre fonte única é tautologia.
+**Detalhe completo.** [kbmain-corpus.md](kbmain-corpus.md) §2.1.
+
+## VER-08 · Auditoria e Investigação com Veredito Quadripartido
+
+**Contexto.** Conclusão do relatório de investigação de um achado de auditoria.
+**Problema.** Agentes tendem a dar pareceres vagos ("parece ser um bug", "talvez precise de ajustinho"), resultando em decisões de engenharia indecisas ou na criação de fakes sintéticos para contornar a falta de hardware/ambiente real de produção.
+**Solução.** `[CAMPO]` Todo relatório de investigação fecha obrigatoriamente em **exatamente um** dos quatro vereditos formais:
+1. `ajuste_simples`: Bug confirmado, correção direta e inequívoca (vai para Trilha A).
+2. `merece_spec`: Bug confirmado, alteração estrutural/domínio (vai para Trilha B/SDD).
+3. `sem_evidencia_refutado`: Falso positivo, erro de leitura ou já corrigido.
+4. `sem_evidencia_precisa_producao`: Impossível confirmar sem hardware/ambiente de produção real. Proíbe simulações sintéticas enganosas e exige a especificação de um plano de telemetria/logging adicional.
+**Trade-offs.** Honestidade rigorosa sobre limitações de bancada × exige disciplina do investigador.
+**Relacionados.** VER-01, VER-07, EXE-08. **Combate.** AP-20 (Auto-validação), AP-38 (Escore Inventado).
+**Origem.** Protocolo de auditoria pré-produção do `auto-slide`.
+
 ---
 
 ## LRN-01 · Lições Aprendidas Consumíveis
@@ -506,7 +661,7 @@ Versionar lineage, rejeições e rollback; pedir aprovação antes de ativar no 
 **Evidência.** arXiv 2606.09498: melhora held-in e held-out nos nove pares modelo×benchmark testados,
 com escopo limitado a três modelos e três benchmarks.
 **Trade-offs.** Melhoria específica e auditável × custo alto de corpus, evaluator e repetições.
-**Relacionados.** EXE-03, EXE-07, VER-01, LRN-02. **Combate.** AP-39.
+**Relacionados.** EXE-03, EXE-10, VER-01, LRN-02. **Combate.** AP-49.
 **Não usar quando.** Não existe evaluator fixo ou holdout; há apenas uma falha anedótica; a superfície
 de harness não pode plausivelmente tratar o mecanismo; ou falta autoridade para promover a mudança.
 
@@ -523,6 +678,10 @@ de harness não pode plausivelmente tratar o mecanismo; ou falta autoridade para
 | CTX-05 Fonte única | D2 | P06 | AP-15 |
 | CTX-06 Linguagem ubíqua | D2 | P06 | AP-02 |
 | CTX-07 Handoff | D2 | P05 | AP-04 |
+| CTX-08 Orçamento por artefato | D2 | P05 | AP-02/27 |
+| CTX-09 Par contrastivo | D2 | P06 | AP-06 |
+| CTX-10 Memória L0–L3 | D2 | P05 | AP-04/11 |
+| CTX-11 Indexação Verbatim | D2 | P06 | AP-22 |
 | INT-01 Constituição | D1 | — | AP-01 |
 | INT-02 Hierárquica | D1 | P02 | AP-06 |
 | INT-03 EARS | D1 | P01 | AP-07 |
@@ -537,22 +696,28 @@ de harness não pode plausivelmente tratar o mecanismo; ou falta autoridade para
 | PLN-04 Disjunção | D3 | P08 | — |
 | PLN-05 Módulo profundo | D3 | P02 | AP-24 |
 | PLN-06 Mapa sob névoa | D3 | P03 | AP-19 |
+| PLN-07 Dupla trilha | D3 | P03/P08 | AP-03/11 |
 | EXE-01 Explore→Plan | D4 | P01 | AP-16 |
 | EXE-02 Hook | D4 | P11 | AP-02 |
 | EXE-03 Harness | D4 | P11 | AP-17 |
 | EXE-04 Envelope | D4 | P10 | AP-18 |
 | EXE-05 Worktree | D4 | P10 | — |
 | EXE-06 Interpretação | D4 | P04 | AP-19 |
-| EXE-07 Loop externo | D4/D5/D6 | P10/P11/P13/P14 | AP-38 |
+| EXE-07 Disjuntor de loop | D4 | P10 | AP-17/30 |
+| EXE-08 Investigação Read-Only + Lock MD | D4 | P10 | AP-45/17 |
+| EXE-09 Auto-Save Hooks | D4 | P11 | AP-11 |
+| EXE-10 Loop externo | D4/D5/D6 | P10/P11/P13/P14 | AP-48 |
 | VER-01 Independente | D5 | P12 | AP-20 |
 | VER-02 Cruzada | D5 | P09 | AP-21 |
 | VER-03 Quarentena | D5 | P13 | AP-22 |
 | VER-04 Falha forçada | D5 | P13 | AP-23 |
 | VER-05 Proporcional | D5 | P13 | AP-24 |
 | VER-06 Loop de feedback | D5 | P13 | AP-17 |
+| VER-07 Matriz de acordo | D5 | P12 | AP-38/39 |
+| VER-08 Veredito Quadripartido | D5 | P12 | AP-20/38 |
 | LRN-01 Lições | D6 | P14 | AP-25 |
 | LRN-02 Promoção | D6 | P14 | AP-25 |
-| LRN-03 Evolução de harness | D6 | P11/P12/P13/P14 | AP-39 |
+| LRN-03 Evolução de harness | D6 | P11/P12/P13/P14 | AP-49 |
 
 ---
 

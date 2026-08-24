@@ -112,7 +112,61 @@ graph TD
 O nó `K` é o mais desobedecido: sob pressão de "precisamos de uma métrica", inventa-se uma proxy — e
 daí nasce AP-05 do corpus de intenção (proxy capturada, Goodhart).
 
-## AD-04 · Execução única, agenda ou loop?
+## AD-04 · Escore de confiança ou evidência reproduzível?
+
+`[CAMPO]` Aplica-se **antes** de VER-07, e é a pergunta que o corpus de origem só aprendeu a fazer
+tarde. Ver [kbmain-corpus.md](kbmain-corpus.md) §2.6.
+
+```mermaid
+graph TD
+    A[Agente prestes a afirmar algo] --> B{A afirmacao e<br/>decidivel por maquina?}
+    B -->|sim| C[Rode a verificacao<br/>grep, exit code, validador, compilador]
+    C --> D[Reporte o COMANDO e a SAIDA<br/>nao um numero]
+    B -->|nao| E{Existe mais<br/>de uma fonte?}
+    E -->|nao| F[Escore sobre fonte unica<br/>e tautologia — declare a fonte<br/>e a limitacao]
+    E -->|sim| G{As fontes<br/>concordam?}
+    G -->|discordam| H[ESCALAR — I-19<br/>apresentar as duas posicoes]
+    G -->|concordam ou silente| I[VER-07 · matriz + modificadores<br/>preenchidos ANTES da conclusao]
+    I --> J{Escore >= limiar<br/>da categoria?}
+    J -->|sim| K[Executar + citar fontes]
+    J -->|nao| L{Tarefa critica?}
+    L -->|sim| M[Recusar e explicar]
+    L -->|nao| N[Perguntar ou executar<br/>com ressalva estrutural]
+```
+
+**O nó `B` é o que muda tudo, e é pulado por default.** Escore existe para quando não se pode testar;
+onde há predicado, o número não acrescenta informação e **subtrai**, porque tem aparência de rigor sem
+o ser — é AP-38. A regra de bolso é H-19.
+
+**O nó `D` merece ênfase:** o formato da evidência importa. "Verifiquei e está correto" não é evidência;
+o comando executado mais sua saída é — porque é **reproduzível por quem lê**, que é a única propriedade
+que distingue verificação de afirmação.
+
+**O nó `N` não é "executar com um aviso no fim".** A ressalva precisa ser **estrutural**: aviso textual
+anexado a uma resposta confiante não funciona, porque o leitor ancora na resposta e desconta o aviso.
+Abaixo do limiar, a resposta sai da posição de resposta e vira inventário do que se sabe, do que não se
+sabe, e uma pergunta.
+
+## AD-05 · Árvore de decisão Git e Worktree
+
+`[CONSOLIDADO]` Aplica-se a todo pedido de alteração para determinar o fluxo de isolamento, branching e commits.
+
+```mermaid
+graph TD
+    A[Demanda de Alteracao] --> B{Envolve alteracao<br/>de codigo/docs?}
+    B -->|nao - so leitura/busca| C[Usar Subagente/Sessao Atual<br/>Sem Worktree]
+    B -->|sim| D{Ja existe Worktree<br/>para esta Frente?}
+    D -->|sim| E[Reusar Worktree Existente<br/>na Branch feat/slug]
+    D -->|nao| F[Criar Worktree + Branch Convencional<br/>claude --worktree tipo/slug]
+    F --> G[Executar Mudancas & Commits<br/>por Task RGIT-03]
+    E --> G
+    G --> H{Frente Concluida &<br/>Verificada /sdd-converge?}
+    H -->|nao| G
+    H -->|sim| I[Rebase contra main,<br/>Squash & Merge RGIT-12]
+    I --> J[Remover Worktree & Branch<br/>git worktree remove RGIT-14]
+```
+
+## AD-06 · Execução única, agenda ou loop?
 
 ```mermaid
 graph TD
@@ -124,13 +178,13 @@ graph TD
     F -->|nao| G[Fluxo assistido nivel 4/5<br/>sem alegar autonomia]
     F -->|sim| H{Custo do loop<br/>se paga?}
     H -->|nao| D
-    H -->|sim| I[EXE-07 + AR-04<br/>especificar loop]
+    H -->|sim| I[EXE-10 + AR-06<br/>especificar loop]
     I --> J{Check e nivel 4?}
     J -->|sim| K[Maker-checker separado<br/>rubrica congelada]
     J -->|nao| L[Loop verificavel]
 ```
 
-O primeiro losango é H-19. “Rodar várias vezes” não basta: feedback precisa selecionar retry,
+O primeiro losango é H-21. “Rodar várias vezes” não basta: feedback precisa selecionar retry,
 prioridade, escopo, skill ou escalonamento diferente.
 
 ---
@@ -171,16 +225,40 @@ stateDiagram-v2
     [*] --> Pendente
     Pendente --> Bloqueada: dependencia nao satisfeita
     Bloqueada --> Pendente: dependencia concluida
-    Pendente --> EmExecucao: envelope verificado
-    EmExecucao --> AguardandoHumano: acao fora do envelope
-    AguardandoHumano --> EmExecucao: aprovado
-    AguardandoHumano --> Pendente: recusado - replanejar
-    EmExecucao --> Verificando: implementacao pronta
-    Verificando --> EmExecucao: harness reprovou
-    Verificando --> NaoVerificavel: comando nao roda no ambiente
-    Verificando --> Concluida: harness aprovou + evidencia registrada
-    NaoVerificavel --> Concluida: humano aceitou o risco explicitamente
-    Concluida --> [*]
+Processos com estados discretos e transições válidas.
+
+## ME-01 · Estado da especificação
+
+```mermaid
+stateDiagram-v2
+    [*] --> Rascunho: /sdd-specify
+    Rascunho --> Rascunho: /sdd-clarify (preenche lacunas)
+    Rascunho --> Esclarecida: 0 bloqueantes abertos (ADR-002)
+    Esclarecida --> Planejada: /sdd-plan + /sdd-tasks
+    Planejada --> EmImplementacao: /sdd-implement (task a task)
+    EmImplementacao --> Implementada: todas as tasks concluidas
+    Implementada --> Convergida: /sdd-converge aprovado (I-09)
+    Convergida --> [*]
+
+    EmImplementacao --> Planejada: desvio estrutural encontrado
+    Rascunho --> Abandono: spec recusada pelo humano
+    Abandono --> [*]
+```
+
+## ME-02 · Estado da task individual
+
+```mermaid
+stateDiagram-v2
+    [*] --> PENDENTE
+    PENDENTE --> EM_EXECUCAO: selecionada pelo runner
+    EM_EXECUCAO --> CONCLUIDA: evidencia de teste anexada
+    EM_EXECUCAO --> BLOQUEADA: obstaculo nao previsto
+    BLOQUEADA --> EM_EXECUCAO: obstaculo resolvido pelo humano
+    CONCLUIDA --> VERIFICADA: teste independente passou (VER-01)
+    VERIFICADA --> [*]
+
+    CONCLUIDA --> PENDENTE: regressao encontrada
+    EM_EXECUCAO --> NAO_VERIFICAVEL: sem harness de teste
 ```
 
 `NaoVerificavel` é um estado **de primeira classe**, não um atalho para `Concluida`. Colapsar os dois
@@ -206,7 +284,25 @@ stateDiagram-v2
 `Poluido` **não** se resolve compactando — a compactação preserva as abordagens falhas. Só `/clear`
 com prompt reescrito sai desse estado.
 
-## ME-04 · Ciclo de vida de uma especificação de loop
+## ME-04 · Ciclo de vida de Frente/Worktree
+
+`[CONSOLIDADO]` Estado do checkout isolado por frente de trabalho (`RGIT-11`).
+
+```mermaid
+stateDiagram-v2
+    [*] --> Criada: claude --worktree <tipo>/<slug>
+    Criada --> EmDesenvolvimento: setup de ambiente (.env, deps)
+    EmDesenvolvimento --> EmDesenvolvimento: commit por task (RGIT-03)
+    EmDesenvolvimento --> EmVerificacao: build + testes + /sdd-converge
+    EmVerificacao --> EmDesenvolvimento: falha na auditoria / testes
+    EmVerificacao --> Integrada: rebase + squash merge para main (RGIT-12)
+    EmDesenvolvimento --> Orfa: sessao abandonada sem merge
+    Integrada --> Removida: git worktree remove + git branch -d (RGIT-14)
+    Orfa --> Removida: sweep de limpeza
+    Removida --> [*]
+```
+
+## ME-05 · Ciclo de vida de uma especificação de loop
 
 ```mermaid
 stateDiagram-v2

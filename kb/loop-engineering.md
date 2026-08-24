@@ -115,7 +115,7 @@ adaptativo; é workflow cíclico.
 | Loop | política externa ao longo do tempo | escolhe próxima ação, prova, lembra e para |
 
 `[RECENTE]` Loops robustos **chamam skills**; não reimprovisam toda a disciplina em cada volta. Um
-loop sem skill e sem check é AP-38, um retry caro ao redor de um agente desconhecido.
+loop sem skill e sem check é AP-48, um retry caro ao redor de um agente desconhecido.
 
 ## 8. Segurança e autonomia
 

@@ -35,7 +35,7 @@ o que o fornecedor recomenda, não o que foi medido.
 - **Anthropic — [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)**
   Contexto como recurso finito com retorno marginal decrescente; system prompts na “altura” certa,
   recuperação *just in time*, progressive disclosure, compactação, notas estruturadas em disco e
-  subagentes. Autoriza o desenho de memória de AR-04: contexto fresco relê estado compacto; não
+  subagentes. Autoriza o desenho de memória de AR-06: contexto fresco relê estado compacto; não
   autoriza concluir que uma técnica específica sempre melhora qualquer modelo.
 
 - **GitHub — [Spec Kit](https://github.github.io/spec-kit/)** · [repo](https://github.com/github/spec-kit)
@@ -200,6 +200,23 @@ acionável — e a mais fácil de perder se não for registrada.
 - **Metodologia SDD V5** — o documento de apresentação mais honesto do conjunto: reconhece que os
   estudos negativos mediram IA **sem** processo e que nenhum testou SDD; enquadra o custo como TCO;
   lista as limitações citando Böckeler; e afirma explicitamente que não é plano fechado.
+
+- **Corpus KbMain** (lido 2026-08-04; ver [ADR-012](11-adrs.md) e [kbmain-corpus.md](kbmain-corpus.md))
+  — 619 arquivos, e a **primeira fonte `[CAMPO]` de terceiro** deste corpus. Cinco camadas epistêmicas
+  empilhadas no mesmo diretório: acervo de 493 arquivos em 36 domínios · 58 agentes com um sistema de
+  confiança calibrado (matriz de acordo, modificadores, limiares por categoria de autonomia) · dossiê
+  metodológico corporativo · kit de verificação por propriedades com catálogo de 9 arquétipos ·
+  transcrição de entrevista técnica.
+  **O que a torna singular:** é a única fonte que documenta os **próprios modos de apodrecimento** com
+  evidência — 7 domínios invisíveis ao registro que os agentes consultam (AP-41), cerimônia de template
+  replicada em ~40 arquivos (AP-40), e o escore de confiança listado como sinal de alerta em ~20
+  agentes do mesmo acervo que o adota (AP-38). **Fonte que rende padrão e anti-padrão simultaneamente
+  é mais confiável, não menos** — a que só rende padrão está vendendo.
+  **Ressalvas de uso.** (a) A camada do dossiê é **retórica**, otimizada para persuadir um decisor —
+  lê-la como manual produz conclusões erradas. (b) Contém material sensível não incorporado (identidade
+  de cliente, endpoint vivo, documentação corporativa restrita, regras comerciais); nada disso entrou
+  na KB, por decisão de ADR-012. (c) Envelhece a partir da data de leitura: é sistema vivo, não
+  publicação.
 
 ---
 

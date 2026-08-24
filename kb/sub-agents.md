@@ -369,6 +369,16 @@ porque o principal já compacta ou porque N é tipicamente pequeno — a hipóte
 
 ---
 
+## 20. Interoperação entre Harnesses de IA (`[CAMPO]`)
+
+Em ambientes de produção com ecossistema multi-ferramenta (**Claude Code**, **Google Antigravity**, **OpenCode**), a portabilidade de estado e sessões entre diferentes agentes exige regras estritas:
+
+1. **Portabilidade de Regras via Upstream Único:** `AGENTS.md` e `RULES.md` no repositório `labs` são a única fonte de verdade. Agentes em qualquer harness leem as regras deste repositório e nunca alteram suas cópias locais nos projetos cliente (evitando `AP-15 · Cópia Manual Multi-Harness`).
+2. **Isolamento de Worktrees Inter-Agentes:** Quando Claude Code, Antigravity ou OpenCode executam tarefas em paralelo no mesmo repositório, cada sessão DEVE rodar em sua própria Git Worktree descartável. Isso evita colisão de arquivos temporários de sessão (como `.claude/`, `.gemini/`, `.opencode/`).
+3. **Contrato de Artefato SDD:** Especificações em `specs/NNN-slug/` usam exclusivamente Markdown neutro e versionável, permitindo que a fase `/sdd-specify` feita em um harness seja consumida na fase `/sdd-plan` ou `/sdd-implement` por outro harness sem perda de contexto.
+
+---
+
 **Volta ao índice:** [README](README.md) · **Relacionado:** [worktrees.md](worktrees.md) ·
 [04-padroes.md · CTX-03](04-padroes.md#ctx-03--delegação-para-preservar-contexto) ·
 [anthropic-claude-code.md §6](anthropic-claude-code.md)
