@@ -107,5 +107,5 @@ tipo(escopo): descrição concisa em minúsculas sem ponto final
 ## 6. Links e Referências
 
 - [worktrees.md](worktrees.md) — Detalhes operacionais e comandos de worktrees.
-- [RULES.md §2 RGIT](RULES.md#2--git-e-commits-rgit) — As 15 regras oficiais de Git.
+- [RULES.md §2 RGIT](../RULES.md#2--git-e-commits-rgit) — As 15 regras oficiais de Git.
 - [09-decisao-estados-algoritmos.md](09-decisao-estados-algoritmos.md) — Diagramas `AD-05` e `ME-04`.
