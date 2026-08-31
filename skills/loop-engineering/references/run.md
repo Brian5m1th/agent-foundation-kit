@@ -10,7 +10,8 @@ Designing or saving a loop does not authorize its effects.
 3. Confirm remaining turn/cost budget and the action envelope.
 4. If the state conflicts with the repository, the repository and fresh evidence win; record the
    reconciliation.
-5. Stop `blocked` before any missing approval or unavailable required dependency.
+5. Stop `blocked` when the next action needs a missing approval or unavailable dependency. Record a
+   later approval gate without blocking earlier reversible work.
 
 ## Execute one turn
 
@@ -19,7 +20,10 @@ Designing or saving a loop does not authorize its effects.
 3. Apply one focused, reversible change through named skills or tools.
 4. Run the declared target check and all protected checks.
 5. Accept only on declared improvement with no forbidden regression. Otherwise restore the previously
-   accepted active variant and log the rejection.
+   accepted active variant only when that restoration is reversible and no stateful or external
+   effect has occurred. After a database, deployment, financial, or other external mutation,
+   reconcile real state and follow the approved recovery or forward-fix procedure; never roll back
+   blindly. Log the rejection either way.
 6. Update durable state atomically with attempt, evidence, decision, cost, next candidate, and budget.
 7. Evaluate terminal states in this order: `error`, `blocked`, `success`, `no-op`, `stalled`,
    `exhausted`, otherwise `continue`.

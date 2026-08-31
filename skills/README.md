@@ -64,6 +64,14 @@ Aponte o agente para ler a instrução da skill desejada antes de executar a tar
 | [`research`](research/SKILL.md) | Model-invoked | Pesquisa contra fontes primárias documentadas em Markdown. |
 | [`to-spec`](to-spec/SKILL.md) / [`to-tickets`](to-tickets/SKILL.md) | User-invoked | Conversão de conversas e planos em especificações e fatias de tarefas executáveis. |
 
+### 🤝 Times e Loops de Agentes
+
+| Skill | Tipo | Descrição |
+|---|---|---|
+| [`agent-team`](agent-team/SKILL.md) | Model-invoked | Desenha e audita times com topologia, Boundary Contracts, guardrails e aceite verificável. |
+| [`agent-team-loop`](agent-team-loop/SKILL.md) | Model-invoked | Executa times em ciclos maker-checker até sucesso provado ou estado terminal explícito. |
+| [`loop-engineering`](loop-engineering/SKILL.md) | Model-invoked | Projeta e executa loops limitados cuja evidência altera a próxima ação. |
+
 ### ⚙️ DevOps, Infraestrutura & Ferramentas
 | Skill | Tipo | Descrição |
 |---|---|---|

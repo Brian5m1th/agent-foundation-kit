@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Team Loop"
+  short_description: "Executa equipes em loops ate aceite verificavel"
+  default_prompt: "Use $agent-team-loop para executar esta tarefa com uma equipe em ciclos ate o aceite verificavel."
