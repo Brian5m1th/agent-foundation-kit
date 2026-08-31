@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Team"
+  short_description: "Desenha equipes de agentes com contratos claros"
+  default_prompt: "Use $agent-team para desenhar e auditar uma equipe de agentes para esta tarefa."
