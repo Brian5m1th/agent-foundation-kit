@@ -9,21 +9,46 @@ Ele serve como fonte de verdade para desenvolvedores humanos e agentes de IA (Cl
 
 Se você é um desenvolvedor ou deseja que a sua IA consuma e execute essas skills:
 
-### Opção 1: Antigravity / Gemini CLI
-Copie ou sincronize as pastas de skills para o seu diretório global `~/.gemini/config/skills/` ou mantenha a referência em `.agents/skills/`:
-```powershell
-Copy-Item -Path "C:\workspace\labs\skills\*" -Destination "$env:USERPROFILE\.gemini\config\skills\" -Recurse -Force
-```
+### Claude Code e Codex
 
-### Opção 2: Claude Code / OpenCode / Cursor / Codex
-Aponte o agente para ler a instrução da skill desejada antes de executar a tarefa:
+Consulte as skills versionadas neste catálogo e as instruções de [AGENTS.md](../AGENTS.md).
+O inventário de 2026-10-03 também encontrou, no checkout local do responsável, uma migração para
+quatro skills canônicas, CLI `tools/labs.ps1` e manifesto `.specify/kit.json`. Esses arquivos ainda
+não integram esta publicação; não presuma sua disponibilidade em um clone.
+No ambiente que já contém essa migração, siga seu router e seus links vivos. Evite cópias em massa.
+
+### Antigravity / Gemini CLI / OpenCode / Cursor / Windsurf
+
+O catálogo pode ser consultado por caminho. A descoberta automática e os adapters devem ser
+verificados no ambiente específico; o manifesto observado apenas no snapshot local declara Claude e Codex.
+Aponte o agente para ler a skill desejada antes de executar a tarefa:
 > *"Leia as instruções da skill contidas em `skills/<nome-da-skill>/SKILL.md` antes de prosseguir."*
+
+O [inventário local de skills e plugins](../docs/memorias-ias/inventario-skills.md) registra
+procedência, sobreposições e limites da coleta de 2026-10-03. Presença no disco não prova ativação.
 
 ---
 
-## 📚 Catálogo Completo de Skills
+## 📚 Catálogo por finalidade
+
+Seleção de entradas por uso. A enumeração completa do snapshot local está no
+[inventário de skills](../docs/memorias-ias/inventario-skills.md).
 
 ### 🔄 Fluxo SDD (Spec-Driven Development)
+
+As quatro skills abaixo pertencem à migração observada no snapshot local, ainda não publicada.
+Neste clone, consulte as entradas `/sdd-*` versionadas listadas a seguir. Quando a migração for
+publicada, seu router deverá orientar a transição sem manter procedimentos paralelos.
+
+| Skill canônica | Responsabilidade |
+|---|---|
+| `sdd-lifecycle` (`skills/sdd-lifecycle/SKILL.md`, snapshot local) | Especificar, esclarecer, planejar, decompor, implementar e conduzir transições. |
+| `sdd-audit` (`skills/sdd-audit/SKILL.md`, snapshot local) | Checklist, análise entre artefatos e convergência independente. |
+| `sdd-project` (`skills/sdd-project/SKILL.md`, snapshot local) | Constituição, instalação, diagnóstico e atualização do kit. |
+| `sdd-learn` (`skills/sdd-learn/SKILL.md`, snapshot local) | Transformar incidentes em proteção verificável conforme AL-05. |
+
+Entradas individuais existentes no acervo:
+
 | Skill | Tipo | Descrição |
 |---|---|---|
 | [`sdd-constitution`](sdd-constitution/SKILL.md) | User-invoked | Estabelece os princípios e constituição inegociável do repositório. |
