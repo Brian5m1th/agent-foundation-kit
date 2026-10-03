@@ -2,16 +2,24 @@
 
 Destilação técnica do sistema de memória local-first MemPalace ([mempalace/mempalace](https://github.com/mempalace/mempalace)).
 
+**Qualificação da fonte em 2026-10-03:** `[CAMPO]` refere-se à inspeção do acervo de terceiro,
+não a um teste em produção do usuário. A cópia local inspecionada declara 3.7.0, revisão
+`0ff93caf9738fcd0d42a81e72986a6658f123b71`. As capacidades e métricas abaixo são descrições e
+relatos do projeto de origem; não foram reproduzidas nesta consolidação. Metas de latência,
+consumo de tokens e recall não são garantias locais. Consulte a
+[avaliação de uso e piloto proposto](../docs/memorias-ias/mempalace-uso.md).
+
 ## 1. Visão Geral e Filosofia
 
-O MemPalace é uma arquitetura de memória persistente local projetada para dar aos agentes de Inteligência Artificial **recall de longo prazo sem perda de fidelity**.
+O MemPalace é uma arquitetura de memória persistente orientada a preservar texto original e
+recuperá-lo por busca. Preservação do texto não implica recuperação perfeita de todos os fatos.
 
 ### Princípios Inegociáveis
 - **Verbatim Always**: Armazenamento textual bruto e exato. Nunca resumi ou parafraseia as falas e conteúdos originais no nível do armazenamento base (*drawers*). Se o usuário disse algo, armazena-se exatamente o que ele disse.
-- **Incremental Only**: Atualização append-only após o armazenamento inicial. Nunca destrói dados existentes para reconstruir.
+- **Ingestão incremental**: preservar fontes e evitar reconstruções destrutivas é o princípio descrito; isso não significa impossibilidade de exclusão. A [API documentada](https://mempalaceofficial.com/reference/mcp-tools.html) também expõe operações de remoção.
 - **Local-First & Zero External API por Padrão**: Todo o fluxo de ingestão, chunking, embedding e busca roda localmente na máquina do usuário (ChromaDB, Ollama, SQLite).
-- **Performance Budget**: Wake-up de inicialização em <100ms; hooks assíncronos em <500ms.
-- **Privacy by Architecture**: Dados nunca saem da máquina do usuário. Zero telemetria, zero dependência de nuvem.
+- **Performance Budget**: metas descritas de wake-up em <100ms e hooks assíncronos em <500ms, sem medição local nesta coleta.
+- **Local por padrão**: a documentação permite opções de rede e backends externos. O envio de contexto recuperado a um modelo depende do cliente; não há garantia universal de que toda utilização permaneça na máquina.
 - **Background Everything**: Salvamento, indexação e extração de entidades ocorrem via hooks em background sem gastar tokens na janela de chat do agente.
 
 ---
@@ -44,7 +52,7 @@ Flags universais de contexto: `DECISION`, `PIVOT`, `TECHNICAL`, `ORIGIN`, `SENSI
 
 ## 3. Pilha de Acionamento L0–L3 (Memory Wake-up Stack)
 
-Para evitar estourar a janela de contexto no boot da conversa ([AP-04](05-antipadroes.md#ap-04-sessão-entulhada)), o MemPalace organiza a recuperação em 4 camadas:
+Para evitar estourar a janela de contexto no boot da conversa ([AP-04](05-antipadroes.md#ap-04--sessão-entulhada-)), o MemPalace organiza a recuperação em 4 camadas:
 
 | Camada | Escopo | Token Cost | Frequência de Carga |
 |---|---|---|---|
@@ -79,7 +87,11 @@ O `query_sanitizer.py` aplica mitigação em 4 etapas:
 
 ---
 
-## 6. Benchmarks Demonstrados (LongMemEval & LoCoMo)
+## 6. Benchmarks reportados pelo projeto de origem (LongMemEval & LoCoMo)
+
+Valores preservados da destilação anterior para rastreabilidade, sem reprodução local. Consulte o
+[protocolo do fornecedor](https://github.com/MemPalace/mempalace/blob/develop/benchmarks/BENCHMARKS.md)
+antes de comparar configurações ou usar esses números para decidir adoção.
 
 | Benchmark | Modo / Configuração | Métrica | Resultado |
 |---|---|---|---|

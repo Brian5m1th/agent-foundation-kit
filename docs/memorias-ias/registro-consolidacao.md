@@ -91,7 +91,7 @@ Os testes dos produtos e a execução dos plugins não foram revalidados. A publ
 conferência do diff isolado, links na árvore publicável e checks do GitHub no HEAD correspondente.
 As referências SDD ausentes dessa árvore foram qualificadas como inventário local, sem links quebrados.
 
-Na preparação para publicação, os 18 arquivos do lote tiveram 209 links locais conferidos contra
+Na preparação para publicação, os 18 arquivos do lote tiveram 210 links locais conferidos contra
 a árvore Git e os arquivos novos explicitamente incluídos; nenhum destino ausente foi encontrado.
 Duas revisões documentais independentes (escopo e padrões) não apontaram bloqueios.
 O índice da KB também passou a descrever os 22 princípios de um projeto externo sem confundi-los
