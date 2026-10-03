@@ -1,5 +1,10 @@
 # Experimento: Integração de Memória Local MemPalace no Antigravity / Claude Code
 
+**Estado da documentação em 2026-10-03:** `[HIPÓTESE]` — este arquivo descreve um experimento e
+resultados esperados. Não contém registro de execução que comprove as metas abaixo. A consolidação
+das memórias não instalou nem ativou esta integração; veja a
+[avaliação de uso](../../docs/memorias-ias/mempalace-uso.md).
+
 **Hipótese:** Integrar o servidor MCP e os retention hooks do MemPalace (`C:\workspace\Extras\mempalace`) como camada de memória local persistente reduz em >90% a perda de contexto entre sessões de agentes mantendo o tempo de boot de sessão em <200ms.
 
 ## Escopo do Experimento

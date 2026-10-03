@@ -47,6 +47,7 @@ inchados e constituições decorativas:
 | — | [PM Agent Skills](pm-agent-skills.md) | Destilação `[INDÚSTRIA]` / `[CONSOLIDADO]` / `[CAMPO]` — acervo de produto (PRDs, Discovery, Estratégia, Métricas, GTM) |
 | — | [Corpus KbMain](kbmain-corpus.md) | Destilação `[CAMPO]` — acervo agêntico de terceiro em produção, com seus modos de apodrecimento |
 | — | [MemPalace Memory System](mempalace-memory-system.md) | Destilação `[CAMPO]` — sistema de memória local verbatim (Wings/Rooms/Drawers, AAAK dialect, L0-L3 stack e query sanitizer) |
+| — | [Memórias das IAs e casos de trabalho](../docs/memorias-ias/README.md) | Acervo `[CAMPO]` com procedência, limites históricos e propostas `[HIPÓTESE]` de autonomia |
 | — | [AI Workflows & Eval Pipelines](ai-workflows-eval-pipelines.md) | Destilação `[INDÚSTRIA]` / `[RECENTE]` — taxonomia de motores de IA e pipelines de avaliação offline (Evals) |
 | 00 | [Taxonomia](00-taxonomia.md) | Classificação hierárquica das disciplinas |
 | 01 | [Ontologia / Knowledge Graph](01-ontologia.md) | Relações semânticas entre conceitos |
@@ -95,7 +96,7 @@ agents, hooks, sub-agents · `github.github.io/spec-kit` · Anthropic Agent Skil
 2605.11027 (Intent-Centric SE) · 2606.09498 (Self-Harness) · 2607.00038 (Loop Engineering) · METR
 2507.09089 · DORA 2024 · GitClear 2025 · Martin Fowler / Thoughtworks (Böckeler).
 **De campo** — `WWMA-Tech/inscreveai-new-project` (.spec, CLAUDE.md, AGENTS.md, patterns.md com
-P1–P22 e P_Novo1–21, correctness/) · `Back-End/Wakanda/wakanda-ai/sdd-kit` (framework/standards,
+22 princípios próprios e P_Novo1–21, correctness/) · `Back-End/Wakanda/wakanda-ai/sdd-kit` (framework/standards,
 WORKFLOW, MODES, 11 agentes, 7 skills, 19 comandos) · `Freelancer/K.A.O.S` (CLAUDE.md, .agents) ·
 Metodologia SDD V5 · Comparativo TDD/BDD/SDD · **corpus KbMain** (619 arquivos: 493 de KB em 36
 domínios, 58 agentes, dossiê metodológico, kit de verificação por propriedades — lido em 2026-08-04,

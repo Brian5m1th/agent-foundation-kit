@@ -10,6 +10,9 @@
 > - 🖥️ **Whitepaper Executivo Desktop**: [[docs/whitepaper-labs-resumo-executivo|Whitepaper Executivo Completo]]
 > - 🔬 **Paper do Fluxo Integrado**: [[docs/paper-fluxo-integrado|Paper do Fluxo Integrado E2E]]
 
+Memórias e casos de trabalho: [acervo das IAs](docs/memorias-ias/README.md) ·
+[oportunidades de autonomia e automação](docs/memorias-ias/autonomia-e-automacao.md).
+
 ---
 
 ## 🏷️ Tags & Metadados do Obsidian

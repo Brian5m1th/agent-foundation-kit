@@ -1,0 +1,689 @@
+{
+  "collected_on": "2026-10-03",
+  "timezone": "America/Bahia",
+  "scope": "Metadados das fontes locais; resultados historicos nao reexecutados. updated_at e data de atualizacao do resumo, nao necessariamente data do evento.",
+  "base_alias": "CODEX_MEMORY",
+  "base_local": "C:\\Users\\brian\\.codex\\memories",
+  "registry": {
+    "path": "MEMORY.md",
+    "sha256": "25be1f6b96857d865b1261067f8c90abded7db0363db93d322a4ac0f0e4c0f13",
+    "bytes": 128261,
+    "lines": 1276
+  },
+  "groups": [
+    {
+      "title": "WakandaAI Wakander lifecycle dates and draft PR #266",
+      "lines": [
+        1,
+        43
+      ],
+      "summaries": [
+        "2026-09-30T22-04-24-ISZm-implement_wakander_lifecycle_dates_pr_266.md"
+      ]
+    },
+    {
+      "title": "PetJus Docker environment maintenance and temporary container cleanup",
+      "lines": [
+        44,
+        68
+      ],
+      "summaries": [
+        "2026-09-30T21-54-25-fo00-docker_container_cleanup_justpet_codefy.md"
+      ]
+    },
+    {
+      "title": "WakandaAI WAI-396 sequential journeys by track",
+      "lines": [
+        69,
+        101
+      ],
+      "summaries": [
+        "2026-09-30T03-11-01-uIlf-wai_396_jornadas_sequenciais_por_trilha.md"
+      ]
+    },
+    {
+      "title": "WakandaAI mission evaluator SDD refinement",
+      "lines": [
+        102,
+        159
+      ],
+      "summaries": [
+        "2026-09-30T01-11-21-jmg6-prompt_arquitetural_sdd_agente_avaliador_missao.md",
+        "2026-09-30T01-19-01-0fTX-refinamento_sdd_avaliador_automatico_de_missoes.md"
+      ]
+    },
+    {
+      "title": "PetJus SPEC-015/B05 clinical timeline independent audit",
+      "lines": [
+        160,
+        205
+      ],
+      "summaries": [
+        "2026-09-28T16-25-36-vT63-spec_015_timeline_audit_and_filter_validation.md"
+      ]
+    },
+    {
+      "title": "PetJus SPEC-018 A1/PNG review, validation, and draft PR evidence",
+      "lines": [
+        206,
+        252
+      ],
+      "summaries": [
+        "2026-09-24T17-43-49-gOGw-spec_018_independent_review_homologation_draft_prs.md"
+      ]
+    },
+    {
+      "title": "PetJus clinical/document backlog merge-state and manager delivery",
+      "lines": [
+        253,
+        296
+      ],
+      "summaries": [
+        "2026-09-29T20-52-13-ZLkS-justpet_backlog_specs_reports_draft_pr_links.md"
+      ]
+    },
+    {
+      "title": "PetJus SPEC-016/B06 resumo clínico PDF homologation",
+      "lines": [
+        297,
+        342
+      ],
+      "summaries": [
+        "2026-09-28T22-50-14-n5uc-homologacao_spec_016_resumo_clinico_pdf.md"
+      ]
+    },
+    {
+      "title": "petJus local task/SPEC sanitization skill",
+      "lines": [
+        343,
+        373
+      ],
+      "summaries": [
+        "2026-09-24T20-05-13-OgPi-ajuste_skill_sanitizacao_script_local.md"
+      ]
+    },
+    {
+      "title": "petJus SPEC-013 recipe “Nova emissão” UI alignment and draft PR",
+      "lines": [
+        374,
+        403
+      ],
+      "summaries": [
+        "2026-09-25T18-33-56-9Ie7-padronizar_botao_nova_emissao_receitas_pr_22.md"
+      ]
+    },
+    {
+      "title": "petJus SPEC-017 backend refactoring and draft publication",
+      "lines": [
+        404,
+        446
+      ],
+      "summaries": [
+        "2026-09-22T21-38-05-Ez77-spec_017_refactor_submethods_complexity_and_draft_prs.md"
+      ]
+    },
+    {
+      "title": "PetJus SPEC-012 C7 retry audit and examination-attachment page migration",
+      "lines": [
+        447,
+        491
+      ],
+      "summaries": [
+        "2026-09-23T03-38-19-tlH8-petjus_spec012_c7_revalidation_page_navigation.md"
+      ]
+    },
+    {
+      "title": "petJus post-implementation SPEC quality review",
+      "lines": [
+        492,
+        519
+      ],
+      "summaries": [
+        "2026-09-23T15-31-29-1Ypa-prompt_revisao_spec_clean_code_solid_srp_idempotencia.md"
+      ]
+    },
+    {
+      "title": "petJus practical SPEC homologation and draft publication",
+      "lines": [
+        520,
+        596
+      ],
+      "summaries": [
+        "2026-09-21T06-15-48-x7Ed-petjus_spec_011_responsavel_homologacao_partial.md",
+        "2026-09-21T06-21-50-6rYg-spec_013_historico_receitas_homologacao_e_drafts.md",
+        "2026-09-21T06-27-54-nBIy-spec_014_historico_atestados_revisao_homologacao_drafts.md"
+      ]
+    },
+    {
+      "title": "petJus SPEC-004 voice assistant requirements, V1 contract, and implementation",
+      "lines": [
+        597,
+        675
+      ],
+      "summaries": [
+        "2026-09-16T16-16-13-MZb6-spec004_requirements_and_wake_word_alternatives.md",
+        "2026-09-25T16-24-37-Z5OX-spec004_v1_2_structured_voice_refinement_android_validation.md"
+      ]
+    },
+    {
+      "title": "petJus clinical/document backlog and SPEC-016 dependency gating",
+      "lines": [
+        676,
+        742
+      ],
+      "summaries": [
+        "2026-09-19T04-26-55-6EC6-petjus_backlog_spec016_spec018_handoffs.md"
+      ]
+    },
+    {
+      "title": "WakandaAI Java Spring Clean/DDD layer architecture and refactoring prompt",
+      "lines": [
+        743,
+        791
+      ],
+      "summaries": [
+        "2026-09-18T06-37-33-ayUQ-wakandaai_entity_service_repository_architecture_rules.md",
+        "2026-09-19T04-03-47-8hdX-arquitetura_camadas_prompt_refatoracao_spring.md"
+      ]
+    },
+    {
+      "title": "Codex skill source verification, download, and selective installation",
+      "lines": [
+        792,
+        837
+      ],
+      "summaries": [
+        "2026-09-16T19-45-53-iBB9-instalar_skills_microsoft_find_skills.md",
+        "2026-09-17T15-57-48-PjVj-clone_toolkit_install_superpowers_skills.md"
+      ]
+    },
+    {
+      "title": "petJus Codex plugin marketplace installation and verification",
+      "lines": [
+        838,
+        865
+      ],
+      "summaries": [
+        "2026-09-17T17-46-14-phEh-install_caveman_codex_plugin.md"
+      ]
+    },
+    {
+      "title": "labs SDD workflow stages and commands",
+      "lines": [
+        866,
+        894
+      ],
+      "summaries": [
+        "2026-09-16T18-21-17-XM68-sdd_stages_and_commands.md"
+      ]
+    },
+    {
+      "title": "petJus SPEC-003 foto framing homologation and draft publication",
+      "lines": [
+        895,
+        940
+      ],
+      "summaries": [
+        "2026-09-14T16-43-06-lgCN-petjus_homologacao_enquadramento_fotos_prs_draft_arquivament.md"
+      ]
+    },
+    {
+      "title": "petJus certificado A1 e receituário MAPA",
+      "lines": [
+        941,
+        986
+      ],
+      "summaries": [
+        "2026-09-09T15-12-54-h8to-petjus_certificado_a1_mapa_commits_prs.md"
+      ]
+    },
+    {
+      "title": "marketplace-happ SPEC-126 Asaas homologation",
+      "lines": [
+        987,
+        1029
+      ],
+      "summaries": [
+        "2026-09-08T15-40-30-XJWP-spec_126_asaas_homologation_report_implementation.md"
+      ]
+    },
+    {
+      "title": "marketplace-happ GitHub draft PR ownership",
+      "lines": [
+        1030,
+        1056
+      ],
+      "summaries": [
+        "2026-09-03T15-18-33-IDZi-recreate_github_drafts_under_brian5m1th.md"
+      ]
+    },
+    {
+      "title": "marketplace-happ Cloudflare Asaas webhook route",
+      "lines": [
+        1057,
+        1079
+      ],
+      "summaries": [
+        "2026-09-03T15-18-33-IDZi-recreate_github_drafts_under_brian5m1th.md"
+      ]
+    },
+    {
+      "title": "marketplace-happ WhatsApp audio transcription",
+      "lines": [
+        1080,
+        1122
+      ],
+      "summaries": [
+        "2026-09-08T15-19-29-r2Pv-whatsapp_audio_transcription_portuguese.md"
+      ]
+    },
+    {
+      "title": "petJus Codex skill installation",
+      "lines": [
+        1123,
+        1145
+      ],
+      "summaries": [
+        "2026-09-09T16-06-52-vDm6-install_trail_of_bits_spec_to_code_compliance.md"
+      ]
+    },
+    {
+      "title": "petJus main/master Git synchronization",
+      "lines": [
+        1146,
+        1172
+      ],
+      "summaries": [
+        "2026-09-09T14-33-19-uk92-atualizar_branches_principais_petjus.md"
+      ]
+    },
+    {
+      "title": "marketplace-happ Asaas BaaS integration and chained PR remediation",
+      "lines": [
+        1173,
+        1207
+      ],
+      "summaries": [
+        "2026-08-31T13-44-21-4h7l-asaas_rollout_pr_remediation_and_validation.md"
+      ]
+    },
+    {
+      "title": "labs Codex commit and Pull Request instructions",
+      "lines": [
+        1208,
+        1248
+      ],
+      "summaries": [
+        "2026-09-10T22-16-55-MQN0-codex_commit_and_pull_request_instructions.md"
+      ]
+    },
+    {
+      "title": "Windows PowerShell Brazilian A1 certificate validation",
+      "lines": [
+        1249,
+        1276
+      ],
+      "summaries": [
+        "2026-09-10T22-10-59-ivhD-validate_brazilian_a1_certificate.md"
+      ]
+    }
+  ],
+  "summaries": [
+    {
+      "path": "rollout_summaries/2026-08-31T13-44-21-4h7l-asaas_rollout_pr_remediation_and_validation.md",
+      "sha256": "7c63e2cff4a6fc354523e889a139fd859dd5485cff970552753878388d521dfa",
+      "bytes": 5910,
+      "lines": 54,
+      "thread_id": "01a05810-57b6-7551-9ae1-8d0b78b8cd7b",
+      "updated_at": "2026-09-02T22:26:00+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-03T15-18-33-IDZi-recreate_github_drafts_under_brian5m1th.md",
+      "sha256": "62f82f86de93ef1581b4f9cef117c106c77ea3ef48bf8d25982afe061531e825",
+      "bytes": 4530,
+      "lines": 67,
+      "thread_id": "01a067d9-ab3f-7693-b417-1520d15e81e4",
+      "updated_at": "2026-09-06T17:42:14+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-08T15-19-29-r2Pv-whatsapp_audio_transcription_portuguese.md",
+      "sha256": "0bbc196cf720f2a251d280e7b0f91a98e1b2e6473fb0bb6bce3962d571ee978a",
+      "bytes": 5762,
+      "lines": 52,
+      "thread_id": "01a0819a-52d2-7bd3-a5f8-e97aaec53709",
+      "updated_at": "2026-09-14T20:45:25+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-08T15-40-30-XJWP-spec_126_asaas_homologation_report_implementation.md",
+      "sha256": "60a1940b53e9f534d80d227cc7fc90ba0660b0ef8a57a3b13bec4999013f2840",
+      "bytes": 5859,
+      "lines": 48,
+      "thread_id": "01a081ad-8db5-7381-9a0f-f220dc2708ab",
+      "updated_at": "2026-09-29T06:31:32+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-09T14-33-19-uk92-atualizar_branches_principais_petjus.md",
+      "sha256": "1b678ffa22ca260952c6ddc7d64d88ea8fa478978ab7f63b76bb96a20cfc8f12",
+      "bytes": 3198,
+      "lines": 45,
+      "thread_id": "01a08696-6ad8-7f22-93a2-81c4bdca1d00",
+      "updated_at": "2026-09-09T14:58:20+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-09T15-12-54-h8to-petjus_certificado_a1_mapa_commits_prs.md",
+      "sha256": "bb772854572d6b5d0a8d2142765cabde8dee0ae6b85626d4abfe3db63564039f",
+      "bytes": 7202,
+      "lines": 86,
+      "thread_id": "01a086ba-a873-7af0-ac3d-c664568e47d6",
+      "updated_at": "2026-09-11T16:57:02+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-09T16-06-52-vDm6-install_trail_of_bits_spec_to_code_compliance.md",
+      "sha256": "5c25479ebf87e9fb7e9a15656e2f01cffecf8fa7d48dc2229da162c507cbd699",
+      "bytes": 1809,
+      "lines": 32,
+      "thread_id": "01a086ec-0f79-7e21-9f08-3d3a73d37b2e",
+      "updated_at": "2026-09-09T16:08:02+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-10T22-10-59-ivhD-validate_brazilian_a1_certificate.md",
+      "sha256": "bba9998b3bea8a2333a30d24262d55ceeb68702aa0056c2b7bb8428d750ffce7",
+      "bytes": 2632,
+      "lines": 34,
+      "thread_id": "01a08d5f-c6fb-7840-ad38-565956934151",
+      "updated_at": "2026-09-10T22:13:23+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-10T22-16-55-MQN0-codex_commit_and_pull_request_instructions.md",
+      "sha256": "cc7f243992dfcf3a780a1da10035c2f4d94287f898189c92cf41255ea6311bc7",
+      "bytes": 2288,
+      "lines": 37,
+      "thread_id": "01a08d65-3525-7c63-bde5-718f1411f88e",
+      "updated_at": "2026-09-10T22:21:20+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-14T16-43-06-lgCN-petjus_homologacao_enquadramento_fotos_prs_draft_arquivament.md",
+      "sha256": "7712ba8d265b72d76f9652ab18a3c3b1587bd21295928a679a34d052b20c8094",
+      "bytes": 5119,
+      "lines": 65,
+      "thread_id": "01a0a0cd-085f-7753-a2db-b05a21c52a5d",
+      "updated_at": "2026-09-15T18:45:07+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-16T16-16-13-MZb6-spec004_requirements_and_wake_word_alternatives.md",
+      "sha256": "91cf075bf3789b915c6d32499b9c182077f2ac72a78d5cd578d9f620864e46aa",
+      "bytes": 6715,
+      "lines": 73,
+      "thread_id": "01a0ab01-2462-72b1-a851-e26605197d74",
+      "updated_at": "2026-09-25T16:24:12+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-16T18-21-17-XM68-sdd_stages_and_commands.md",
+      "sha256": "585c3ae3e61b08228c4014a1245aec2b72ae7c2dfdd37d8dc018428325c1b03d",
+      "bytes": 1257,
+      "lines": 22,
+      "thread_id": "01a0ab73-a4b5-7672-b04d-3daead794da4",
+      "updated_at": "2026-09-16T18:21:43+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-16T19-45-53-iBB9-instalar_skills_microsoft_find_skills.md",
+      "sha256": "f60330cb1891513d8ead7a73f3055679a19c9b5c721027ce4332cbeae2edc175",
+      "bytes": 4277,
+      "lines": 60,
+      "thread_id": "01a0abc1-18e7-7032-8b6c-4a553a649e23",
+      "updated_at": "2026-09-16T19:51:09+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-17T15-57-48-PjVj-clone_toolkit_install_superpowers_skills.md",
+      "sha256": "837affdc61a7e1138f0dff0c3e0542f4858e0230bd085c92a8779f3ad74eba7b",
+      "bytes": 2499,
+      "lines": 44,
+      "thread_id": "01a0b016-a1b3-7df3-9fd3-1b35b4664f55",
+      "updated_at": "2026-09-17T16:01:48+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-17T16-08-15-MFHF-analyze_vibe_coding_toolkit_java_angular_adaptation.md",
+      "sha256": "cfaacf12dabeaf62eff922bec581957415e6da18dee6809c6c551dd244d5c658",
+      "bytes": 4607,
+      "lines": 59,
+      "thread_id": "01a0b020-3494-7a81-8f7f-701f8934b267",
+      "updated_at": "2026-09-17T22:30:19+00:00",
+      "indexed_in_registry": false
+    },
+    {
+      "path": "rollout_summaries/2026-09-17T17-46-14-phEh-install_caveman_codex_plugin.md",
+      "sha256": "6bbd1e5ee52ca528a176a39d4eb7243aa64d654ee2f97592544323c7f6f2ae06",
+      "bytes": 2320,
+      "lines": 38,
+      "thread_id": "01a0b079-ea2e-79d3-abfa-86873ee43fad",
+      "updated_at": "2026-09-17T17:49:29+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-17T18-29-19-PTcX-estimativa_prazos_historias_justpet.md",
+      "sha256": "28f483db92335e7b85d76d1ea257f8f5de92614e3dabe170434eb70787a55a91",
+      "bytes": 3676,
+      "lines": 44,
+      "thread_id": "01a0b0a1-5a14-7141-8d3b-48636b4e73f7",
+      "updated_at": "2026-09-17T18:32:56+00:00",
+      "indexed_in_registry": false
+    },
+    {
+      "path": "rollout_summaries/2026-09-18T06-37-33-ayUQ-wakandaai_entity_service_repository_architecture_rules.md",
+      "sha256": "4fece59876984a9dc64dc87ff5e07e39d6f5e37a01120d6fe3b2018004ed1cf8",
+      "bytes": 4918,
+      "lines": 54,
+      "thread_id": "01a0b33c-0fd3-7940-abac-20f7827fd33c",
+      "updated_at": "2026-09-20T03:35:33+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-19T04-03-47-8hdX-arquitetura_camadas_prompt_refatoracao_spring.md",
+      "sha256": "3cf894f127753f0f8eb27867f48a9d9a06390a78a0da48561e8b718a75027c1e",
+      "bytes": 4246,
+      "lines": 51,
+      "thread_id": "01a0b7d5-a5fb-7af1-bad7-16991622d3f5",
+      "updated_at": "2026-09-20T03:23:04+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-19T04-26-55-6EC6-petjus_backlog_spec016_spec018_handoffs.md",
+      "sha256": "6bcf4dc6cc1ead4c16979f5687afa9045e4c994bdcb2e824a7f5823e5054609a",
+      "bytes": 9110,
+      "lines": 108,
+      "thread_id": "01a0b7ea-d2a7-76d2-a4b9-52eac642b9ba",
+      "updated_at": "2026-09-28T19:12:48+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-21T06-15-48-x7Ed-petjus_spec_011_responsavel_homologacao_partial.md",
+      "sha256": "41befb732bed59e44620596f6d9a04796b5047533260a86ae000f4902ce20911",
+      "bytes": 6369,
+      "lines": 54,
+      "thread_id": "01a0c29b-3a43-7611-abab-27c949926201",
+      "updated_at": "2026-09-25T20:19:39+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-21T06-21-50-6rYg-spec_013_historico_receitas_homologacao_e_drafts.md",
+      "sha256": "3f33755a963e9791c6e3502d00980e0f8849ca8a485ba72d0295d630949eb1ec",
+      "bytes": 3598,
+      "lines": 55,
+      "thread_id": "01a0c2a0-c0da-7d43-ad28-25088a5e17a4",
+      "updated_at": "2026-09-21T18:54:44+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-21T06-27-54-nBIy-spec_014_historico_atestados_revisao_homologacao_drafts.md",
+      "sha256": "b30af94a3a8e84ce9b747b9ae21c3f5d51075727e8b76654c6cf5f1542711117",
+      "bytes": 6517,
+      "lines": 86,
+      "thread_id": "01a0c2a6-51d6-7753-85cd-782ccbc93116",
+      "updated_at": "2026-09-22T18:28:52+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-22T21-38-05-Ez77-spec_017_refactor_submethods_complexity_and_draft_prs.md",
+      "sha256": "9f37386cc0891a8030b90f7721819ef596e83774c6645575737208b548bcafb0",
+      "bytes": 4575,
+      "lines": 51,
+      "thread_id": "01a0cb0d-f7c9-7fc3-91ba-c5fcd85b6d55",
+      "updated_at": "2026-09-28T04:16:01+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-23T03-38-19-tlH8-petjus_spec012_c7_revalidation_page_navigation.md",
+      "sha256": "ba461869fc61f02a5386b9b97e5205ecab0604e95d5b16eeade942673c5a94ff",
+      "bytes": 4307,
+      "lines": 59,
+      "thread_id": "01a0cc57-c543-7010-912b-905dad0aa81e",
+      "updated_at": "2026-09-30T19:02:03+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-23T15-31-29-1Ypa-prompt_revisao_spec_clean_code_solid_srp_idempotencia.md",
+      "sha256": "5ba7b2514895e4a774fdd165962c5e74f9dab98398f66f2c8455f2085839c05a",
+      "bytes": 2854,
+      "lines": 40,
+      "thread_id": "01a0cee4-b173-7a00-9c0b-605942155ab0",
+      "updated_at": "2026-09-23T15:36:06+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-24T17-43-49-gOGw-spec_018_independent_review_homologation_draft_prs.md",
+      "sha256": "3309ff336a955b2b62b3af139f14db470ebd566bf75bfdf747c7ef82d42fa518",
+      "bytes": 5588,
+      "lines": 61,
+      "thread_id": "01a0d484-350c-7d23-91e2-57d535f6c464",
+      "updated_at": "2026-09-30T19:09:33+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-24T20-05-13-OgPi-ajuste_skill_sanitizacao_script_local.md",
+      "sha256": "13a10a139e7c266a96967f7410b7d382e7771d0d43c0979ba7a0b777ed9773c8",
+      "bytes": 4608,
+      "lines": 52,
+      "thread_id": "01a0d505-a8e0-7d70-b3c4-9396cd0b9f9c",
+      "updated_at": "2026-09-24T20:47:51+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-25T16-24-37-Z5OX-spec004_v1_2_structured_voice_refinement_android_validation.md",
+      "sha256": "8070f4bbee855ad3c4143a0a23e8f52cac9d99a804a0b7ad2483bf0cf2b6bdd8",
+      "bytes": 6534,
+      "lines": 81,
+      "thread_id": "01a0d962-0e20-7c20-9af6-af8cc7ea2aa3",
+      "updated_at": "2026-09-29T11:39:00+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-25T18-33-56-9Ie7-padronizar_botao_nova_emissao_receitas_pr_22.md",
+      "sha256": "2061d71ffbeff70ed369468aa25e54ed7934d9bc4b94ab0be982005435318d94",
+      "bytes": 3888,
+      "lines": 51,
+      "thread_id": "01a0d9d8-755b-7bd2-bdb7-49a842317f83",
+      "updated_at": "2026-09-25T18:56:20+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-28T16-25-36-vT63-spec_015_timeline_audit_and_filter_validation.md",
+      "sha256": "5d7721b7c102fab5c35618fd79c5a74f3be2b1db1844bb0ccbbf418ecd11d974",
+      "bytes": 4536,
+      "lines": 50,
+      "thread_id": "01a0e8d6-085b-75a0-b7c1-18cb7211776b",
+      "updated_at": "2026-09-30T19:01:17+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-28T22-50-14-n5uc-homologacao_spec_016_resumo_clinico_pdf.md",
+      "sha256": "99b76177634afd661a1df31e7152a647aa18ca54c19ed79307ec3edadeb6e042",
+      "bytes": 6542,
+      "lines": 72,
+      "thread_id": "01a0ea36-2ca1-78f1-b4f4-290bd02ea56c",
+      "updated_at": "2026-09-29T08:15:42+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-29T20-52-13-ZLkS-justpet_backlog_specs_reports_draft_pr_links.md",
+      "sha256": "ae9177d8132339435fbd3bb54985094288e2013019b4e148d1b3e84730230f6f",
+      "bytes": 5282,
+      "lines": 63,
+      "thread_id": "01a0eef0-7c66-79f2-b3bc-e16a5c796262",
+      "updated_at": "2026-09-29T21:01:13+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-30T01-11-21-jmg6-prompt_arquitetural_sdd_agente_avaliador_missao.md",
+      "sha256": "3413b6879ad14ffd4842d738df7e7c90e4e87c477d8e2dcece07640df2a4ed10",
+      "bytes": 3519,
+      "lines": 37,
+      "thread_id": "01a0efdd-bb1d-7a82-9a43-904c38a46aa6",
+      "updated_at": "2026-09-30T01:17:22+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-30T01-19-01-0fTX-refinamento_sdd_avaliador_automatico_de_missoes.md",
+      "sha256": "bf2b0f8ffe164b8f310711ec6f12af87977337210c87b1e17b5a37a189293e43",
+      "bytes": 5838,
+      "lines": 67,
+      "thread_id": "01a0efe4-c24d-7fe1-bff3-cab53071ba39",
+      "updated_at": "2026-09-30T04:20:54+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-30T03-11-01-uIlf-wai_396_jornadas_sequenciais_por_trilha.md",
+      "sha256": "f584ca3834876804487b6b8df73e14c14582fda5b806e4741d59c880aa0299bf",
+      "bytes": 4951,
+      "lines": 54,
+      "thread_id": "01a0f04b-4ac5-7313-af13-79ed0be2cbb5",
+      "updated_at": "2026-09-30T04:29:02+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-30T21-54-25-fo00-docker_container_cleanup_justpet_codefy.md",
+      "sha256": "018196c1afdd6d9843c02d1d6907b8e50ee31f639e2a6901135a09eb66897c9b",
+      "bytes": 1924,
+      "lines": 37,
+      "thread_id": "01a0f44f-cd21-7d10-b291-b4567aa42598",
+      "updated_at": "2026-09-30T21:58:19+00:00",
+      "indexed_in_registry": true
+    },
+    {
+      "path": "rollout_summaries/2026-09-30T22-04-24-ISZm-implement_wakander_lifecycle_dates_pr_266.md",
+      "sha256": "3148149c1027a8f22d26e9be05c1038360845a9ce67fcb22ad1ea4321ebd3bfd",
+      "bytes": 4004,
+      "lines": 61,
+      "thread_id": "01a0f458-f039-7792-b387-25b356f33274",
+      "updated_at": "2026-10-02T16:56:23+00:00",
+      "indexed_in_registry": true
+    }
+  ],
+  "additional_sources": [
+    {
+      "path": "extensions/ad_hoc/notes/2026-09-21T180906Z-relatorios-chefia-provas-visuais.md",
+      "sha256": "6c174b03aafd33f6a5901a4360d01854e48f0a2f0c16fe82a6307b8181fc907f",
+      "bytes": 844,
+      "lines": 8
+    },
+    {
+      "path": "skills/petjus-spec-homologation/SKILL.md",
+      "sha256": "fae846b667ae6cb2a39b3e57ed83854af837d321e3bbe6f918477fc5fbd1f132",
+      "bytes": 4914,
+      "lines": 57
+    }
+  ]
+}
