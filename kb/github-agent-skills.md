@@ -74,7 +74,7 @@ graph LR
 | `caveman` | `JuliusBrussee/caveman` (1k+ ★) | Estilo telegráfico conciso para cortar 65-75% de tokens de prosa mantendo código 100% exato. | `[INDÚSTRIA]` | [`caveman/SKILL.md`](../templates/skills/caveman/SKILL.md) |
 | `superpowers` | `obra/superpowers` (2k+ ★) | Framework senior TDD-first, design socrático e auditoria rigorosa contra "vibe coding". | `[INDÚSTRIA]` | [`superpowers/SKILL.md`](../templates/skills/superpowers/SKILL.md) |
 | `diagnosing-bugs` | `mattpocock/skills` (1.5k+ ★) | Workflow de depuração empírica em 6 passos (repro determinística, encolhimento, hipóteses ranqueadas, instrução). | `[INDÚSTRIA]` | [`diagnosing-bugs/SKILL.md`](../templates/skills/diagnosing-bugs/SKILL.md) |
-| `codebase-design` | `mattpocock/skills` / Ousterhout | Guia de design para criar módulos profundos e interfaces limpas com seams de teste. | `[CONSOLIDADO]` | [`codebase-design/SKILL.md`](../templates/skills/codebase-design/SKILL.md) |
+| `codebase-design` | `mattpocock/skills` / Ousterhout | Guia de design para criar módulos profundos e interfaces limpas com seams de teste. | `[CONSOLIDADO]` | [`codebase-design/SKILL.md`](../skills/codebase-design/SKILL.md) |
 
 ---
 
